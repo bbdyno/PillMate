@@ -1,0 +1,41 @@
+/* Common */
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.done" = "Done";
+"common.close" = "Close";
+"common.confirm" = "Confirm";
+"common.error" = "Error";
+"common.success" = "Success";
+
+/* App */
+"app.name" = "PillMate";
+"app.welcome" = "Welcome to PillMate";
+"app.description" = "Your medication reminder companion";
+
+/* Tabs */
+"tab.home" = "Home";
+"tab.medications" = "Medications";
+"tab.reminders" = "Reminders";
+"tab.settings" = "Settings";
+
+/* Medications */
+"medications.title" = "My Medications";
+"medications.add" = "Add Medication";
+"medications.empty" = "No medications added yet";
+"medications.name" = "Medication Name";
+"medications.dosage" = "Dosage";
+"medications.frequency" = "Frequency";
+
+/* Reminders */
+"reminders.title" = "Reminders";
+"reminders.time" = "Time";
+"reminders.set" = "Set Reminder";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.language" = "Language";
+"settings.notifications" = "Notifications";
+"settings.about" = "About";

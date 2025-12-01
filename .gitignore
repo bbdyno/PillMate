@@ -1,0 +1,50 @@
+# Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+!*.xcworkspace/xcshareddata/
+
+# User-specific files
+*.xcuserstate
+*.xcuserdatad
+
+# Build
+build/
+DerivedData/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Tuist
+.tuist
+Tuist/Dependencies
+Derived/
+*.xcworkspace
+*.xcodeproj
+
+# SwiftGen
+**/Generated/
+
+# Swift Package Manager
+.swiftpm/
+*.swiftpm
+.build/
+
+# CocoaPods
+Pods/
+*.podspec
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+iOSInjectionProject/
+
+# macOS
+.DS_Store

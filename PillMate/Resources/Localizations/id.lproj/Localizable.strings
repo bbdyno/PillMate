@@ -1,0 +1,41 @@
+/* Common */
+"common.ok" = "OK";
+"common.cancel" = "Batal";
+"common.save" = "Simpan";
+"common.delete" = "Hapus";
+"common.edit" = "Edit";
+"common.done" = "Selesai";
+"common.close" = "Tutup";
+"common.confirm" = "Konfirmasi";
+"common.error" = "Kesalahan";
+"common.success" = "Berhasil";
+
+/* App */
+"app.name" = "PillMate";
+"app.welcome" = "Selamat datang di PillMate";
+"app.description" = "Pendamping pengingat obat Anda";
+
+/* Tabs */
+"tab.home" = "Beranda";
+"tab.medications" = "Obat";
+"tab.reminders" = "Pengingat";
+"tab.settings" = "Pengaturan";
+
+/* Medications */
+"medications.title" = "Obat Saya";
+"medications.add" = "Tambah Obat";
+"medications.empty" = "Belum ada obat yang ditambahkan";
+"medications.name" = "Nama Obat";
+"medications.dosage" = "Dosis";
+"medications.frequency" = "Frekuensi";
+
+/* Reminders */
+"reminders.title" = "Pengingat";
+"reminders.time" = "Waktu";
+"reminders.set" = "Atur Pengingat";
+
+/* Settings */
+"settings.title" = "Pengaturan";
+"settings.language" = "Bahasa";
+"settings.notifications" = "Notifikasi";
+"settings.about" = "Tentang";

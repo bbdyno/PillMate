@@ -1,0 +1,41 @@
+/* Common */
+"common.ok" = "OK";
+"common.cancel" = "キャンセル";
+"common.save" = "保存";
+"common.delete" = "削除";
+"common.edit" = "編集";
+"common.done" = "完了";
+"common.close" = "閉じる";
+"common.confirm" = "確認";
+"common.error" = "エラー";
+"common.success" = "成功";
+
+/* App */
+"app.name" = "ピルメイト";
+"app.welcome" = "ピルメイトへようこそ";
+"app.description" = "あなたの服薬リマインダー";
+
+/* Tabs */
+"tab.home" = "ホーム";
+"tab.medications" = "お薬";
+"tab.reminders" = "リマインダー";
+"tab.settings" = "設定";
+
+/* Medications */
+"medications.title" = "マイお薬";
+"medications.add" = "お薬を追加";
+"medications.empty" = "まだお薬が追加されていません";
+"medications.name" = "お薬の名前";
+"medications.dosage" = "用量";
+"medications.frequency" = "服用頻度";
+
+/* Reminders */
+"reminders.title" = "リマインダー";
+"reminders.time" = "時間";
+"reminders.set" = "リマインダー設定";
+
+/* Settings */
+"settings.title" = "設定";
+"settings.language" = "言語";
+"settings.notifications" = "通知";
+"settings.about" = "について";

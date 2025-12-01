@@ -1,0 +1,41 @@
+/* Common */
+"common.ok" = "确定";
+"common.cancel" = "取消";
+"common.save" = "保存";
+"common.delete" = "删除";
+"common.edit" = "编辑";
+"common.done" = "完成";
+"common.close" = "关闭";
+"common.confirm" = "确认";
+"common.error" = "错误";
+"common.success" = "成功";
+
+/* App */
+"app.name" = "用药助手";
+"app.welcome" = "欢迎使用用药助手";
+"app.description" = "您的用药提醒伴侣";
+
+/* Tabs */
+"tab.home" = "首页";
+"tab.medications" = "药物";
+"tab.reminders" = "提醒";
+"tab.settings" = "设置";
+
+/* Medications */
+"medications.title" = "我的药物";
+"medications.add" = "添加药物";
+"medications.empty" = "还没有添加药物";
+"medications.name" = "药物名称";
+"medications.dosage" = "剂量";
+"medications.frequency" = "频率";
+
+/* Reminders */
+"reminders.title" = "提醒";
+"reminders.time" = "时间";
+"reminders.set" = "设置提醒";
+
+/* Settings */
+"settings.title" = "设置";
+"settings.language" = "语言";
+"settings.notifications" = "通知";
+"settings.about" = "关于";
