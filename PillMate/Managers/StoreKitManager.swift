@@ -106,7 +106,12 @@ final class StoreKitManager {
     }
     
     /// 프리미엄 구매 여부
-    var isPremium: Bool = false
+    var isPremium: Bool = false {
+        didSet {
+            // 앱 시작 시 iCloud 설정을 위해 캐시
+            UserDefaults.standard.set(isPremium, forKey: "isPremiumCached")
+        }
+    }
     
     /// 로딩 상태
     var isLoading: Bool = false
@@ -139,6 +144,8 @@ final class StoreKitManager {
     private init() {
         // 저장된 프리미엄 상태 로드
         isPremium = UserDefaults.standard.bool(forKey: premiumKey)
+        // 앱 시작 시 iCloud 설정을 위해 캐시 동기화
+        UserDefaults.standard.set(isPremium, forKey: "isPremiumCached")
         
         // 거래 리스너 시작
         transactionListener = listenForTransactions()
@@ -172,10 +179,10 @@ final class StoreKitManager {
                 return product1.price < product2.price
             }
             
-            print("제품 로드 완료: \(products.count)개")
+            print("✅ 제품 로드 완료: \(products.count)개")
             
         } catch {
-            print("제품 로드 실패: \(error)")
+            print("❌ 제품 로드 실패: \(error)")
             errorMessage = "제품 정보를 불러올 수 없습니다."
         }
     }
@@ -208,16 +215,16 @@ final class StoreKitManager {
                 // 거래 완료 표시 (중요!)
                 await transaction.finish()
                 
-                print("구매 성공: \(product.displayName)")
+                print("✅ 구매 성공: \(product.displayName)")
                 return true
                 
             case .userCancelled:
-                print("사용자가 구매를 취소했습니다.")
+                print("ℹ️ 사용자가 구매를 취소했습니다.")
                 return false
                 
             case .pending:
                 // 부모 승인 대기 등
-                print("구매 대기 중 (승인 필요)")
+                print("ℹ️ 구매 대기 중 (승인 필요)")
                 errorMessage = "구매 승인 대기 중입니다."
                 return false
                 
@@ -226,11 +233,11 @@ final class StoreKitManager {
             }
             
         } catch StoreKit.StoreKitError.userCancelled {
-            print("사용자가 구매를 취소했습니다.")
+            print("ℹ️ 사용자가 구매를 취소했습니다.")
             return false
             
         } catch {
-            print("구매 실패: \(error)")
+            print("❌ 구매 실패: \(error)")
             errorMessage = "구매에 실패했습니다. 다시 시도해주세요."
             return false
         }
@@ -293,10 +300,10 @@ final class StoreKitManager {
                 successMessage = "복원할 구매 내역이 없습니다."
             }
             
-            print("구매 복원 완료")
+            print("✅ 구매 복원 완료")
             
         } catch {
-            print("구매 복원 실패: \(error)")
+            print("❌ 구매 복원 실패: \(error)")
             errorMessage = "구매 복원에 실패했습니다."
         }
     }
@@ -315,7 +322,7 @@ final class StoreKitManager {
                     await self.handlePurchase(transaction)
                     await transaction.finish()
                 } catch {
-                    print("거래 처리 실패: \(error)")
+                    print("❌ 거래 처리 실패: \(error)")
                 }
             }
         }
@@ -330,7 +337,7 @@ final class StoreKitManager {
                 self.isPremium = true
                 UserDefaults.standard.set(true, forKey: self.premiumKey)
             }
-            print("프리미엄 활성화됨")
+            print("✅ 프리미엄 활성화됨")
         }
         
         // 기부는 별도 처리 없음 (소모품)
@@ -352,11 +359,11 @@ final class StoreKitManager {
                     }
                 }
             } catch {
-                print("거래 검증 실패: \(error)")
+                print("❌ 거래 검증 실패: \(error)")
             }
         }
         
-        print("프리미엄 상태: \(isPremium)")
+        print("ℹ️ 프리미엄 상태: \(isPremium)")
     }
     
     // MARK: - Verification
@@ -366,11 +373,11 @@ final class StoreKitManager {
     private func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {
         case .verified(let safe):
-            // Apple이 서명 검증 완료
+            // ✅ Apple이 서명 검증 완료
             return safe
             
         case .unverified(_, let error):
-            // 검증 실패 (변조 가능성)
+            // ❌ 검증 실패 (변조 가능성)
             throw StoreKitError.failedVerification(error)
         }
     }
@@ -439,11 +446,11 @@ enum StoreKitError: LocalizedError {
 // MARK: - Premium Features
 
 /// 프리미엄 기능 정의
-/// 프리미엄 정책 변경 시 이 구조체 수정
+/// 💡 프리미엄 정책 변경 시 이 구조체 수정
 struct PremiumFeatures {
     
     // MARK: - 무료 사용자 제한
-    // 제한 값을 변경하여 정책 조정 가능
+    // 💡 제한 값을 변경하여 정책 조정 가능
     
     /// 무료 사용자 최대 약물 등록 수
     static let freeMedicationLimit = 3

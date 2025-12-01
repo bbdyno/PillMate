@@ -37,11 +37,27 @@ struct PillMateApp: App {
             Patient.self
         ])
         
-        let modelConfiguration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false,
-            cloudKitDatabase: .automatic
-        )
+        // 💎 iCloud 동기화 설정 (프리미엄 + 사용자 설정에 따라)
+        let shouldEnableCloudKit = Self.shouldEnableCloudSync()
+        
+        let modelConfiguration: ModelConfiguration
+        if shouldEnableCloudKit {
+            // iCloud 동기화 활성화
+            modelConfiguration = ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: false,
+                cloudKitDatabase: .automatic
+            )
+            print("☁️ iCloud 동기화 활성화됨")
+        } else {
+            // 로컬 전용
+            modelConfiguration = ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: false,
+                cloudKitDatabase: .none
+            )
+            print("📱 로컬 전용 모드")
+        }
         
         do {
             modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -74,6 +90,34 @@ struct PillMateApp: App {
         case "dark": return .dark
         default: return nil
         }
+    }
+    
+    // MARK: - Static Methods
+    
+    /// iCloud 동기화 활성화 여부 결정
+    /// - 프리미엄 사용자이고, iCloud 동기화 설정이 켜져 있을 때만 활성화
+    private static func shouldEnableCloudSync() -> Bool {
+        // 1. 프리미엄 상태 확인 (캐시된 값 사용)
+        let isPremiumCached = UserDefaults.standard.bool(forKey: "isPremiumCached")
+        
+        // 2. 사용자의 iCloud 동기화 설정 확인
+        let iCloudSyncEnabled = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.iCloudSyncEnabled)
+        
+        // 3. iCloud 계정 가용성 확인
+        let isICloudAvailable = FileManager.default.ubiquityIdentityToken != nil
+        
+        #if DEBUG
+        print("💎 프리미엄 (캐시): \(isPremiumCached)")
+        print("☁️ iCloud 설정: \(iCloudSyncEnabled)")
+        print("☁️ iCloud 가용: \(isICloudAvailable)")
+        #endif
+        
+        return isPremiumCached && iCloudSyncEnabled && isICloudAvailable
+    }
+    
+    /// 현재 iCloud 동기화 상태 확인
+    static var isCloudSyncEnabled: Bool {
+        shouldEnableCloudSync()
     }
     
     // MARK: - Methods

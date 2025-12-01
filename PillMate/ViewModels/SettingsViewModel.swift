@@ -108,6 +108,12 @@ final class SettingsViewModel {
     /// 로딩 상태
     var isLoading: Bool = false
     
+    /// 내보내기 중
+    var isExporting: Bool = false
+    
+    /// 가져오기 중
+    var isImporting: Bool = false
+    
     /// 에러 메시지
     var errorMessage: String?
     
@@ -129,6 +135,32 @@ final class SettingsViewModel {
     
     /// 알림 재설정 확인
     var showRescheduleConfirmation: Bool = false
+    
+    /// 앱 재시작 필요 알림 (iCloud 설정 변경 시)
+    var showRestartAlert: Bool = false
+    
+    /// iCloud 동기화 중 가져오기 경고
+    var showImportWithICloudWarning: Bool = false
+    
+    // MARK: - iCloud Status
+    
+    /// iCloud 계정 가용성
+    var isICloudAvailable: Bool {
+        FileManager.default.ubiquityIdentityToken != nil
+    }
+    
+    /// iCloud 상태 텍스트
+    var iCloudStatusText: String {
+        if !isICloudAvailable {
+            return "iCloud 사용 불가"
+        } else if iCloudSyncEnabled && PillMateApp.isCloudSyncEnabled {
+            return "동기화 중"
+        } else if iCloudSyncEnabled && !PillMateApp.isCloudSyncEnabled {
+            return "재시작 필요"
+        } else {
+            return "비활성화"
+        }
+    }
     
     // MARK: - Private Properties
     

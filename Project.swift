@@ -7,7 +7,7 @@ let project = Project(
             name: "PillMate",
             destinations: .iOS,
             product: .app,
-            bundleId: "com.bbdyno.pillMate",
+            bundleId: "com.bbdyno.app.pillMate",
             infoPlist: .extendingDefault(
                 with: [
                     "CFBundleDevelopmentRegion": "en",
@@ -64,7 +64,7 @@ let project = Project(
             name: "PillMateWidget",
             destinations: .iOS,
             product: .appExtension,
-            bundleId: "com.bbdyno.pillMate.widget",
+            bundleId: "com.bbdyno.app.pillMate.widget",
             infoPlist: .extendingDefault(
                 with: [
                     "NSExtension": [
@@ -80,7 +80,7 @@ let project = Project(
             name: "PillMateTests",
             destinations: .iOS,
             product: .unitTests,
-            bundleId: "com.bbdyno.pillMate.tests",
+            bundleId: "com.bbdyno.app.pillMate.tests",
             infoPlist: .default,
             sources: ["PillMateTests/**"],
             dependencies: [
@@ -91,7 +91,7 @@ let project = Project(
             name: "PillMateUITests",
             destinations: .iOS,
             product: .uiTests,
-            bundleId: "com.bbdyno.pillMate.uitests",
+            bundleId: "com.bbdyno.app.pillMate.uitests",
             infoPlist: .default,
             sources: ["PillMateUITests/**"],
             dependencies: [

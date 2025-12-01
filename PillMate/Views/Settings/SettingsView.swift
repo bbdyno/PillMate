@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UniformTypeIdentifiers
 
 /// 설정 화면
 struct SettingsView: View {
@@ -19,6 +20,16 @@ struct SettingsView: View {
     // 💡 프리미엄/기부 시트 표시 상태
     @State private var showPremiumSheet = false
     @State private var showTipJarSheet = false
+    
+    // 📦 데이터 내보내기/가져오기
+    @State private var showImportFilePicker = false
+    @State private var showExportShareSheet = false
+    @State private var exportFileURL: URL?
+    @State private var showImportConfirmation = false
+    @State private var importValidation: ImportValidationResult?
+    @State private var pendingImportURL: URL?
+    @State private var showImportResult = false
+    @State private var importResult: ImportResult?
     
     // MARK: - Body
     
@@ -39,6 +50,9 @@ struct SettingsView: View {
                 
                 // 데이터 관리
                 dataSection
+                
+                // 📦 백업 (프리미엄)
+                backupSection
                 
                 // 💕 개발자 응원 (기부)
                 supportSection
@@ -107,6 +121,161 @@ struct SettingsView: View {
             }
         }
         .tint(AppColors.primary)
+        // 📦 파일 가져오기 (Document Picker)
+        .fileImporter(
+            isPresented: $showImportFilePicker,
+            allowedContentTypes: [.json],
+            allowsMultipleSelection: false
+        ) { result in
+            handleImportFileSelection(result)
+        }
+        // 📦 내보내기 공유 시트
+        .sheet(isPresented: $showExportShareSheet) {
+            if let url = exportFileURL {
+                ShareSheet(items: [url])
+            }
+        }
+        // 📦 가져오기 확인 Alert
+        .alert("데이터 가져오기", isPresented: $showImportConfirmation) {
+            Button("취소", role: .cancel) {
+                pendingImportURL = nil
+                importValidation = nil
+            }
+            Button("가져오기", role: .destructive) {
+                Task {
+                    await performImport()
+                }
+            }
+        } message: {
+            if let validation = importValidation {
+                Text("""
+                다음 데이터를 가져옵니다:
+                
+                내보낸 날짜: \(validation.exportDate.formatted(date: .abbreviated, time: .shortened))
+                앱 버전: \(validation.appVersion)
+                기기: \(validation.deviceName)
+                
+                총 \(validation.totalCount)개 항목
+                (환자 \(validation.patientCount), 약물 \(validation.medicationCount), 기록 \(validation.logCount)개 등)
+                
+                ⚠️ 기존 데이터가 모두 삭제됩니다.
+                """)
+            }
+        }
+        // 📦 가져오기 결과 Alert
+        .alert("가져오기 완료", isPresented: $showImportResult) {
+            Button("확인") {
+                importResult = nil
+            }
+        } message: {
+            if let result = importResult {
+                Text("""
+                데이터를 성공적으로 가져왔습니다.
+                
+                \(result.summary)
+                
+                총 \(result.totalCount)개 항목
+                """)
+            }
+        }
+        // ☁️ 앱 재시작 필요 Alert
+        .alert("앱 재시작 필요", isPresented: $viewModel.showRestartAlert) {
+            Button("나중에") { }
+            Button("지금 종료") {
+                exit(0)
+            }
+        } message: {
+            Text("iCloud 동기화 설정을 변경하려면 앱을 완전히 종료한 후 다시 실행해야 합니다.\n\n앱을 종료하시겠습니까?")
+        }
+        // ☁️ iCloud 동기화 중 가져오기 경고
+        .alert("iCloud 동기화 주의", isPresented: $viewModel.showImportWithICloudWarning) {
+            Button("취소", role: .cancel) { }
+            Button("계속") {
+                showImportFilePicker = true
+            }
+        } message: {
+            Text("iCloud 동기화가 활성화된 상태입니다.\n\n데이터를 가져오면 이 계정에 연결된 모든 기기의 데이터가 교체됩니다.\n\n계속하시겠습니까?")
+        }
+    }
+    
+    // MARK: - Export/Import Methods
+    
+    /// 데이터 내보내기
+    private func exportData() async {
+        viewModel.isExporting = true
+        defer { viewModel.isExporting = false }
+        
+        do {
+            let data = try await DataExportManager.shared.exportAllData(context: modelContext)
+            let fileURL = try DataExportManager.shared.createExportFile(data: data)
+            exportFileURL = fileURL
+            showExportShareSheet = true
+        } catch {
+            viewModel.errorMessage = "내보내기 실패: \(error.localizedDescription)"
+        }
+    }
+    
+    /// 파일 선택 처리
+    private func handleImportFileSelection(_ result: Result<[URL], Error>) {
+        switch result {
+        case .success(let urls):
+            guard let url = urls.first else { return }
+            
+            // Security scoped resource access
+            guard url.startAccessingSecurityScopedResource() else {
+                viewModel.errorMessage = "파일에 접근할 수 없습니다."
+                return
+            }
+            
+            defer { url.stopAccessingSecurityScopedResource() }
+            
+            do {
+                // 파일을 임시 디렉토리로 복사
+                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
+                if FileManager.default.fileExists(atPath: tempURL.path) {
+                    try FileManager.default.removeItem(at: tempURL)
+                }
+                try FileManager.default.copyItem(at: url, to: tempURL)
+                
+                // 유효성 검사
+                let validation = try DataExportManager.shared.validateImportFile(at: tempURL)
+                importValidation = validation
+                pendingImportURL = tempURL
+                showImportConfirmation = true
+            } catch {
+                viewModel.errorMessage = "파일을 읽을 수 없습니다: \(error.localizedDescription)"
+            }
+            
+        case .failure(let error):
+            viewModel.errorMessage = "파일 선택 실패: \(error.localizedDescription)"
+        }
+    }
+    
+    /// 가져오기 실행
+    private func performImport() async {
+        guard let url = pendingImportURL else { return }
+        
+        viewModel.isImporting = true
+        defer {
+            viewModel.isImporting = false
+            pendingImportURL = nil
+            importValidation = nil
+        }
+        
+        do {
+            let result = try await DataExportManager.shared.importData(
+                from: url,
+                context: modelContext,
+                mergeStrategy: .replace
+            )
+            importResult = result
+            showImportResult = true
+            
+            // 임시 파일 삭제
+            try? FileManager.default.removeItem(at: url)
+        } catch {
+            viewModel.errorMessage = "가져오기 실패: \(error.localizedDescription)"
+        }
     }
     
     // MARK: - Premium Section
@@ -399,11 +568,6 @@ struct SettingsView: View {
     
     private var dataSection: some View {
         Section {
-            // iCloud 동기화
-            Toggle(isOn: $viewModel.iCloudSyncEnabled) {
-                Label("iCloud 동기화", systemImage: "icloud")
-            }
-            
             // 환자 관리 (피보호자)
             NavigationLink {
                 PatientView()
@@ -456,6 +620,136 @@ struct SettingsView: View {
             }
         } header: {
             Text("데이터")
+        }
+    }
+    
+    // MARK: - Cloud & Backup Section (💎 Premium)
+    
+    private var backupSection: some View {
+        Section {
+            // 💎 프리미엄 체크
+            if !StoreKitManager.shared.isPremium {
+                // 프리미엄 필요 안내
+                VStack(alignment: .leading, spacing: AppSpacing.sm) {
+                    HStack {
+                        Label("iCloud 동기화", systemImage: "icloud.fill")
+                            .foregroundColor(.blue)
+                        Spacer()
+                        PremiumBadge()
+                    }
+                    
+                    HStack {
+                        Label("데이터 백업", systemImage: "externaldrive.fill")
+                        Spacer()
+                        PremiumBadge()
+                    }
+                }
+                
+                Text("프리미엄으로 여러 기기 간 동기화와 데이터 백업/복원이 가능합니다.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Button {
+                    showPremiumSheet = true
+                } label: {
+                    Text("프리미엄으로 잠금 해제")
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
+                }
+            } else {
+                // ☁️ iCloud 동기화 (프리미엄 사용자)
+                Toggle(isOn: $viewModel.iCloudSyncEnabled) {
+                    HStack {
+                        Label("iCloud 동기화", systemImage: "icloud.fill")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .onChange(of: viewModel.iCloudSyncEnabled) { _, newValue in
+                    viewModel.showRestartAlert = true
+                }
+                
+                // iCloud 상태 표시
+                HStack {
+                    Text("동기화 상태")
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    if viewModel.isICloudAvailable {
+                        if viewModel.iCloudSyncEnabled && PillMateApp.isCloudSyncEnabled {
+                            Label("활성화됨", systemImage: "checkmark.circle.fill")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                        } else if viewModel.iCloudSyncEnabled && !PillMateApp.isCloudSyncEnabled {
+                            Label("재시작 필요", systemImage: "exclamationmark.circle.fill")
+                                .font(.caption)
+                                .foregroundColor(.orange)
+                        } else {
+                            Text("비활성화")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    } else {
+                        Label("iCloud 사용 불가", systemImage: "xmark.circle.fill")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
+                
+                Divider()
+                
+                // 💎 데이터 내보내기 (프리미엄 사용자)
+                Button {
+                    Task {
+                        await exportData()
+                    }
+                } label: {
+                    HStack {
+                        Label("데이터 내보내기", systemImage: "square.and.arrow.up")
+                        Spacer()
+                        if viewModel.isExporting {
+                            ProgressView()
+                        } else {
+                            Text("JSON")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                .disabled(viewModel.isExporting)
+                
+                // 💎 데이터 가져오기 (프리미엄 사용자)
+                Button {
+                    // iCloud 동기화 중이면 경고
+                    if viewModel.iCloudSyncEnabled && PillMateApp.isCloudSyncEnabled {
+                        viewModel.showImportWithICloudWarning = true
+                    } else {
+                        showImportFilePicker = true
+                    }
+                } label: {
+                    HStack {
+                        Label("데이터 가져오기", systemImage: "square.and.arrow.down")
+                        Spacer()
+                        if viewModel.isImporting {
+                            ProgressView()
+                        }
+                    }
+                }
+                .disabled(viewModel.isImporting)
+            }
+        } header: {
+            HStack {
+                Text("클라우드 및 백업")
+                if !StoreKitManager.shared.isPremium {
+                    PremiumBadge()
+                }
+            }
+        } footer: {
+            if StoreKitManager.shared.isPremium {
+                if viewModel.iCloudSyncEnabled {
+                    Text("iCloud 동기화가 켜진 상태에서 가져오기를 하면 다른 기기에도 영향을 줄 수 있습니다.")
+                } else {
+                    Text("내보내기된 파일은 다른 기기나 재설치 후 가져오기로 복원할 수 있습니다.")
+                }
+            }
         }
     }
     
