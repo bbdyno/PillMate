@@ -22,22 +22,30 @@ struct HealthMetricsView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: AppSpacing.lg) {
-                    // HealthKit 동기화 카드
-                    syncCard
-                    
-                    // 지표 그리드
-                    metricsGrid
-                    
-                    // 선택된 지표 상세
-                    if let selectedType = viewModel.selectedMetricType {
-                        metricDetailCard(for: selectedType)
+            Group {
+                if !PremiumFeatures.canUseHealthKit {
+                    // 프리미엄이 아닌 사용자: 업그레이드 안내만 표시
+                    premiumRequiredContent
+                } else {
+                    // 프리미엄 사용자: 전체 기능 표시
+                    ScrollView {
+                        VStack(spacing: AppSpacing.lg) {
+                            // HealthKit 동기화 카드
+                            syncCard
+
+                            // 지표 그리드
+                            metricsGrid
+
+                            // 선택된 지표 상세
+                            if let selectedType = viewModel.selectedMetricType {
+                                metricDetailCard(for: selectedType)
+                            }
+                        }
+                        .padding(.top, AppSpacing.sm)
+                        .padding(.horizontal, AppSpacing.md)
+                        .padding(.bottom, AppSpacing.xxl)
                     }
                 }
-                .padding(.top, AppSpacing.sm)
-                .padding(.horizontal, AppSpacing.md)
-                .padding(.bottom, AppSpacing.xxl)
             }
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
@@ -51,15 +59,18 @@ struct HealthMetricsView: View {
                             .foregroundColor(AppColors.textPrimary)
                     }
                 }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        viewModel.inputMetricType = nil
-                        viewModel.showInputSheet = true
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(AppColors.primaryGradient)
+
+                // 프리미엄 사용자에게만 + 버튼 표시
+                if PremiumFeatures.canUseHealthKit {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            viewModel.inputMetricType = nil
+                            viewModel.showInputSheet = true
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title3)
+                                .foregroundStyle(AppColors.primaryGradient)
+                        }
                     }
                 }
             }
@@ -84,58 +95,112 @@ struct HealthMetricsView: View {
             }
         }
     }
-    
+
+    // MARK: - Premium Required Content
+
+    private var premiumRequiredContent: some View {
+        VStack(spacing: AppSpacing.xl) {
+            Spacer()
+
+            // 아이콘
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color(hex: "FF6B6B").opacity(0.2), Color(hex: "EE5A5A").opacity(0.1)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 120, height: 120)
+
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 50))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color(hex: "FF6B6B"), Color(hex: "EE5A5A")],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            }
+            .padding(.bottom, AppSpacing.md)
+
+            // 제목
+            VStack(spacing: AppSpacing.sm) {
+                Text(DoseMateStrings.Health.premiumFeature)
+                    .font(AppTypography.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(AppColors.textPrimary)
+
+                Text(DoseMateStrings.Health.premiumDescription)
+                    .font(AppTypography.body)
+                    .foregroundColor(AppColors.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, AppSpacing.xl)
+            }
+
+            // 기능 목록
+            VStack(alignment: .leading, spacing: AppSpacing.md) {
+                FeatureRow(
+                    icon: "heart.text.square.fill",
+                    title: DoseMateStrings.Health.syncFromHealth,
+                    description: "건강 앱과 자동 동기화"
+                )
+
+                FeatureRow(
+                    icon: "chart.line.uptrend.xyaxis",
+                    title: DoseMateStrings.Health.metricsTitle,
+                    description: "건강 지표 추적 및 분석"
+                )
+
+                FeatureRow(
+                    icon: "calendar",
+                    title: "기록 관리",
+                    description: "모든 건강 데이터 기록 보관"
+                )
+            }
+            .padding(AppSpacing.lg)
+            .background(AppColors.cardBackground)
+            .cornerRadius(AppRadius.lg)
+            .shadow(color: Color.black.opacity(0.04), radius: 8, y: 2)
+            .padding(.horizontal, AppSpacing.lg)
+
+            Spacer()
+
+            // 업그레이드 버튼
+            Button {
+                showPremiumSheet = true
+            } label: {
+                HStack(spacing: AppSpacing.sm) {
+                    Image(systemName: "crown.fill")
+                    Text("프리미엄으로 업그레이드")
+                        .fontWeight(.semibold)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(AppSpacing.md)
+                .background(
+                    LinearGradient(
+                        colors: [Color(hex: "FF6B6B"), Color(hex: "EE5A5A")],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .foregroundColor(.white)
+                .cornerRadius(AppRadius.md)
+            }
+            .padding(.horizontal, AppSpacing.lg)
+            .padding(.bottom, AppSpacing.xl)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
     // MARK: - Sync Card
-    
+
     private var syncCard: some View {
         Group {
-            if !PremiumFeatures.canUseHealthKit {
-                // 프리미엄 업셀 카드 (비프리미엄 사용자)
-                Button {
-                    showPremiumSheet = true
-                } label: {
-                    HStack(spacing: AppSpacing.md) {
-                        ZStack {
-                            Circle()
-                                .fill(LinearGradient(
-                                    colors: [Color(hex: "FF6B6B"), Color(hex: "EE5A5A")],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ))
-                                .frame(width: 50, height: 50)
-
-                            Image(systemName: "crown.fill")
-                                .font(.system(size: 22))
-                                .foregroundColor(.white)
-                        }
-
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(DoseMateStrings.Health.premiumFeature)
-                                .font(AppTypography.headline)
-                                .foregroundColor(AppColors.textPrimary)
-
-                            Text(DoseMateStrings.Health.premiumDescription)
-                                .font(AppTypography.caption)
-                                .foregroundColor(AppColors.textSecondary)
-                        }
-
-                        Spacer()
-
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 18))
-                            .foregroundColor(AppColors.primary)
-                            .frame(width: 36, height: 36)
-                            .background(AppColors.primarySoft)
-                            .cornerRadius(AppRadius.sm)
-                    }
-                    .padding(AppSpacing.md)
-                    .background(AppColors.cardBackground)
-                    .cornerRadius(AppRadius.lg)
-                    .shadow(color: Color.black.opacity(0.04), radius: 8, y: 2)
-                }
-                .buttonStyle(.plain)
-            } else if !healthKitManager.isAuthorized {
-                // 권한 요청 카드 (프리미엄 사용자 + 미승인)
+            if !healthKitManager.isAuthorized {
+                // 권한 요청 카드
                 Button {
                     Task {
                         await viewModel.requestHealthKitPermission()
@@ -182,7 +247,7 @@ struct HealthMetricsView: View {
                 }
                 .buttonStyle(.plain)
             } else {
-                // 동기화 카드 (프리미엄 사용자 + 권한 승인됨)
+                // 동기화 카드
                 Button {
                     Task {
                         await viewModel.syncAuthorized()
