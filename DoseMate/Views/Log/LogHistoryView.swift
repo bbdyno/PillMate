@@ -48,7 +48,7 @@ struct LogHistoryView: View {
                     HStack(spacing: AppSpacing.xs) {
                         Image(systemName: "list.clipboard.fill")
                             .foregroundStyle(AppColors.primaryGradient)
-                        Text("복약 기록")
+                        Text(DoseMateStrings.LogHistory.title)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                     }
@@ -59,7 +59,7 @@ struct LogHistoryView: View {
                         Button {
                             viewModel.prepareExport()
                         } label: {
-                            Label("CSV 내보내기", systemImage: "square.and.arrow.up")
+                            Label(DoseMateStrings.LogHistory.csvExport, systemImage: "square.and.arrow.up")
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle")
@@ -67,6 +67,7 @@ struct LogHistoryView: View {
                     }
                 }
             }
+            .toolbarBackground(.clear, for: .navigationBar)
             .onAppear {
                 viewModel.setup(with: modelContext)
             }
@@ -110,21 +111,21 @@ struct LogHistoryView: View {
                     LogStatRow(
                         icon: "checkmark.circle.fill",
                         value: viewModel.takenCount,
-                        label: "복용",
+                        label: DoseMateStrings.LogHistory.taken,
                         color: .white
                     )
                     
                     LogStatRow(
                         icon: "clock.fill",
                         value: viewModel.delayedCount,
-                        label: "지연",
+                        label: DoseMateStrings.LogHistory.delayed,
                         color: .white.opacity(0.8)
                     )
                     
                     LogStatRow(
                         icon: "xmark.circle.fill",
                         value: viewModel.skippedCount,
-                        label: "건너뜀",
+                        label: DoseMateStrings.LogHistory.skipped,
                         color: .white.opacity(0.6)
                     )
                 }
@@ -136,7 +137,7 @@ struct LogHistoryView: View {
             HStack {
                 LogSummaryItem(
                     value: viewModel.logs.count,
-                    label: "총 기록"
+                    label: DoseMateStrings.LogHistory.totalRecords
                 )
                 
                 Divider()
@@ -144,7 +145,7 @@ struct LogHistoryView: View {
                 
                 LogSummaryItem(
                     value: viewModel.consecutiveDays,
-                    label: "연속 일수"
+                    label: DoseMateStrings.LogHistory.consecutiveDays
                 )
                 
                 Divider()
@@ -152,7 +153,7 @@ struct LogHistoryView: View {
                 
                 LogSummaryItem(
                     value: viewModel.filteredLogs.count,
-                    label: "필터 결과"
+                    label: DoseMateStrings.LogHistory.filterResults
                 )
             }
             .padding(.vertical, AppSpacing.sm)
@@ -207,7 +208,7 @@ struct LogHistoryView: View {
     
     private var viewModeToggle: some View {
         HStack {
-            SectionHeader(title: "기록 보기")
+            SectionHeader(title: DoseMateStrings.LogHistory.viewRecords)
             
             Spacer()
             
@@ -292,11 +293,21 @@ struct LogHistoryView: View {
             
             // 요일 헤더
             HStack(spacing: 0) {
-                ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { day in
+                let weekdays = [
+                    DoseMateStrings.Calendar.sunday,
+                    DoseMateStrings.Calendar.monday,
+                    DoseMateStrings.Calendar.tuesday,
+                    DoseMateStrings.Calendar.wednesday,
+                    DoseMateStrings.Calendar.thursday,
+                    DoseMateStrings.Calendar.friday,
+                    DoseMateStrings.Calendar.saturday
+                ]
+                
+                ForEach(Array(weekdays.enumerated()), id: \.offset) { index, day in
                     Text(day)
                         .font(AppTypography.caption)
                         .fontWeight(.medium)
-                        .foregroundColor(day == "일" ? AppColors.danger : AppColors.textSecondary)
+                        .foregroundColor(index == 0 ? AppColors.danger : AppColors.textSecondary)
                         .frame(maxWidth: .infinity)
                 }
             }
@@ -358,7 +369,7 @@ struct LogHistoryView: View {
             
             let logs = viewModel.selectedDateLogs
             if logs.isEmpty {
-                Text("기록이 없습니다")
+                Text(DoseMateStrings.LogHistory.noRecords)
                     .font(AppTypography.subheadline)
                     .foregroundColor(AppColors.textSecondary)
                     .frame(maxWidth: .infinity)
@@ -409,7 +420,7 @@ struct LogHistoryView: View {
                         .font(.system(size: 40))
                         .foregroundColor(AppColors.textTertiary)
                     
-                    Text("기록이 없습니다")
+                    Text(DoseMateStrings.LogHistory.noRecords)
                         .font(AppTypography.headline)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -527,7 +538,7 @@ struct LogHistoryRow: View {
             
             // 약물 정보
             VStack(alignment: .leading, spacing: 2) {
-                Text(log.medication?.name ?? "알 수 없음")
+                Text(log.medication?.name ?? DoseMateStrings.LogHistory.unknown)
                     .font(AppTypography.body)
                     .foregroundColor(AppColors.textPrimary)
                 

@@ -82,11 +82,11 @@ enum LogStatus: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .taken: return "복용완료"
-        case .skipped: return "건너뜀"
-        case .delayed: return "지연"
-        case .snoozed: return "미루기"
-        case .pending: return "대기중"
+        case .taken: return DoseMateStrings.Status.taken
+        case .skipped: return DoseMateStrings.Status.skipped
+        case .delayed: return DoseMateStrings.Status.delayed
+        case .snoozed: return DoseMateStrings.Status.snoozed
+        case .pending: return DoseMateStrings.Status.pending
         }
     }
     

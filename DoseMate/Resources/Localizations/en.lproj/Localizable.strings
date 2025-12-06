@@ -39,3 +39,397 @@
 "settings.language" = "Language";
 "settings.notifications" = "Notifications";
 "settings.about" = "About";
+
+/* Calendar */
+"calendar.sunday" = "Sun";
+"calendar.monday" = "Mon";
+"calendar.tuesday" = "Tue";
+"calendar.wednesday" = "Wed";
+"calendar.thursday" = "Thu";
+"calendar.friday" = "Fri";
+"calendar.saturday" = "Sat";
+
+/* Period */
+"period.today" = "Today";
+"period.yesterday" = "Yesterday";
+"period.this_week" = "This Week";
+"period.last_week" = "Last Week";
+"period.this_month" = "This Month";
+"period.last_month" = "Last Month";
+"period.last_3_months" = "Last 3 Months";
+"period.last_6_months" = "Last 6 Months";
+"period.this_year" = "This Year";
+"period.all_time" = "All Time";
+
+/* Status */
+"status.pending" = "Pending";
+"status.taken" = "Taken";
+"status.skipped" = "Skipped";
+"status.snoozed" = "Snoozed";
+"status.delayed" = "Delayed";
+
+/* Log History */
+"log_history.title" = "Medication Log";
+"log_history.view_records" = "View Records";
+"log_history.no_records" = "No records available";
+"log_history.total_records" = "Total Records";
+"log_history.adherence_rate" = "Adherence Rate";
+"log_history.consecutive_days" = "Consecutive Days";
+"log_history.filter_results" = "Filter Results";
+"log_history.taken" = "Taken";
+"log_history.skipped" = "Skipped";
+"log_history.snoozed" = "Snoozed";
+"log_history.delayed" = "Delayed";
+"log_history.pending" = "Pending";
+"log_history.unknown" = "Unknown";
+"log_history.csv_export" = "Export CSV";
+
+/* Premium */
+"premium.title" = "Premium";
+"premium.close" = "Close";
+"premium.restore_alert_title" = "Purchase Status";
+"premium.confirm" = "OK";
+"premium.upgrade_title" = "Upgrade to Premium";
+"premium.upgrade_subtitle" = "Unlock all features and enjoy an ad‑free experience.";
+"premium.current_status" = "You already have Premium";
+"premium.features_title" = "What you get";
+"premium.lifetime_access" = "Lifetime access";
+"premium.purchase_button" = "Get Premium";
+"premium.family_sharing" = "Supports Family Sharing";
+"premium.restore_purchases" = "Restore Purchases";
+"premium.terms_of_service" = "Terms of Service";
+"premium.privacy_policy" = "Privacy Policy";
+"premium.payment_info" = "Payment will be charged to your Apple ID account.";
+"premium.processing" = "Processing...";
+"premium.loading" = "Loading...";
+
+/* Tip Jar */
+"tip_jar.title" = "Support the Developer";
+"tip_jar.close" = "Close";
+"tip_jar.support_developer" = "Support the Developer";
+"tip_jar.support_description" = "If you enjoy using the app, you can leave a tip to support development.";
+"tip_jar.total_tips" = "Total tips: %d";
+"tip_jar.loading_products" = "Loading products...";
+"tip_jar.info_title" = "Information";
+"tip_jar.info_no_features" = "Tips do not unlock features.";
+"tip_jar.info_support_only" = "Your tip is a token of support only.";
+"tip_jar.info_secure_payment" = "Secure payment via the App Store.";
+"tip_jar.thank_you_title" = "Thank You!";
+"tip_jar.thank_you_message" = "Your support means a lot and helps ongoing development.";
+"tip_jar.error_title" = "Purchase Error";
+"tip_jar.error_unknown" = "An unknown error occurred.";
+"tip_jar.processing" = "Processing...";
+
+/* Premium Required */
+"premium_required.title" = "Premium Feature";
+"premium_required.message" = "The feature '%@' requires Premium.";
+"premium_required.view_premium" = "View Premium";
+
+/* Premium Badge */
+"premium_badge.pro" = "PRO";
+
+/* Errors */
+"errors.load_medications_failed" = "Failed to load medications.";
+"errors.add_medication_premium_limit" = "In the free version, you can add up to %d medications. Upgrade to Premium.";
+"errors.add_medication_failed" = "Failed to add medication.";
+"errors.delete_medication_failed" = "Failed to delete medication.";
+
+/* Common (additional) */
+"common.add" = "Add";
+"common.name" = "Name";
+
+/* Patients */
+"patients.title" = "Patient Management";
+"patients.delete_title" = "Delete Patient";
+"patients.delete_message" = "All medication records for %@ will be deleted.";
+"patients.empty_title" = "No patients registered";
+"patients.empty_description" = "To manage medications for family or dependents, please add a patient.";
+"patients.add_button" = "Add Patient";
+"patients.header_count" = "Total %d patients";
+"patients.header_subtitle" = "are being managed";
+"patients.list_title" = "Patient List";
+"patients.medications_count_format" = "%d medications";
+"patients.select_title" = "Select Patient";
+"patients.managed_patients" = "Managed Patients";
+"patients.self" = "Me";
+"patients.manage_mine" = "My medication management";
+"patients.notes_title" = "Notes";
+"patients.notes_optional" = "Notes (Optional)";
+
+/* Patient Detail */
+"patients.detail.today_medication" = "Today's Medication";
+"patients.detail.adherence" = "Adherence";
+"patients.detail.medications_title" = "Medications";
+"patients.detail.no_medications" = "No medications registered";
+"patients.detail.add_medication" = "Add Medication";
+"patients.detail.appointments_title" = "Appointments";
+"patients.detail.no_appointments" = "No upcoming appointments";
+
+/* Add/Edit Patient */
+"patients.add.title" = "Add Patient";
+"patients.edit.title" = "Edit Patient";
+"patients.common.relationship" = "Relationship";
+"patients.common.birthdate_input" = "Enter Birthdate";
+"patients.common.birthdate" = "Birthdate";
+"patients.common.profile_color" = "Profile Color";
+
+/* Medication Form (Patient flows) */
+"medications.add_title" = "Add Medication";
+"medications.name_placeholder" = "Medication Name";
+"medications.dosage_placeholder" = "Dosage (e.g., 1 pill)";
+"medications.strength_placeholder" = "Strength (e.g., 500mg)";
+"medications.form" = "Form";
+
+/* Appointments */
+"appointments.title" = "Appointments";
+"appointments.add_title" = "Add Appointment";
+"appointments.for_name" = "%@'s Appointment";
+"appointments.doctor_name" = "Doctor Name";
+"appointments.specialty" = "Specialty";
+"appointments.datetime" = "Appointment Date & Time";
+"appointments.location" = "Location";
+"appointments.notes" = "Notes (Optional)";
+"appointments.past_section" = "Past Appointments";
+"appointments.upcoming_section" = "Upcoming Appointments";
+"appointments.delete" = "Delete";
+"appointments.complete" = "Complete";
+"appointments.empty_title" = "No Appointments";
+"appointments.empty_description" = "Add an appointment to get started";
+
+/* Tab (Additional) */
+"tab.history" = "History";
+"tab.health" = "Health";
+
+/* Settings (Additional) */
+"settings.notifications" = "Notifications";
+"settings.healthkit" = "Health";
+"settings.appearance" = "Appearance";
+"settings.data" = "Data";
+"settings.support" = "Support";
+"settings.about_section" = "About";
+"settings.cloud_backup" = "Cloud & Backup";
+"settings.version" = "Version";
+"settings.privacy_policy" = "Privacy Policy";
+"settings.terms_of_service" = "Terms of Service";
+"settings.notification_permission" = "Notification Permission";
+"settings.enable_notifications" = "Enable Notifications";
+"settings.sound" = "Sound";
+"settings.haptic" = "Haptic";
+"settings.default_snooze_interval" = "Default Snooze Interval";
+"settings.reminder_before" = "Reminder Before";
+"settings.reschedule_notifications" = "Reschedule Notifications";
+"settings.open_settings" = "Settings";
+"settings.healthkit_sync" = "Auto Sync";
+"settings.last_sync" = "Last Sync";
+"settings.sync_now" = "Sync Now";
+"settings.request_healthkit_permission" = "Request Health Permission";
+"settings.healthkit_unavailable" = "Health app is not available on this device.";
+"settings.icloud_sync" = "iCloud Sync";
+"settings.export_data" = "Export Data";
+"settings.import_data" = "Import Data";
+"settings.delete_all_data" = "Delete All Data";
+"settings.patient_management" = "Patient Management";
+"settings.caregiver_alerts" = "Caregiver Alerts";
+"settings.appearance_mode" = "Appearance Mode";
+"settings.support_developer" = "Support the Developer";
+"settings.restore_purchases" = "Restore Purchases";
+"settings.sample_data" = "Create Sample Data";
+"settings.premium_locked" = "Unlock with Premium";
+"settings.icloud_sync_status" = "Sync Status";
+"settings.sync_active" = "Active";
+"settings.sync_restart_required" = "Restart Required";
+"settings.sync_disabled" = "Disabled";
+"settings.icloud_unavailable" = "iCloud Unavailable";
+"settings.family_medication_management" = "Family medication management";
+"settings.caregiver_alert_description" = "Alert on missed doses";
+
+/* Alerts */
+"alert.delete_all_title" = "Delete Data";
+"alert.delete_all_message" = "All medications, logs, and health metrics will be deleted. This action cannot be undone.";
+"alert.reschedule_notifications_title" = "Reschedule Notifications";
+"alert.reschedule_notifications_message" = "Do you want to reschedule all medication notifications?";
+"alert.restart_required_title" = "App Restart Required";
+"alert.restart_required_message" = "To change iCloud sync settings, you must completely quit and restart the app.\n\nDo you want to quit the app?";
+"alert.icloud_warning_title" = "iCloud Sync Warning";
+"alert.icloud_warning_message" = "iCloud sync is enabled.\n\nImporting data will affect all devices connected to this account.\n\nDo you want to continue?";
+"alert.import_data_title" = "Import Data";
+"alert.import_data_message" = "The following data will be imported:\n\nExport date: %@\nApp version: %@\nDevice: %@\n\nTotal %d items\n(Patients %d, Medications %d, Logs %d, etc.)\n\nExisting data will be deleted.";
+"alert.import_complete_title" = "Import Complete";
+"alert.import_complete_message" = "Data imported successfully.\n\n%@\n\nTotal %d items";
+"alert.quit_later" = "Later";
+"alert.quit_now" = "Quit Now";
+"alert.continue" = "Continue";
+
+/* Medication List */
+"medication_list.title" = "Medication Management";
+"medication_list.search_placeholder" = "Search medications";
+"medication_list.filter_sort" = "Filter & Sort";
+"medication_list.sort" = "Sort";
+"medication_list.filter" = "Filter";
+"medication_list.active_medications" = "Active";
+"medication_list.low_stock" = "Low Stock";
+"medication_list.total" = "Total";
+"medication_list.free_version" = "Using Free Version";
+"medication_list.medications_registered" = "%d/%d medications registered";
+"medication_list.upgrade" = "Upgrade";
+"medication_list.no_medications" = "No medications added yet";
+"medication_list.add_to_start" = "Add medication to start managing";
+"medication_list.no_search_results" = "No search results";
+"medication_list.no_results_for" = "No results found for '%@'";
+"medication_list.count" = "%d medications";
+"medication_list.delete_confirmation" = "Delete Medication";
+"medication_list.delete_message" = "Do you want to delete %@?";
+"medication_list.discontinued" = "Discontinued";
+"medication_list.items" = "items";
+
+/* Patient (Additional) */
+"patient.medication" = "%@'s Medication";
+"patient.appointment" = "%@'s Appointment";
+"patient.initials" = "Initials";
+"patient.age" = "Age";
+"patient.adherence_today" = "Today's Adherence";
+"patient.adherence_rate_label" = "Adherence Rate";
+"patient.basic_info" = "Basic Information";
+"patient.name_label" = "Name";
+"patient.relationship_label" = "Relationship";
+"patient.notes_section" = "Notes";
+"patient.profile_color_section" = "Profile Color";
+"patient.notes_optional_label" = "Notes (Optional)";
+"patient.appointment_list_title" = "Appointments";
+"patient.medical_specialty" = "Specialty";
+"patient.appointment_datetime" = "Appointment Date & Time";
+"patient.appointment_location" = "Location";
+
+/* Home (Additional) */
+"home.completed" = "Completed";
+"home.pending" = "Pending";
+"home.streak" = "Streak";
+"home.greeting_morning" = "Good morning ☀️";
+"home.greeting_afternoon" = "Good afternoon 🌤";
+"home.greeting_evening" = "Good evening 🌙";
+"home.greeting_default" = "Hello ✨";
+"home.low_stock" = "Low Stock";
+"home.today_appointments" = "Today's Appointments";
+"home.items_remaining" = "%d items remaining";
+"home.patient_medication" = "%@'s Medication";
+
+/* Health */
+"health.title" = "Health Metrics";
+"health.error" = "Error";
+"health.confirm" = "OK";
+"health.premium_feature" = "Premium Only • Health App Integration";
+"health.premium_description" = "Upgrade to sync health data";
+"health.permission_required" = "Health App Permission Required";
+"health.permission_description" = "Permission is needed to sync health data";
+"health.sync_from_health" = "Sync from Health App";
+"health.last_sync" = "Last: %@";
+"health.sync_description" = "Sync to fetch health data";
+"health.metrics_title" = "Health Metrics";
+"health.recent_records" = "Recent Records";
+"health.no_records" = "No records available";
+"health.add_record" = "Add Record";
+"health.select_metric" = "Select Metric";
+"health.systolic_bp" = "Systolic Blood Pressure";
+"health.diastolic_bp" = "Diastolic Blood Pressure";
+"health.input_value" = "Enter Value";
+"health.notes_optional" = "Notes (Optional)";
+"health.save" = "Save";
+"health.input_title" = "Input Health Metric";
+"health.cancel" = "Cancel";
+"health.no_record" = "No Record";
+"health.date" = "Date";
+"health.value" = "Value";
+
+/* Settings (Additional) */
+"settings.delete_all_data_alert_title" = "Delete Data";
+"settings.reschedule_notifications_alert_title" = "Reschedule Notifications";
+"settings.import_data_alert_title" = "Import Data";
+"settings.import_complete_alert_title" = "Import Complete";
+"settings.restart_required_alert_title" = "App Restart Required";
+"settings.delete_all_message" = "All medications, logs, and health metrics will be deleted. This action cannot be undone.";
+"settings.reschedule_message" = "Do you want to reschedule all medication notifications?";
+"settings.import_button" = "Import";
+"settings.later_button" = "Later";
+"settings.quit_now_button" = "Quit Now";
+"settings.continue_button" = "Continue";
+"settings.premium_active" = "Premium";
+"settings.premium_in_use" = "In Use";
+"settings.premium_upgrade_title" = "Upgrade to Premium";
+"settings.premium_all_features" = "Unlock all features • %@";
+"settings.developer_support" = "Support the Developer";
+"settings.restore_purchases" = "Restore Purchases";
+"settings.support_section" = "Support";
+"settings.already_purchased_hint" = "If you've already purchased, tap Restore.";
+"settings.notification_permission" = "Notification Permission";
+"settings.open_settings" = "Settings";
+"settings.enable_notifications" = "Enable Notifications";
+"settings.notification_sound" = "Notification Sound";
+"settings.haptic" = "Haptic";
+"settings.default_snooze" = "Default Snooze Time";
+"settings.on_the_hour" = "On the hour";
+"settings.reminder_before" = "Reminder Before";
+"settings.reschedule_button" = "Reschedule Notifications";
+"settings.healthkit_integration" = "Health App Integration";
+"settings.premium_locked" = "Unlock with Premium";
+"settings.healthkit_unavailable" = "Health app is not available on this device.";
+"settings.request_permission" = "Request Health Permission";
+"settings.auto_sync" = "Auto Sync";
+"settings.last_sync_label" = "Last Sync";
+"settings.sync_now" = "Sync Now";
+"settings.appearance_mode" = "Appearance Mode";
+"settings.patient_management" = "Patient Management";
+"settings.family_medication" = "Family medication management";
+"settings.caregiver_alerts" = "Caregiver Alerts";
+"settings.missed_dose_alert" = "Alert on missed doses";
+"settings.appointments" = "Appointments";
+"settings.create_sample_data" = "Create Sample Data";
+"settings.delete_all" = "Delete All Data";
+"settings.data_backup" = "Data Backup";
+"settings.premium_sync_description" = "Premium enables multi-device sync and data backup/restore.";
+"settings.sync_status_label" = "Sync Status";
+"settings.sync_active" = "Active";
+"settings.sync_restart_required" = "Restart Required";
+"settings.sync_disabled" = "Disabled";
+"settings.export_data" = "Export Data";
+"settings.import_data" = "Import Data";
+"settings.export_description" = "Exported files can be restored via Import on other devices or after reinstall.";
+"settings.version_label" = "Version";
+"settings.privacy_policy" = "Privacy Policy";
+"settings.terms_of_service" = "Terms of Service";
+"settings.info_section" = "About";
+"settings.premium_status" = "Premium Status";
+"settings.premium_activated" = "Activated";
+"settings.premium_deactivated" = "Deactivated";
+"settings.reset_tip_count" = "Reset Tip Count";
+"settings.total_tips" = "Total Tips";
+"settings.more_developer_options" = "More Developer Options";
+"settings.developer_settings" = "Developer Settings";
+
+/* Medication List (Additional) */
+"medication_list.search_prompt" = "Search medications";
+"medication_list.title_short" = "Medication Management";
+"medication_list.sort_section" = "Sort";
+"medication_list.sort_label" = "Sort";
+"medication_list.filter_section" = "Filter";
+"medication_list.filter_label" = "Filter";
+"medication_list.delete_alert_title" = "Delete Medication";
+"medication_list.delete_button" = "Delete";
+"medication_list.active_label" = "Active";
+"medication_list.no_results" = "No search results";
+"medication_list.medication_list_title" = "Medication List";
+
+/* Alert */
+"alert.import_data_message" = "Import data exported on %@ from %@ (version %@)?\n\nTotal: %d items\n- Patients: %d\n- Medications: %d\n- Logs: %d";
+"alert.import_complete_message" = "%@\n\nTotal imported: %d items";
+"alert.restart_required_message" = "Changes will take effect after restarting the app.";
+"alert.icloud_warning_title" = "iCloud Sync Active";
+"alert.icloud_warning_message" = "Importing data while iCloud sync is enabled may affect other devices. Continue?";
+
+/* Settings Errors */
+"settings.error_export_failed" = "Export failed: %@";
+"settings.error_file_access_denied" = "Cannot access file.";
+"settings.error_file_read_failed" = "Cannot read file: %@";
+"settings.error_file_selection_failed" = "File selection failed: %@";
+"settings.error_import_failed" = "Import failed: %@";
+"settings.icloud_sync_import_warning" = "Importing while iCloud sync is enabled may affect other devices.";
+"settings.debug_footer" = "Only shown in DEBUG builds. Automatically hidden in release builds.";

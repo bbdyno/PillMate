@@ -62,7 +62,7 @@ struct HomeView: View {
                     HStack(spacing: AppSpacing.xs) {
                         Image(systemName: "pills.fill")
                             .foregroundStyle(AppColors.primaryGradient)
-                        Text("DoseMate")
+                        Text(DoseMateStrings.App.name)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                     }
@@ -78,6 +78,7 @@ struct HomeView: View {
                     }
                 }
             }
+            .toolbarBackground(.clear, for: .navigationBar)
             .refreshable {
                 await viewModel.refresh()
             }
@@ -113,7 +114,7 @@ struct HomeView: View {
                         Text(greetingText)
                             .font(AppTypography.subheadline)
                             .foregroundColor(.white.opacity(0.9))
-                        Text("\(viewModel.selectedPatientName)의 복약")
+                        Text(DoseMateStrings.Home.patientMedication(viewModel.selectedPatientName))
                             .font(AppTypography.title2)
                             .foregroundColor(.white)
                     }
@@ -145,19 +146,19 @@ struct HomeView: View {
                 // 준수율 링
                 HStack(spacing: AppSpacing.xl) {
                     adherenceRing(
-                        title: "오늘",
+                        title: DoseMateStrings.Period.today,
                         rate: viewModel.todayAdherenceRate,
                         size: 85
                     )
-                    
+
                     adherenceRing(
-                        title: "이번주",
+                        title: DoseMateStrings.Period.thisWeek,
                         rate: viewModel.weekAdherenceRate,
                         size: 70
                     )
-                    
+
                     adherenceRing(
-                        title: "이번달",
+                        title: DoseMateStrings.Period.thisMonth,
                         rate: viewModel.monthAdherenceRate,
                         size: 70
                     )
@@ -172,7 +173,7 @@ struct HomeView: View {
                 statisticItem(
                     icon: "checkmark.circle.fill",
                     value: "\(viewModel.completedLogsCount)",
-                    label: "완료",
+                    label: DoseMateStrings.Home.completed,
                     color: AppColors.success
                 )
                 
@@ -182,7 +183,7 @@ struct HomeView: View {
                 statisticItem(
                     icon: "clock.fill",
                     value: "\(viewModel.pendingLogsCount)",
-                    label: "대기",
+                    label: DoseMateStrings.Home.pending,
                     color: AppColors.warning
                 )
                 
@@ -192,7 +193,7 @@ struct HomeView: View {
                 statisticItem(
                     icon: "flame.fill",
                     value: "\(viewModel.consecutiveDays)일",
-                    label: "연속",
+                    label: DoseMateStrings.Home.streak,
                     color: AppColors.peach
                 )
             }
@@ -206,10 +207,10 @@ struct HomeView: View {
     private var greetingText: String {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
-        case 5..<12: return "좋은 아침이에요 ☀️"
-        case 12..<17: return "좋은 오후에요 🌤"
-        case 17..<21: return "좋은 저녁이에요 🌙"
-        default: return "안녕하세요 ✨"
+        case 5..<12: return DoseMateStrings.Home.greetingMorning
+        case 12..<17: return DoseMateStrings.Home.greetingAfternoon
+        case 17..<21: return DoseMateStrings.Home.greetingEvening
+        default: return DoseMateStrings.Home.greetingDefault
         }
     }
     
@@ -266,7 +267,7 @@ struct HomeView: View {
             HStack(spacing: AppSpacing.sm) {
                 // 본인 버튼
                 PatientChipView(
-                    name: "본인",
+                    name: DoseMateStrings.Common.ok,
                     color: AppColors.primary,
                     isSelected: viewModel.selectedPatient == nil,
                     onTap: {
@@ -298,7 +299,7 @@ struct HomeView: View {
                 IconBadge(icon: "bell.fill", color: AppColors.primary)
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("다음 복약")
+                    Text(DoseMateStrings.Reminders.title)
                         .font(AppTypography.headline)
                         .foregroundColor(AppColors.textPrimary)
                     if let timeText = viewModel.timeUntilNextDoseText {
@@ -364,8 +365,8 @@ struct HomeView: View {
     private var todayScheduleSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
             SectionHeader(
-                title: "오늘의 복약",
-                subtitle: "\(viewModel.completedLogsCount)/\(viewModel.totalLogsCount) 완료"
+                title: DoseMateStrings.Reminders.title,
+                subtitle: "\(viewModel.completedLogsCount)/\(viewModel.totalLogsCount) \(DoseMateStrings.Status.taken)"
             )
             
             if viewModel.todayLogs.isEmpty {
@@ -417,11 +418,11 @@ struct HomeView: View {
                 .foregroundStyle(AppColors.successGradient)
             
             VStack(spacing: 4) {
-                Text("오늘 예정된 복약이 없습니다")
+                Text(DoseMateStrings.LogHistory.noRecords)
                     .font(AppTypography.headline)
                     .foregroundColor(AppColors.textPrimary)
-                
-                Text("약물을 추가하여 복약 관리를 시작하세요")
+
+                Text(DoseMateStrings.Medications.add)
                     .font(AppTypography.subheadline)
                     .foregroundColor(AppColors.textSecondary)
             }
@@ -435,7 +436,7 @@ struct HomeView: View {
     
     private var lowStockSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: "재고 부족", subtitle: "\(viewModel.lowStockMedications.count)개 약물")
+            SectionHeader(title: DoseMateStrings.Home.lowStock, subtitle: "\(viewModel.lowStockMedications.count)개 \(DoseMateStrings.Tab.medications)")
             
             VStack(spacing: AppSpacing.xs) {
                 ForEach(viewModel.lowStockMedications) { medication in
@@ -464,7 +465,7 @@ struct HomeView: View {
     
     private var appointmentSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: "오늘의 진료", subtitle: "\(viewModel.todayAppointments.count)개 예약")
+            SectionHeader(title: DoseMateStrings.Home.todayAppointments, subtitle: "\(viewModel.todayAppointments.count)개 \(DoseMateStrings.Reminders.title)")
             
             VStack(spacing: AppSpacing.xs) {
                 ForEach(viewModel.todayAppointments) { appointment in
@@ -503,12 +504,12 @@ struct HomeView: View {
                 // 아이콘
                 IconBadge(icon: "forward.fill", color: AppColors.warning, size: 60, iconSize: 28)
                 
-                Text("복약을 건너뛰시나요?")
+                Text(DoseMateStrings.Status.skipped)
                     .font(AppTypography.title3)
                     .foregroundColor(AppColors.textPrimary)
-                
+
                 // 이유 입력
-                TextField("이유를 입력하세요 (선택)", text: $skipReason, axis: .vertical)
+                TextField(DoseMateStrings.Common.edit, text: $skipReason, axis: .vertical)
                     .textFieldStyle(.plain)
                     .padding(AppSpacing.md)
                     .background(AppColors.background)
@@ -519,7 +520,7 @@ struct HomeView: View {
                 
                 // 버튼들
                 VStack(spacing: AppSpacing.sm) {
-                    Button("건너뛰기") {
+                    Button(DoseMateStrings.Status.skipped) {
                         if let log = selectedLogForSkip {
                             Task {
                                 await viewModel.markAsSkipped(
@@ -533,8 +534,8 @@ struct HomeView: View {
                         }
                     }
                     .buttonStyle(PrimaryButtonStyle())
-                    
-                    Button("취소") {
+
+                    Button(DoseMateStrings.Common.cancel) {
                         skipReason = ""
                         selectedLogForSkip = nil
                         showSkipReasonSheet = false
@@ -759,8 +760,8 @@ struct PatientSelectorSheet: View {
                 VStack(spacing: AppSpacing.md) {
                     // 본인 옵션
                     PatientSelectionRow(
-                        name: "본인",
-                        subtitle: "나의 복약 관리",
+                        name: DoseMateStrings.Common.ok,
+                        subtitle: DoseMateStrings.Reminders.title,
                         color: AppColors.primary,
                         isSelected: selectedPatient == nil,
                         onTap: { onSelect(nil) }
@@ -770,7 +771,7 @@ struct PatientSelectorSheet: View {
                         Divider()
                             .padding(.vertical, AppSpacing.xs)
                         
-                        Text("관리 중인 환자")
+                        Text(DoseMateStrings.Settings.title)
                             .font(AppTypography.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(AppColors.textSecondary)
@@ -791,11 +792,11 @@ struct PatientSelectorSheet: View {
                 .padding(AppSpacing.lg)
             }
             .background(AppColors.background)
-            .navigationTitle("환자 선택")
+            .navigationTitle(DoseMateStrings.Settings.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("완료") {
+                    Button(DoseMateStrings.Common.done) {
                         dismiss()
                     }
                     .foregroundColor(AppColors.primary)

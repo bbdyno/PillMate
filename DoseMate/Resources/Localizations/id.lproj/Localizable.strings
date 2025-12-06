@@ -39,3 +39,397 @@
 "settings.language" = "Bahasa";
 "settings.notifications" = "Notifikasi";
 "settings.about" = "Tentang";
+
+/* Calendar */
+"calendar.sunday" = "Min";
+"calendar.monday" = "Sen";
+"calendar.tuesday" = "Sel";
+"calendar.wednesday" = "Rab";
+"calendar.thursday" = "Kam";
+"calendar.friday" = "Jum";
+"calendar.saturday" = "Sab";
+
+/* Period */
+"period.today" = "Hari ini";
+"period.yesterday" = "Kemarin";
+"period.this_week" = "Minggu ini";
+"period.last_week" = "Minggu lalu";
+"period.this_month" = "Bulan ini";
+"period.last_month" = "Bulan lalu";
+"period.last_3_months" = "3 bulan terakhir";
+"period.last_6_months" = "6 bulan terakhir";
+"period.this_year" = "Tahun ini";
+"period.all_time" = "Sepanjang waktu";
+
+/* Status */
+"status.pending" = "Tertunda";
+"status.taken" = "Diminum";
+"status.skipped" = "Dilewati";
+"status.snoozed" = "Ditunda";
+"status.delayed" = "Terlambat";
+
+/* Log History */
+"log_history.title" = "Riwayat Obat";
+"log_history.view_records" = "Lihat Catatan";
+"log_history.no_records" = "Tidak ada catatan";
+"log_history.total_records" = "Total Catatan";
+"log_history.adherence_rate" = "Tingkat Kepatuhan";
+"log_history.consecutive_days" = "Hari berturut-turut";
+"log_history.filter_results" = "Saring Hasil";
+"log_history.taken" = "Diminum";
+"log_history.skipped" = "Dilewati";
+"log_history.snoozed" = "Ditunda";
+"log_history.delayed" = "Terlambat";
+"log_history.pending" = "Tertunda";
+"log_history.unknown" = "Tidak diketahui";
+"log_history.csv_export" = "Ekspor CSV";
+
+/* Premium */
+"premium.title" = "Premium";
+"premium.close" = "Tutup";
+"premium.restore_alert_title" = "Status Pembelian";
+"premium.confirm" = "Konfirmasi";
+"premium.upgrade_title" = "Tingkatkan ke Premium";
+"premium.upgrade_subtitle" = "Buka semua fitur dan nikmati tanpa iklan.";
+"premium.current_status" = "Anda sudah Premium";
+"premium.features_title" = "Fitur yang Disediakan";
+"premium.lifetime_access" = "Akses seumur hidup";
+"premium.purchase_button" = "Dapatkan Premium";
+"premium.family_sharing" = "Dukungan Keluarga";
+"premium.restore_purchases" = "Pulihkan Pembelian";
+"premium.terms_of_service" = "Ketentuan Layanan";
+"premium.privacy_policy" = "Kebijakan Privasi";
+"premium.payment_info" = "Pembayaran akan dibebankan ke akun Apple ID Anda.";
+"premium.processing" = "Memproses...";
+"premium.loading" = "Memuat...";
+
+/* Tip Jar */
+"tip_jar.title" = "Dukung Pengembang";
+"tip_jar.close" = "Tutup";
+"tip_jar.support_developer" = "Dukung Pengembang";
+"tip_jar.support_description" = "Jika Anda menyukai aplikasi ini, tinggalkan tip untuk mendukung pengembangan.";
+"tip_jar.total_tips" = "Total tip: %d";
+"tip_jar.loading_products" = "Memuat produk...";
+"tip_jar.info_title" = "Info";
+"tip_jar.info_no_features" = "Tip tidak membuka fitur apa pun.";
+"tip_jar.info_support_only" = "Tip Anda murni dukungan.";
+"tip_jar.info_secure_payment" = "Pembayaran aman melalui App Store.";
+"tip_jar.thank_you_title" = "Terima kasih!";
+"tip_jar.thank_you_message" = "Dukungan Anda sangat berarti dan membantu pengembangan berkelanjutan.";
+"tip_jar.error_title" = "Kesalahan Pembelian";
+"tip_jar.error_unknown" = "Terjadi kesalahan yang tidak diketahui.";
+"tip_jar.processing" = "Memproses...";
+
+/* Premium Required */
+"premium_required.title" = "Fitur Premium";
+"premium_required.message" = "Fitur '%@' memerlukan Premium.";
+"premium_required.view_premium" = "Lihat Premium";
+
+/* Premium Badge */
+"premium_badge.pro" = "PRO";
+
+/* Errors */
+"errors.load_medications_failed" = "Gagal memuat daftar obat.";
+"errors.add_medication_premium_limit" = "Versi gratis hanya dapat menambahkan hingga %d obat. Tingkatkan ke Premium.";
+"errors.add_medication_failed" = "Gagal menambahkan obat.";
+"errors.delete_medication_failed" = "Gagal menghapus obat.";
+
+/* Common (additional) */
+"common.add" = "Tambah";
+"common.name" = "Nama";
+
+/* Patients */
+"patients.title" = "Manajemen Pasien";
+"patients.delete_title" = "Hapus Pasien";
+"patients.delete_message" = "Semua catatan obat untuk %@ akan dihapus.";
+"patients.empty_title" = "Tidak ada pasien terdaftar";
+"patients.empty_description" = "Tambahkan pasien untuk mengelola obat keluarga atau tanggungan.";
+"patients.add_button" = "Tambah Pasien";
+"patients.header_count" = "Total %d pasien";
+"patients.header_subtitle" = "sedang dikelola";
+"patients.list_title" = "Daftar Pasien";
+"patients.medications_count_format" = "%d obat";
+"patients.select_title" = "Pilih Pasien";
+"patients.managed_patients" = "Pasien yang Dikelola";
+"patients.self" = "Saya";
+"patients.manage_mine" = "Kelola obat saya";
+"patients.notes_title" = "Catatan";
+"patients.notes_optional" = "Catatan (opsional)";
+
+/* Patient Detail */
+"patients.detail.today_medication" = "Obat hari ini";
+"patients.detail.adherence" = "Kepatuhan obat";
+"patients.detail.medications_title" = "Obat";
+"patients.detail.no_medications" = "Tidak ada obat terdaftar";
+"patients.detail.add_medication" = "Tambah obat";
+"patients.detail.appointments_title" = "Janji";
+"patients.detail.no_appointments" = "Tidak ada janji terjadwal";
+
+/* Add/Edit Patient */
+"patients.add.title" = "Tambah Pasien";
+"patients.edit.title" = "Edit Pasien";
+"patients.common.relationship" = "Hubungan";
+"patients.common.birthdate_input" = "Masukkan tanggal lahir";
+"patients.common.birthdate" = "Tanggal lahir";
+"patients.common.profile_color" = "Warna profil";
+
+/* Medication Form (Patient flows) */
+"medications.add_title" = "Tambah Obat";
+"medications.name_placeholder" = "Nama obat";
+"medications.dosage_placeholder" = "Dosis (mis: 1 tablet)";
+"medications.strength_placeholder" = "Kekuatan (mis: 500mg)";
+"medications.form" = "Bentuk sediaan";
+
+/* Appointments */
+"appointments.title" = "Janji";
+"appointments.add_title" = "Tambah Janji";
+"appointments.for_name" = "Janji %@";
+"appointments.doctor_name" = "Nama dokter";
+"appointments.specialty" = "Spesialisasi";
+"appointments.datetime" = "Tanggal & waktu";
+"appointments.location" = "Lokasi";
+"appointments.notes" = "Catatan (opsional)";
+"appointments.past_section" = "Kunjungan sebelumnya";
+"appointments.upcoming_section" = "Kunjungan mendatang";
+"appointments.delete" = "Hapus";
+"appointments.complete" = "Selesai";
+"appointments.empty_title" = "Tidak ada janji";
+"appointments.empty_description" = "Tambahkan janji untuk memulai";
+
+/* Tab (Additional) */
+"tab.history" = "Riwayat";
+"tab.health" = "Kesehatan";
+
+/* Settings (Additional) */
+"settings.notifications" = "Notifikasi";
+"settings.healthkit" = "Kesehatan";
+"settings.appearance" = "Tampilan";
+"settings.data" = "Data";
+"settings.support" = "Dukungan";
+"settings.about_section" = "Tentang";
+"settings.cloud_backup" = "Cloud & Cadangan";
+"settings.version" = "Versi";
+"settings.privacy_policy" = "Kebijakan Privasi";
+"settings.terms_of_service" = "Ketentuan Layanan";
+"settings.notification_permission" = "Izin notifikasi";
+"settings.enable_notifications" = "Terima notifikasi";
+"settings.sound" = "Suara notifikasi";
+"settings.haptic" = "Getaran";
+"settings.default_snooze_interval" = "Durasi tunda default";
+"settings.reminder_before" = "Pengingat sebelumnya";
+"settings.reschedule_notifications" = "Atur ulang notifikasi";
+"settings.open_settings" = "Pengaturan";
+"settings.healthkit_sync" = "Sinkron otomatis";
+"settings.last_sync" = "Sinkron terakhir";
+"settings.sync_now" = "Sinkron sekarang";
+"settings.request_healthkit_permission" = "Minta izin Kesehatan";
+"settings.healthkit_unavailable" = "App Kesehatan tidak tersedia di perangkat ini.";
+"settings.icloud_sync" = "Sinkron iCloud";
+"settings.export_data" = "Ekspor data";
+"settings.import_data" = "Impor data";
+"settings.delete_all_data" = "Hapus semua data";
+"settings.patient_management" = "Manajemen pasien";
+"settings.caregiver_alerts" = "Peringatan pengasuh";
+"settings.appearance_mode" = "Mode tampilan";
+"settings.support_developer" = "Dukung pengembang";
+"settings.restore_purchases" = "Pulihkan pembelian";
+"settings.sample_data" = "Buat data contoh";
+"settings.premium_locked" = "Buka dengan Premium";
+"settings.icloud_sync_status" = "Status sinkron";
+"settings.sync_active" = "Aktif";
+"settings.sync_restart_required" = "Perlu mulai ulang";
+"settings.sync_disabled" = "Nonaktif";
+"settings.icloud_unavailable" = "iCloud tidak tersedia";
+"settings.family_medication_management" = "Manajemen obat keluarga";
+"settings.caregiver_alert_description" = "Peringatan jika dosis terlewat";
+
+/* Alerts */
+"alert.delete_all_title" = "Hapus Data";
+"alert.delete_all_message" = "Semua obat, catatan obat, dan metrik kesehatan akan dihapus. Tindakan ini tidak dapat dibatalkan.";
+"alert.reschedule_notifications_title" = "Atur Ulang Notifikasi";
+"alert.reschedule_notifications_message" = "Atur ulang semua pengingat obat?";
+"alert.restart_required_title" = "Perlu Mulai Ulang Aplikasi";
+"alert.restart_required_message" = "Untuk mengubah pengaturan sinkron iCloud, tutup aplikasi sepenuhnya lalu buka lagi.\n\nTutup aplikasi sekarang?";
+"alert.icloud_warning_title" = "Peringatan Sinkron iCloud";
+"alert.icloud_warning_message" = "Sinkron iCloud sedang aktif.\n\nMengimpor data akan menggantikan data di semua perangkat yang terhubung ke akun ini.\n\nLanjutkan?";
+"alert.import_data_title" = "Impor Data";
+"alert.import_data_message" = "Data berikut akan diimpor:\n\nTanggal ekspor: %@\nVersi aplikasi: %@\nPerangkat: %@\n\nTotal %d item\n(Pasien %d, Obat %d, Catatan %d, dll.)\n\nSemua data yang ada akan dihapus.";
+"alert.import_complete_title" = "Impor Selesai";
+"alert.import_complete_message" = "Data berhasil diimpor.\n\n%@\n\nTotal %d item";
+"alert.quit_later" = "Nanti";
+"alert.quit_now" = "Tutup sekarang";
+"alert.continue" = "Lanjutkan";
+
+/* Medication List */
+"medication_list.title" = "Manajemen Obat";
+"medication_list.search_placeholder" = "Cari obat";
+"medication_list.filter_sort" = "Filter & Urutkan";
+"medication_list.sort" = "Urutkan";
+"medication_list.filter" = "Filter";
+"medication_list.active_medications" = "Sedang diminum";
+"medication_list.low_stock" = "Stok menipis";
+"medication_list.total" = "Total";
+"medication_list.free_version" = "Menggunakan versi gratis";
+"medication_list.medications_registered" = "%d/%d obat terdaftar";
+"medication_list.upgrade" = "Upgrade";
+"medication_list.no_medications" = "Tidak ada obat terdaftar";
+"medication_list.add_to_start" = "Tambahkan obat untuk mulai mengelola";
+"medication_list.no_search_results" = "Tidak ada hasil";
+"medication_list.no_results_for" = "Tidak ada hasil untuk '%@'";
+"medication_list.count" = "%d obat";
+"medication_list.delete_confirmation" = "Hapus Obat";
+"medication_list.delete_message" = "Hapus %@?";
+"medication_list.discontinued" = "Dihentikan";
+"medication_list.items" = "item";
+
+/* Patient (Additional) */
+"patient.medication" = "Obat %@";
+"patient.appointment" = "Janji %@";
+"patient.initials" = "Inisial";
+"patient.age" = "Usia";
+"patient.adherence_today" = "Obat hari ini";
+"patient.adherence_rate_label" = "Kepatuhan";
+"patient.basic_info" = "Info dasar";
+"patient.name_label" = "Nama";
+"patient.relationship_label" = "Hubungan";
+"patient.notes_section" = "Catatan";
+"patient.profile_color_section" = "Warna profil";
+"patient.notes_optional_label" = "Catatan (opsional)";
+"patient.appointment_list_title" = "Janji medis";
+"patient.medical_specialty" = "Spesialisasi medis";
+"patient.appointment_datetime" = "Tanggal & waktu janji";
+"patient.appointment_location" = "Lokasi";
+
+/* Home (Additional) */
+"home.completed" = "Selesai";
+"home.pending" = "Tertunda";
+"home.streak" = "Beruntun";
+"home.greeting_morning" = "Selamat pagi ☀️";
+"home.greeting_afternoon" = "Selamat siang 🌤";
+"home.greeting_evening" = "Selamat malam 🌙";
+"home.greeting_default" = "Halo ✨";
+"home.low_stock" = "Stok menipis";
+"home.today_appointments" = "Janji hari ini";
+"home.items_remaining" = "%d tersisa";
+"home.patient_medication" = "Obat %@";
+
+/* Health */
+"health.title" = "Metrik Kesehatan";
+"health.error" = "Kesalahan";
+"health.confirm" = "Konfirmasi";
+"health.premium_feature" = "Khusus Premium • Integrasi Kesehatan";
+"health.premium_description" = "Upgrade untuk sinkronkan data kesehatan";
+"health.permission_required" = "Perlu izin Kesehatan";
+"health.permission_description" = "Izin diperlukan untuk menghubungkan data kesehatan";
+"health.sync_from_health" = "Sinkron dari Kesehatan";
+"health.last_sync" = "Terakhir: %@";
+"health.sync_description" = "Sinkron untuk mengambil data kesehatan";
+"health.metrics_title" = "Metrik kesehatan";
+"health.recent_records" = "Catatan terbaru";
+"health.no_records" = "Tidak ada catatan";
+"health.add_record" = "Tambah catatan";
+"health.select_metric" = "Pilih metrik";
+"health.systolic_bp" = "Tekanan darah sistolik";
+"health.diastolic_bp" = "Tekanan darah diastolik";
+"health.input_value" = "Masukkan nilai";
+"health.notes_optional" = "Catatan (opsional)";
+"health.save" = "Simpan";
+"health.input_title" = "Masukan metrik kesehatan";
+"health.cancel" = "Batal";
+"health.no_record" = "Tidak ada catatan";
+"health.date" = "Tanggal";
+"health.value" = "Nilai";
+
+/* Settings (Additional) */
+"settings.delete_all_data_alert_title" = "Hapus Data";
+"settings.reschedule_notifications_alert_title" = "Atur Ulang Notifikasi";
+"settings.import_data_alert_title" = "Impor Data";
+"settings.import_complete_alert_title" = "Impor Selesai";
+"settings.restart_required_alert_title" = "Perlu Mulai Ulang Aplikasi";
+"settings.delete_all_message" = "Semua obat, catatan obat, dan metrik kesehatan akan dihapus. Tindakan ini tidak dapat dibatalkan.";
+"settings.reschedule_message" = "Atur ulang semua pengingat obat?";
+"settings.import_button" = "Impor";
+"settings.later_button" = "Nanti";
+"settings.quit_now_button" = "Tutup sekarang";
+"settings.continue_button" = "Lanjutkan";
+"settings.premium_active" = "Premium";
+"settings.premium_in_use" = "Digunakan";
+"settings.premium_upgrade_title" = "Tingkatkan ke Premium";
+"settings.premium_all_features" = "Buka semua fitur • %@";
+"settings.developer_support" = "Dukung pengembang";
+"settings.restore_purchases" = "Pulihkan pembelian";
+"settings.support_section" = "Dukungan";
+"settings.already_purchased_hint" = "Jika sudah membeli, tekan Pulihkan.";
+"settings.notification_permission" = "Izin notifikasi";
+"settings.open_settings" = "Pengaturan";
+"settings.enable_notifications" = "Terima notifikasi";
+"settings.notification_sound" = "Suara notifikasi";
+"settings.haptic" = "Getaran";
+"settings.default_snooze" = "Durasi tunda default";
+"settings.on_the_hour" = "Tepat jam";
+"settings.reminder_before" = "Pengingat sebelumnya";
+"settings.reschedule_button" = "Atur ulang notifikasi";
+"settings.healthkit_integration" = "Integrasi Kesehatan";
+"settings.premium_locked" = "Buka dengan Premium";
+"settings.healthkit_unavailable" = "App Kesehatan tidak tersedia di perangkat ini.";
+"settings.request_permission" = "Minta izin";
+"settings.auto_sync" = "Sinkron otomatis";
+"settings.last_sync_label" = "Sinkron terakhir";
+"settings.sync_now" = "Sinkron sekarang";
+"settings.appearance_mode" = "Mode tampilan";
+"settings.patient_management" = "Manajemen pasien";
+"settings.family_medication" = "Manajemen obat keluarga";
+"settings.caregiver_alerts" = "Peringatan pengasuh";
+"settings.missed_dose_alert" = "Peringatan jika terlewat";
+"settings.appointments" = "Janji medis";
+"settings.create_sample_data" = "Buat data contoh";
+"settings.delete_all" = "Hapus semua data";
+"settings.data_backup" = "Cadangan data";
+"settings.premium_sync_description" = "Dengan Premium, sinkronisasi antar perangkat dan cadangan/pemulihan data tersedia.";
+"settings.sync_status_label" = "Status sinkron";
+"settings.sync_active" = "Aktif";
+"settings.sync_restart_required" = "Perlu mulai ulang";
+"settings.sync_disabled" = "Nonaktif";
+"settings.export_data" = "Ekspor data";
+"settings.import_data" = "Impor data";
+"settings.export_description" = "File ekspor dapat dipulihkan di perangkat lain atau setelah instal ulang melalui Impor.";
+"settings.version_label" = "Versi";
+"settings.privacy_policy" = "Kebijakan Privasi";
+"settings.terms_of_service" = "Ketentuan Layanan";
+"settings.info_section" = "Info";
+"settings.premium_status" = "Status Premium";
+"settings.premium_activated" = "Diaktifkan";
+"settings.premium_deactivated" = "Dinonaktifkan";
+"settings.reset_tip_count" = "Reset jumlah tip";
+"settings.total_tips" = "Total jumlah tip";
+"settings.more_developer_options" = "Opsi pengembang lainnya";
+"settings.developer_settings" = "Pengaturan pengembang";
+
+/* Medication List (Additional) */
+"medication_list.search_prompt" = "Cari obat";
+"medication_list.title_short" = "Manajemen Obat";
+"medication_list.sort_section" = "Urutkan";
+"medication_list.sort_label" = "Urutkan";
+"medication_list.filter_section" = "Filter";
+"medication_list.filter_label" = "Filter";
+"medication_list.delete_alert_title" = "Hapus Obat";
+"medication_list.delete_button" = "Hapus";
+"medication_list.active_label" = "Sedang diminum";
+"medication_list.no_results" = "Tidak ada hasil";
+"medication_list.medication_list_title" = "Daftar obat";
+
+/* Alert */
+"alert.import_data_message" = "Impor data yang diekspor pada %@ dari %@ (versi %@)?\n\nTotal %d item\n- Pasien: %d\n- Obat: %d\n- Catatan: %d";
+"alert.import_complete_message" = "%@\n\nTotal item yang diimpor: %d";
+"alert.restart_required_message" = "Perubahan akan diterapkan setelah aplikasi dimulai ulang.";
+"alert.icloud_warning_title" = "Sinkron iCloud aktif";
+"alert.icloud_warning_message" = "Mengimpor saat sinkron iCloud aktif dapat memengaruhi perangkat lain. Lanjutkan?";
+
+/* Settings Errors */
+"settings.error_export_failed" = "Gagal mengekspor: %@";
+"settings.error_file_access_denied" = "Tidak dapat mengakses file.";
+"settings.error_file_read_failed" = "Tidak dapat membaca file: %@";
+"settings.error_file_selection_failed" = "Gagal memilih file: %@";
+"settings.error_import_failed" = "Gagal mengimpor: %@";
+"settings.icloud_sync_import_warning" = "Mengimpor saat sinkron iCloud aktif dapat memengaruhi perangkat lain.";
+"settings.debug_footer" = "Hanya ditampilkan pada build DEBUG. Secara otomatis disembunyikan pada build rilis.";

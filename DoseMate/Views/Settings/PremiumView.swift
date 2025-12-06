@@ -8,7 +8,6 @@
 import SwiftUI
 import StoreKit
 
-/// 프리미엄 업그레이드 화면
 struct PremiumView: View {
     // MARK: - Properties
     
@@ -22,16 +21,9 @@ struct PremiumView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    // 헤더
                     headerSection
-                    
-                    // 기능 목록
                     featuresSection
-                    
-                    // 구매 버튼
                     purchaseSection
-                    
-                    // 복원 및 약관
                     footerSection
                 }
                 .padding()
@@ -44,11 +36,11 @@ struct PremiumView: View {
                 )
                 .ignoresSafeArea()
             )
-            .navigationTitle("프리미엄")
+            .navigationTitle(DoseMateStrings.Premium.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("닫기") {
+                    Button(DoseMateStrings.Premium.close) {
                         dismiss()
                     }
                 }
@@ -58,8 +50,8 @@ struct PremiumView: View {
                     loadingOverlay
                 }
             }
-            .alert("구매 복원", isPresented: $showRestoreAlert) {
-                Button("확인", role: .cancel) {}
+            .alert(DoseMateStrings.Premium.restoreAlertTitle, isPresented: $showRestoreAlert) {
+                Button(DoseMateStrings.Premium.confirm, role: .cancel) {}
             } message: {
                 Text(storeManager.successMessage ?? storeManager.errorMessage ?? "")
             }
@@ -88,18 +80,18 @@ struct PremiumView: View {
                 .shadow(color: .orange.opacity(0.5), radius: 10)
             
             // 제목
-            Text("프리미엄으로 업그레이드")
+            Text(DoseMateStrings.Premium.upgradeTitle)
                 .font(.title)
                 .fontWeight(.bold)
             
             // 부제목
-            Text("모든 기능을 제한 없이 사용하세요")
+            Text(DoseMateStrings.Premium.upgradeSubtitle)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             
             // 이미 프리미엄인 경우
             if storeManager.isPremium {
-                Label("프리미엄 사용 중", systemImage: "checkmark.seal.fill")
+                Label(DoseMateStrings.Premium.currentStatus, systemImage: "checkmark.seal.fill")
                     .font(.headline)
                     .foregroundColor(.green)
                     .padding(.horizontal, 20)
@@ -115,7 +107,7 @@ struct PremiumView: View {
     
     private var featuresSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("프리미엄 기능")
+            Text(DoseMateStrings.Premium.featuresTitle)
                 .font(.headline)
                 .padding(.horizontal, 4)
             
@@ -149,7 +141,7 @@ struct PremiumView: View {
                             .font(.system(size: 36, weight: .bold, design: .rounded))
                             .foregroundColor(.blue)
                         
-                        Text("평생 이용 · 한 번만 결제")
+                        Text(DoseMateStrings.Premium.lifetimeAccess)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     } else {
@@ -171,7 +163,7 @@ struct PremiumView: View {
                 } label: {
                     HStack {
                         Image(systemName: "crown.fill")
-                        Text("프리미엄 구매하기")
+                        Text(DoseMateStrings.Premium.purchaseButton)
                             .fontWeight(.semibold)
                     }
                     .frame(maxWidth: .infinity)
@@ -192,7 +184,7 @@ struct PremiumView: View {
                 HStack {
                     Image(systemName: "person.3.fill")
                         .foregroundColor(.blue)
-                    Text("가족 공유 지원")
+                    Text(DoseMateStrings.Premium.familySharing)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -214,7 +206,7 @@ struct PremiumView: View {
                     showRestoreAlert = true
                 }
             } label: {
-                Text("구매 복원")
+                Text(DoseMateStrings.Premium.restorePurchases)
                     .font(.subheadline)
                     .foregroundColor(.blue)
             }
@@ -222,18 +214,18 @@ struct PremiumView: View {
             // 약관 링크
             HStack(spacing: 16) {
                 // 💡 실제 앱 출시 시 링크 업데이트 필요
-                Link("이용약관", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                Link(DoseMateStrings.Premium.termsOfService, destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
                 
                 Text("·")
                     .foregroundColor(.secondary)
                 
-                Link("개인정보처리방침", destination: URL(string: "https://www.apple.com/kr/privacy/")!)
+                Link(DoseMateStrings.Premium.privacyPolicy, destination: URL(string: "https://www.apple.com/kr/privacy/")!)
             }
             .font(.caption)
             .foregroundColor(.secondary)
             
             // 안내 문구
-            Text("결제는 Apple ID를 통해 처리되며,\n구독이 아닌 일회성 결제입니다.")
+            Text(DoseMateStrings.Premium.paymentInfo)
                 .font(.caption2)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -252,7 +244,7 @@ struct PremiumView: View {
                 ProgressView()
                     .scaleEffect(1.2)
                 
-                Text(storeManager.isPurchasing ? "구매 처리 중..." : "불러오는 중...")
+                Text(storeManager.isPurchasing ? DoseMateStrings.Premium.processing : DoseMateStrings.Premium.loading)
                     .font(.subheadline)
                     .foregroundColor(.white)
             }
@@ -322,17 +314,17 @@ struct TipJarView: View {
                                 )
                             )
                         
-                        Text("개발자 응원하기")
+                        Text(DoseMateStrings.TipJar.supportDeveloper)
                             .font(.title2)
                             .fontWeight(.bold)
                         
-                        Text("여러분의 작은 후원이\n더 나은 앱을 만드는 데 큰 힘이 됩니다")
+                        Text(DoseMateStrings.TipJar.supportDescription)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
                         
                         if storeManager.totalTipCount > 0 {
-                            Text("총 \(storeManager.totalTipCount)번 응원해주셨어요! 💕")
+                            Text(DoseMateStrings.TipJar.totalTips(storeManager.totalTipCount))
                                 .font(.caption)
                                 .foregroundColor(.pink)
                                 .padding(.horizontal, 16)
@@ -348,7 +340,7 @@ struct TipJarView: View {
                         // 제품 로딩 중
                         VStack(spacing: 12) {
                             ProgressView()
-                            Text("제품 정보를 불러오는 중...")
+                            Text(DoseMateStrings.TipJar.loadingProducts)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -375,7 +367,7 @@ struct TipJarView: View {
                     
                     // 안내 문구
                     VStack(spacing: 12) {
-                        Text("💡 안내사항")
+                        Text(DoseMateStrings.TipJar.infoTitle)
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
@@ -383,7 +375,7 @@ struct TipJarView: View {
                         
                         VStack(alignment: .leading, spacing: 6) {
                             Label {
-                                Text("기부는 추가 기능을 해제하지 않습니다")
+                                Text(DoseMateStrings.TipJar.infoNoFeatures)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             } icon: {
@@ -392,7 +384,7 @@ struct TipJarView: View {
                             }
                             
                             Label {
-                                Text("순수하게 개발자를 응원하는 목적입니다")
+                                Text(DoseMateStrings.TipJar.infoSupportOnly)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             } icon: {
@@ -401,7 +393,7 @@ struct TipJarView: View {
                             }
                             
                             Label {
-                                Text("결제는 Apple ID를 통해 안전하게 처리됩니다")
+                                Text(DoseMateStrings.TipJar.infoSecurePayment)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             } icon: {
@@ -416,11 +408,11 @@ struct TipJarView: View {
                 }
                 .padding()
             }
-            .navigationTitle("응원하기")
+            .navigationTitle(DoseMateStrings.TipJar.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("닫기") {
+                    Button(DoseMateStrings.TipJar.close) {
                         dismiss()
                     }
                 }
@@ -430,19 +422,19 @@ struct TipJarView: View {
                     loadingOverlay
                 }
             }
-            .alert("감사합니다! 💕", isPresented: $showThankYou) {
-                Button("확인", role: .cancel) {
+            .alert(DoseMateStrings.TipJar.thankYouTitle, isPresented: $showThankYou) {
+                Button(DoseMateStrings.Premium.confirm, role: .cancel) {
                     selectedProductID = nil
                 }
             } message: {
-                Text("따뜻한 응원에 감사드립니다.\n더 좋은 앱으로 보답하겠습니다!")
+                Text(DoseMateStrings.TipJar.thankYouMessage)
             }
-            .alert("오류", isPresented: $showError) {
-                Button("확인", role: .cancel) {
+            .alert(DoseMateStrings.TipJar.errorTitle, isPresented: $showError) {
+                Button(DoseMateStrings.Premium.confirm, role: .cancel) {
                     selectedProductID = nil
                 }
             } message: {
-                Text(storeManager.errorMessage ?? "알 수 없는 오류가 발생했습니다.")
+                Text(storeManager.errorMessage ?? DoseMateStrings.TipJar.errorUnknown)
             }
         }
     }
@@ -483,7 +475,7 @@ struct TipJarView: View {
                 ProgressView()
                     .scaleEffect(1.2)
                 
-                Text("처리 중...")
+                Text(DoseMateStrings.TipJar.processing)
                     .font(.subheadline)
                     .foregroundColor(.white)
             }
@@ -618,10 +610,10 @@ struct PremiumRequiredView: View {
                 .font(.system(size: 40))
                 .foregroundColor(.orange)
             
-            Text("프리미엄 기능")
+            Text(DoseMateStrings.PremiumRequired.title)
                 .font(.headline)
             
-            Text("\(feature) 기능은\n프리미엄 사용자만 이용할 수 있습니다.")
+            Text(DoseMateStrings.PremiumRequired.message(feature))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -629,7 +621,7 @@ struct PremiumRequiredView: View {
             Button {
                 onUpgrade()
             } label: {
-                Label("프리미엄 보기", systemImage: "crown")
+                Label(DoseMateStrings.PremiumRequired.viewPremium, systemImage: "crown")
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
             }
@@ -649,7 +641,7 @@ struct PremiumBadge: View {
         HStack(spacing: 4) {
             Image(systemName: "crown.fill")
                 .font(.caption2)
-            Text("PRO")
+            Text(DoseMateStrings.PremiumBadge.pro)
                 .font(.caption2)
                 .fontWeight(.bold)
         }

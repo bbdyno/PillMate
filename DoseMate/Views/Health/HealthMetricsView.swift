@@ -46,7 +46,7 @@ struct HealthMetricsView: View {
                     HStack(spacing: AppSpacing.xs) {
                         Image(systemName: "heart.fill")
                             .foregroundStyle(AppColors.danger.gradient)
-                        Text("건강 지표")
+                        Text(DoseMateStrings.Health.title)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                     }
@@ -63,6 +63,7 @@ struct HealthMetricsView: View {
                     }
                 }
             }
+            .toolbarBackground(.clear, for: .navigationBar)
             .onAppear {
                 viewModel.setup(with: modelContext)
             }
@@ -72,8 +73,8 @@ struct HealthMetricsView: View {
             .sheet(isPresented: $showPremiumSheet) {
                 PremiumView()
             }
-            .alert("오류", isPresented: .constant(viewModel.errorMessage != nil)) {
-                Button("확인") {
+            .alert(DoseMateStrings.Health.error, isPresented: .constant(viewModel.errorMessage != nil)) {
+                Button(DoseMateStrings.Health.confirm) {
                     viewModel.errorMessage = nil
                 }
             } message: {
@@ -109,11 +110,11 @@ struct HealthMetricsView: View {
                         }
 
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("프리미엄 전용 • 건강 앱 연동")
+                            Text(DoseMateStrings.Health.premiumFeature)
                                 .font(AppTypography.headline)
                                 .foregroundColor(AppColors.textPrimary)
 
-                            Text("업그레이드하고 건강 데이터를 동기화하세요")
+                            Text(DoseMateStrings.Health.premiumDescription)
                                 .font(AppTypography.caption)
                                 .foregroundColor(AppColors.textSecondary)
                         }
@@ -156,11 +157,11 @@ struct HealthMetricsView: View {
                         }
 
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("건강 앱 권한 요청")
+                            Text(DoseMateStrings.Health.permissionRequired)
                                 .font(AppTypography.headline)
                                 .foregroundColor(AppColors.textPrimary)
 
-                            Text("건강 데이터를 연동하려면 권한이 필요합니다")
+                            Text(DoseMateStrings.Health.permissionDescription)
                                 .font(AppTypography.caption)
                                 .foregroundColor(AppColors.textSecondary)
                         }
@@ -203,16 +204,16 @@ struct HealthMetricsView: View {
                         }
 
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("건강 앱에서 동기화")
+                            Text(DoseMateStrings.Health.syncFromHealth)
                                 .font(AppTypography.headline)
                                 .foregroundColor(AppColors.textPrimary)
 
                             if let lastSync = healthKitManager.lastSyncDate {
-                                Text("마지막: \(lastSync.relativeTimeString)")
+                                Text(DoseMateStrings.Health.lastSync(lastSync.relativeTimeString))
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
                             } else {
-                                Text("동기화하여 건강 데이터를 가져오세요")
+                                Text(DoseMateStrings.Health.syncDescription)
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
                             }
@@ -247,7 +248,7 @@ struct HealthMetricsView: View {
     
     private var metricsGrid: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: "건강 지표")
+            SectionHeader(title: DoseMateStrings.Health.metricsTitle)
             
             LazyVGrid(columns: [
                 GridItem(.flexible(), spacing: AppSpacing.sm),
@@ -284,8 +285,8 @@ struct HealthMetricsView: View {
                     Text(type.displayName)
                         .font(AppTypography.headline)
                         .foregroundColor(AppColors.textPrimary)
-                    
-                    Text("최근 기록")
+
+                    Text(DoseMateStrings.Health.recentRecords)
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -378,15 +379,15 @@ struct HealthMetricsView: View {
                     Image(systemName: "chart.line.uptrend.xyaxis")
                         .font(.system(size: 40))
                         .foregroundColor(AppColors.textTertiary)
-                    
-                    Text("기록이 없습니다")
+
+                    Text(DoseMateStrings.Health.noRecords)
                         .font(AppTypography.subheadline)
                         .foregroundColor(AppColors.textSecondary)
-                    
+
                     Button {
                         viewModel.openInputSheet(for: type)
                     } label: {
-                        Label("기록 추가", systemImage: "plus")
+                        Label(DoseMateStrings.Health.addRecord, systemImage: "plus")
                     }
                     .buttonStyle(SecondaryButtonStyle())
                     .frame(width: 140)
@@ -406,7 +407,7 @@ struct HealthMetricsView: View {
                 // 지표 타입 선택
                 if viewModel.inputMetricType == nil {
                     VStack(alignment: .leading, spacing: AppSpacing.md) {
-                        Text("측정 항목 선택")
+                        Text(DoseMateStrings.Health.selectMetric)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                         
@@ -450,7 +451,7 @@ struct HealthMetricsView: View {
                         
                         VStack(spacing: AppSpacing.sm) {
                             if type == .bloodPressure {
-                                TextField("수축기 혈압", text: $viewModel.inputSystolic)
+                                TextField(DoseMateStrings.Health.systolicBp, text: $viewModel.inputSystolic)
                                     .keyboardType(.decimalPad)
                                     .font(AppTypography.title)
                                     .multilineTextAlignment(.center)
@@ -461,8 +462,8 @@ struct HealthMetricsView: View {
                                 Text("mmHg (수축기)")
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
-                                
-                                TextField("이완기 혈압", text: $viewModel.inputDiastolic)
+
+                                TextField(DoseMateStrings.Health.diastolicBp, text: $viewModel.inputDiastolic)
                                     .keyboardType(.decimalPad)
                                     .font(AppTypography.headline)
                                     .multilineTextAlignment(.center)
@@ -493,7 +494,7 @@ struct HealthMetricsView: View {
                                     }
                                 }
                             } else {
-                                TextField("값 입력", text: $viewModel.inputValue)
+                                TextField(DoseMateStrings.Health.inputValue, text: $viewModel.inputValue)
                                     .keyboardType(.decimalPad)
                                     .font(AppTypography.title)
                                     .multilineTextAlignment(.center)
@@ -511,7 +512,7 @@ struct HealthMetricsView: View {
                         .cornerRadius(AppRadius.lg)
                         
                         // 메모
-                        TextField("메모 (선택)", text: $viewModel.inputNotes)
+                        TextField(DoseMateStrings.Health.notesOptional, text: $viewModel.inputNotes)
                             .padding(AppSpacing.md)
                             .background(AppColors.cardBackground)
                             .cornerRadius(AppRadius.md)
@@ -523,7 +524,7 @@ struct HealthMetricsView: View {
                 
                 // 저장 버튼
                 if viewModel.inputMetricType != nil {
-                    Button("저장") {
+                    Button(DoseMateStrings.Health.save) {
                         Task {
                             await viewModel.saveMetric()
                         }
@@ -535,7 +536,7 @@ struct HealthMetricsView: View {
                 }
             }
             .background(AppColors.background)
-            .navigationTitle(viewModel.inputMetricType?.displayName ?? "건강 지표 입력")
+            .navigationTitle(viewModel.inputMetricType?.displayName ?? DoseMateStrings.Health.inputTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -550,7 +551,7 @@ struct HealthMetricsView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("취소") {
+                    Button(DoseMateStrings.Health.cancel) {
                         viewModel.showInputSheet = false
                         resetInputFields()
                     }
@@ -630,8 +631,8 @@ struct HealthMetricCardView: View {
                         .font(AppTypography.title3)
                         .fontWeight(.bold)
                         .foregroundColor(AppColors.textTertiary)
-                    
-                    Text("기록 없음")
+
+                    Text(DoseMateStrings.Health.noRecord)
                         .font(AppTypography.caption2)
                         .foregroundColor(AppColors.textTertiary)
                 }

@@ -70,8 +70,8 @@ struct PatientView: View {
                 EditPatientView(patient: patient)
             }
             .alert("환자 삭제", isPresented: $showDeleteConfirmation) {
-                Button("취소", role: .cancel) {}
-                Button("삭제", role: .destructive) {
+                Button(DoseMateStrings.Common.cancel, role: .cancel) {}
+                Button(DoseMateStrings.Common.delete, role: .destructive) {
                     if let patient = patientToDelete {
                         deletePatient(patient)
                     }
@@ -282,13 +282,13 @@ struct PatientCard: View {
             Button {
                 onEdit()
             } label: {
-                Label("수정", systemImage: "pencil")
+                Label(DoseMateStrings.Common.edit, systemImage: "pencil")
             }
-            
+
             Button(role: .destructive) {
                 onDelete()
             } label: {
-                Label("삭제", systemImage: "trash")
+                Label(DoseMateStrings.Common.delete, systemImage: "trash")
             }
         }
     }
@@ -705,13 +705,13 @@ struct AddPatientView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("취소") {
+                    Button(DoseMateStrings.Common.cancel) {
                         dismiss()
                     }
                     .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("저장") {
+                    Button(DoseMateStrings.Common.save) {
                         savePatient()
                     }
                     .fontWeight(.semibold)
@@ -874,11 +874,11 @@ struct EditPatientView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("취소") { dismiss() }
+                    Button(DoseMateStrings.Common.cancel) { dismiss() }
                         .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("저장") { updatePatient() }
+                    Button(DoseMateStrings.Common.save) { updatePatient() }
                         .fontWeight(.semibold)
                         .foregroundColor(AppColors.primary)
                         .disabled(name.isEmpty)
@@ -998,11 +998,11 @@ struct AddMedicationForPatientView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("취소") { dismiss() }
+                    Button(DoseMateStrings.Common.cancel) { dismiss() }
                         .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("저장") { saveMedication() }
+                    Button(DoseMateStrings.Common.save) { saveMedication() }
                         .fontWeight(.semibold)
                         .foregroundColor(name.isEmpty ? AppColors.textTertiary : AppColors.primary)
                         .disabled(name.isEmpty)
@@ -1114,11 +1114,11 @@ struct AddAppointmentForPatientView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("취소") { dismiss() }
+                    Button(DoseMateStrings.Common.cancel) { dismiss() }
                         .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("저장") { saveAppointment() }
+                    Button(DoseMateStrings.Common.save) { saveAppointment() }
                         .fontWeight(.semibold)
                         .foregroundColor(doctorName.isEmpty ? AppColors.textTertiary : AppColors.primary)
                         .disabled(doctorName.isEmpty)

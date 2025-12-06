@@ -16,12 +16,12 @@ struct ContentView: View {
     
     // MARK: - Tab Enum
     
-    enum Tab: String, CaseIterable {
-        case home = "홈"
-        case medications = "약물"
-        case log = "기록"
-        case health = "건강"
-        case settings = "설정"
+    enum Tab: CaseIterable {
+        case home
+        case medications
+        case log
+        case health
+        case settings
         
         var icon: String {
             switch self {
@@ -32,6 +32,16 @@ struct ContentView: View {
             case .settings: return "gearshape.fill"
             }
         }
+        
+        var title: String {
+            switch self {
+            case .home: return DoseMateStrings.Tab.home
+            case .medications: return DoseMateStrings.Tab.medications
+            case .log: return DoseMateStrings.Tab.history
+            case .health: return DoseMateStrings.Tab.health
+            case .settings: return DoseMateStrings.Tab.settings
+            }
+        }
     }
     
     // MARK: - Body
@@ -40,31 +50,31 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             HomeView()
                 .tabItem {
-                    Label(Tab.home.rawValue, systemImage: Tab.home.icon)
+                    Label(Tab.home.title, systemImage: Tab.home.icon)
                 }
                 .tag(Tab.home)
             
             MedicationListView()
                 .tabItem {
-                    Label(Tab.medications.rawValue, systemImage: Tab.medications.icon)
+                    Label(Tab.medications.title, systemImage: Tab.medications.icon)
                 }
                 .tag(Tab.medications)
             
             LogHistoryView()
                 .tabItem {
-                    Label(Tab.log.rawValue, systemImage: Tab.log.icon)
+                    Label(Tab.log.title, systemImage: Tab.log.icon)
                 }
                 .tag(Tab.log)
             
             HealthMetricsView()
                 .tabItem {
-                    Label(Tab.health.rawValue, systemImage: Tab.health.icon)
+                    Label(Tab.health.title, systemImage: Tab.health.icon)
                 }
                 .tag(Tab.health)
             
             SettingsView()
                 .tabItem {
-                    Label(Tab.settings.rawValue, systemImage: Tab.settings.icon)
+                    Label(Tab.settings.title, systemImage: Tab.settings.icon)
                 }
                 .tag(Tab.settings)
         }

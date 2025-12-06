@@ -11,23 +11,23 @@
 "common.success" = "성공";
 
 /* App */
-"app.name" = "필메이트";
-"app.welcome" = "필메이트에 오신 것을 환영합니다";
-"app.description" = "당신의 복약 알림 도우미";
+"app.name" = "PillMate";
+"app.welcome" = "PillMate에 오신 것을 환영합니다";
+"app.description" = "당신의 복약 알림 동반자";
 
 /* Tabs */
 "tab.home" = "홈";
-"tab.medications" = "약";
+"tab.medications" = "약물";
 "tab.reminders" = "알림";
 "tab.settings" = "설정";
 
 /* Medications */
-"medications.title" = "내 약";
-"medications.add" = "약 추가";
-"medications.empty" = "아직 추가된 약이 없습니다";
-"medications.name" = "약 이름";
+"medications.title" = "내 약물";
+"medications.add" = "약물 추가";
+"medications.empty" = "아직 추가된 약물이 없습니다";
+"medications.name" = "약물 이름";
 "medications.dosage" = "복용량";
-"medications.frequency" = "복용 주기";
+"medications.frequency" = "빈도";
 
 /* Reminders */
 "reminders.title" = "알림";
@@ -39,3 +39,397 @@
 "settings.language" = "언어";
 "settings.notifications" = "알림";
 "settings.about" = "정보";
+
+/* Calendar */
+"calendar.sunday" = "일";
+"calendar.monday" = "월";
+"calendar.tuesday" = "화";
+"calendar.wednesday" = "수";
+"calendar.thursday" = "목";
+"calendar.friday" = "금";
+"calendar.saturday" = "토";
+
+/* Period */
+"period.today" = "오늘";
+"period.yesterday" = "어제";
+"period.this_week" = "이번 주";
+"period.last_week" = "지난주";
+"period.this_month" = "이번 달";
+"period.last_month" = "지난달";
+"period.last_3_months" = "최근 3개월";
+"period.last_6_months" = "최근 6개월";
+"period.this_year" = "올해";
+"period.all_time" = "전체 기간";
+
+/* Status */
+"status.pending" = "대기";
+"status.taken" = "복용함";
+"status.skipped" = "건너뜀";
+"status.snoozed" = "미루기됨";
+"status.delayed" = "지연됨";
+
+/* Log History */
+"log_history.title" = "복약 기록";
+"log_history.view_records" = "기록 보기";
+"log_history.no_records" = "기록이 없습니다";
+"log_history.total_records" = "전체 기록";
+"log_history.adherence_rate" = "복약 준수율";
+"log_history.consecutive_days" = "연속 일수";
+"log_history.filter_results" = "결과 필터";
+"log_history.taken" = "복용함";
+"log_history.skipped" = "건너뜀";
+"log_history.snoozed" = "미루기됨";
+"log_history.delayed" = "지연됨";
+"log_history.pending" = "대기";
+"log_history.unknown" = "알 수 없음";
+"log_history.csv_export" = "CSV 내보내기";
+
+/* Premium */
+"premium.title" = "프리미엄";
+"premium.close" = "닫기";
+"premium.restore_alert_title" = "구매 상태";
+"premium.confirm" = "확인";
+"premium.upgrade_title" = "프리미엄으로 업그레이드";
+"premium.upgrade_subtitle" = "모든 기능을 잠금 해제하고 광고 없는 사용을 즐기세요.";
+"premium.current_status" = "이미 프리미엄을 보유하고 있습니다";
+"premium.features_title" = "제공 기능";
+"premium.lifetime_access" = "평생 이용권";
+"premium.purchase_button" = "프리미엄 받기";
+"premium.family_sharing" = "가족 공유 지원";
+"premium.restore_purchases" = "구매 복원";
+"premium.terms_of_service" = "서비스 약관";
+"premium.privacy_policy" = "개인정보 처리방침";
+"premium.payment_info" = "결제는 Apple ID 계정으로 청구됩니다.";
+"premium.processing" = "처리 중...";
+"premium.loading" = "로딩 중...";
+
+/* Tip Jar */
+"tip_jar.title" = "개발자 후원";
+"tip_jar.close" = "닫기";
+"tip_jar.support_developer" = "개발자 후원";
+"tip_jar.support_description" = "앱이 마음에 드셨다면 개발을 지원하기 위해 팁을 남겨주세요.";
+"tip_jar.total_tips" = "총 팁: %d";
+"tip_jar.loading_products" = "제품을 불러오는 중...";
+"tip_jar.info_title" = "안내";
+"tip_jar.info_no_features" = "팁은 기능을 잠금 해제하지 않습니다.";
+"tip_jar.info_support_only" = "귀하의 팁은 순수한 후원입니다.";
+"tip_jar.info_secure_payment" = "App Store를 통한 안전한 결제.";
+"tip_jar.thank_you_title" = "감사합니다!";
+"tip_jar.thank_you_message" = "여러분의 지원은 큰 힘이 되며 지속적인 개발에 도움이 됩니다.";
+"tip_jar.error_title" = "구매 오류";
+"tip_jar.error_unknown" = "알 수 없는 오류가 발생했습니다.";
+"tip_jar.processing" = "처리 중...";
+
+/* Premium Required */
+"premium_required.title" = "프리미엄 기능";
+"premium_required.message" = "'%@' 기능은 프리미엄이 필요합니다.";
+"premium_required.view_premium" = "프리미엄 보기";
+
+/* Premium Badge */
+"premium_badge.pro" = "PRO";
+
+/* Errors */
+"errors.load_medications_failed" = "약물 목록을 불러오는데 실패했습니다.";
+"errors.add_medication_premium_limit" = "무료 버전에서는 약물을 %d개까지 추가할 수 있습니다. 프리미엄으로 업그레이드하세요.";
+"errors.add_medication_failed" = "약물 추가에 실패했습니다.";
+"errors.delete_medication_failed" = "약물 삭제에 실패했습니다.";
+
+/* Common (additional) */
+"common.add" = "추가";
+"common.name" = "이름";
+
+/* Patients */
+"patients.title" = "환자 관리";
+"patients.delete_title" = "환자 삭제";
+"patients.delete_message" = "%@의 모든 약물 기록이 삭제됩니다.";
+"patients.empty_title" = "등록된 환자가 없습니다";
+"patients.empty_description" = "가족이나 피부양자의 약물을 관리하려면 환자를 추가하세요.";
+"patients.add_button" = "환자 추가";
+"patients.header_count" = "총 %d명의 환자";
+"patients.header_subtitle" = "를 관리 중입니다";
+"patients.list_title" = "환자 목록";
+"patients.medications_count_format" = "%d개 약물";
+"patients.select_title" = "환자 선택";
+"patients.managed_patients" = "관리 중인 환자";
+"patients.self" = "나";
+"patients.manage_mine" = "내 약물 관리";
+"patients.notes_title" = "메모";
+"patients.notes_optional" = "메모 (선택사항)";
+
+/* Patient Detail */
+"patients.detail.today_medication" = "오늘의 약";
+"patients.detail.adherence" = "복약 순응도";
+"patients.detail.medications_title" = "약물";
+"patients.detail.no_medications" = "등록된 약물이 없습니다";
+"patients.detail.add_medication" = "약물 추가";
+"patients.detail.appointments_title" = "예약";
+"patients.detail.no_appointments" = "예정된 예약이 없습니다";
+
+/* Add/Edit Patient */
+"patients.add.title" = "환자 추가";
+"patients.edit.title" = "환자 편집";
+"patients.common.relationship" = "관계";
+"patients.common.birthdate_input" = "생년월일 입력";
+"patients.common.birthdate" = "생년월일";
+"patients.common.profile_color" = "프로필 색상";
+
+/* Medication Form (Patient flows) */
+"medications.add_title" = "약물 추가";
+"medications.name_placeholder" = "약물 이름";
+"medications.dosage_placeholder" = "복용량 (예: 1정)";
+"medications.strength_placeholder" = "강도 (예: 500mg)";
+"medications.form" = "제형";
+
+/* Appointments */
+"appointments.title" = "예약";
+"appointments.add_title" = "예약 추가";
+"appointments.for_name" = "%@의 예약";
+"appointments.doctor_name" = "의사 이름";
+"appointments.specialty" = "전문 분야";
+"appointments.datetime" = "예약 날짜 및 시간";
+"appointments.location" = "위치";
+"appointments.notes" = "메모 (선택)";
+"appointments.past_section" = "지난 진료";
+"appointments.upcoming_section" = "예정된 진료";
+"appointments.delete" = "삭제";
+"appointments.complete" = "완료";
+"appointments.empty_title" = "예약이 없습니다";
+"appointments.empty_description" = "예약을 추가하여 시작하세요";
+
+/* Tab (Additional) */
+"tab.history" = "기록";
+"tab.health" = "건강";
+
+/* Settings (Additional) */
+"settings.notifications" = "알림";
+"settings.healthkit" = "건강";
+"settings.appearance" = "외관";
+"settings.data" = "데이터";
+"settings.support" = "지원";
+"settings.about_section" = "정보";
+"settings.cloud_backup" = "클라우드 및 백업";
+"settings.version" = "버전";
+"settings.privacy_policy" = "개인정보 처리방침";
+"settings.terms_of_service" = "이용약관";
+"settings.notification_permission" = "알림 권한";
+"settings.enable_notifications" = "알림 받기";
+"settings.sound" = "알림 소리";
+"settings.haptic" = "진동";
+"settings.default_snooze_interval" = "기본 스누즈 시간";
+"settings.reminder_before" = "미리 알림";
+"settings.reschedule_notifications" = "알림 재설정";
+"settings.open_settings" = "설정";
+"settings.healthkit_sync" = "자동 동기화";
+"settings.last_sync" = "마지막 동기화";
+"settings.sync_now" = "지금 동기화";
+"settings.request_healthkit_permission" = "건강 앱 권한 요청";
+"settings.healthkit_unavailable" = "이 기기에서는 건강 앱을 사용할 수 없습니다.";
+"settings.icloud_sync" = "iCloud 동기화";
+"settings.export_data" = "데이터 내보내기";
+"settings.import_data" = "데이터 가져오기";
+"settings.delete_all_data" = "모든 데이터 삭제";
+"settings.patient_management" = "환자 관리";
+"settings.caregiver_alerts" = "보호자 알림";
+"settings.appearance_mode" = "외관 모드";
+"settings.support_developer" = "개발자 응원하기";
+"settings.restore_purchases" = "구매 복원";
+"settings.sample_data" = "샘플 데이터 생성";
+"settings.premium_locked" = "프리미엄으로 잠금 해제";
+"settings.icloud_sync_status" = "동기화 상태";
+"settings.sync_active" = "활성화됨";
+"settings.sync_restart_required" = "재시작 필요";
+"settings.sync_disabled" = "비활성화";
+"settings.icloud_unavailable" = "iCloud 사용 불가";
+"settings.family_medication_management" = "가족 복약 관리";
+"settings.caregiver_alert_description" = "미복약 시 알림";
+
+/* Alerts */
+"alert.delete_all_title" = "데이터 삭제";
+"alert.delete_all_message" = "모든 약물, 복약 기록, 건강 지표가 삭제됩니다. 이 작업은 되돌릴 수 없습니다.";
+"alert.reschedule_notifications_title" = "알림 재설정";
+"alert.reschedule_notifications_message" = "모든 복약 알림을 재설정하시겠습니까?";
+"alert.restart_required_title" = "앱 재시작 필요";
+"alert.restart_required_message" = "iCloud 동기화 설정을 변경하려면 앱을 완전히 종료한 후 다시 실행해야 합니다.\n\n앱을 종료하시겠습니까?";
+"alert.icloud_warning_title" = "iCloud 동기화 주의";
+"alert.icloud_warning_message" = "iCloud 동기화가 활성화된 상태입니다.\n\n데이터를 가져오면 이 계정에 연결된 모든 기기의 데이터가 교체됩니다.\n\n계속하시겠습니까?";
+"alert.import_data_title" = "데이터 가져오기";
+"alert.import_data_message" = "다음 데이터를 가져옵니다:\n\n내보낸 날짜: %@\n앱 버전: %@\n기기: %@\n\n총 %d개 항목\n(환자 %d, 약물 %d, 기록 %d개 등)\n\n기존 데이터가 모두 삭제됩니다.";
+"alert.import_complete_title" = "가져오기 완료";
+"alert.import_complete_message" = "데이터를 성공적으로 가져왔습니다.\n\n%@\n\n총 %d개 항목";
+"alert.quit_later" = "나중에";
+"alert.quit_now" = "지금 종료";
+"alert.continue" = "계속";
+
+/* Medication List */
+"medication_list.title" = "약물 관리";
+"medication_list.search_placeholder" = "약물 검색";
+"medication_list.filter_sort" = "필터 및 정렬";
+"medication_list.sort" = "정렬";
+"medication_list.filter" = "필터";
+"medication_list.active_medications" = "복용 중";
+"medication_list.low_stock" = "재고 부족";
+"medication_list.total" = "전체";
+"medication_list.free_version" = "무료 버전 사용 중";
+"medication_list.medications_registered" = "약물 %d/%d개 등록됨";
+"medication_list.upgrade" = "업그레이드";
+"medication_list.no_medications" = "등록된 약물이 없습니다";
+"medication_list.add_to_start" = "약물을 추가하여 복약 관리를 시작하세요";
+"medication_list.no_search_results" = "검색 결과가 없습니다";
+"medication_list.no_results_for" = "'%@'에 대한 결과를 찾을 수 없습니다";
+"medication_list.count" = "%d개 약물";
+"medication_list.delete_confirmation" = "약물 삭제";
+"medication_list.delete_message" = "%@을(를) 삭제하시겠습니까?";
+"medication_list.discontinued" = "중단됨";
+"medication_list.items" = "개";
+
+/* Patient (Additional) */
+"patient.medication" = "%@님의 약물";
+"patient.appointment" = "%@님의 진료 예약";
+"patient.initials" = "이니셜";
+"patient.age" = "나이";
+"patient.adherence_today" = "오늘의 복약";
+"patient.adherence_rate_label" = "준수율";
+"patient.basic_info" = "기본 정보";
+"patient.name_label" = "이름";
+"patient.relationship_label" = "관계";
+"patient.notes_section" = "메모";
+"patient.profile_color_section" = "프로필 색상";
+"patient.notes_optional_label" = "메모 (선택)";
+"patient.appointment_list_title" = "진료 예약";
+"patient.medical_specialty" = "진료과";
+"patient.appointment_datetime" = "예약 일시";
+"patient.appointment_location" = "장소";
+
+/* Home (Additional) */
+"home.completed" = "완료";
+"home.pending" = "대기";
+"home.streak" = "연속";
+"home.greeting_morning" = "좋은 아침이에요 ☀️";
+"home.greeting_afternoon" = "좋은 오후에요 🌤";
+"home.greeting_evening" = "좋은 저녁이에요 🌙";
+"home.greeting_default" = "안녕하세요 ✨";
+"home.low_stock" = "재고 부족";
+"home.today_appointments" = "오늘의 진료";
+"home.items_remaining" = "%d개 남음";
+"home.patient_medication" = "%@님의 복약";
+
+/* Health */
+"health.title" = "건강 지표";
+"health.error" = "오류";
+"health.confirm" = "확인";
+"health.premium_feature" = "프리미엄 전용 • 건강 앱 연동";
+"health.premium_description" = "업그레이드하고 건강 데이터를 동기화하세요";
+"health.permission_required" = "건강 앱 권한 요청";
+"health.permission_description" = "건강 데이터를 연동하려면 권한이 필요합니다";
+"health.sync_from_health" = "건강 앱에서 동기화";
+"health.last_sync" = "마지막: %@";
+"health.sync_description" = "동기화하여 건강 데이터를 가져오세요";
+"health.metrics_title" = "건강 지표";
+"health.recent_records" = "최근 기록";
+"health.no_records" = "기록이 없습니다";
+"health.add_record" = "기록 추가";
+"health.select_metric" = "측정 항목 선택";
+"health.systolic_bp" = "수축기 혈압";
+"health.diastolic_bp" = "이완기 혈압";
+"health.input_value" = "값 입력";
+"health.notes_optional" = "메모 (선택)";
+"health.save" = "저장";
+"health.input_title" = "건강 지표 입력";
+"health.cancel" = "취소";
+"health.no_record" = "기록 없음";
+"health.date" = "날짜";
+"health.value" = "값";
+
+/* Settings (Additional) */
+"settings.delete_all_data_alert_title" = "데이터 삭제";
+"settings.reschedule_notifications_alert_title" = "알림 재설정";
+"settings.import_data_alert_title" = "데이터 가져오기";
+"settings.import_complete_alert_title" = "가져오기 완료";
+"settings.restart_required_alert_title" = "앱 재시작 필요";
+"settings.delete_all_message" = "모든 약물, 복약 기록, 건강 지표가 삭제됩니다. 이 작업은 되돌릴 수 없습니다.";
+"settings.reschedule_message" = "모든 복약 알림을 재설정하시겠습니까?";
+"settings.import_button" = "가져오기";
+"settings.later_button" = "나중에";
+"settings.quit_now_button" = "지금 종료";
+"settings.continue_button" = "계속";
+"settings.premium_active" = "프리미엄";
+"settings.premium_in_use" = "사용 중";
+"settings.premium_upgrade_title" = "프리미엄으로 업그레이드";
+"settings.premium_all_features" = "모든 기능 잠금 해제 • %@";
+"settings.developer_support" = "개발자 응원하기";
+"settings.restore_purchases" = "구매 복원";
+"settings.support_section" = "지원";
+"settings.already_purchased_hint" = "이미 구매하셨다면 복원을 눌러주세요.";
+"settings.notification_permission" = "알림 권한";
+"settings.open_settings" = "설정";
+"settings.enable_notifications" = "알림 받기";
+"settings.notification_sound" = "알림 소리";
+"settings.haptic" = "진동";
+"settings.default_snooze" = "기본 스누즈 시간";
+"settings.on_the_hour" = "정각에";
+"settings.reminder_before" = "미리 알림";
+"settings.reschedule_button" = "알림 재설정";
+"settings.healthkit_integration" = "건강 앱 연동";
+"settings.premium_locked" = "프리미엄으로 잠금 해제";
+"settings.healthkit_unavailable" = "이 기기에서는 건강 앱을 사용할 수 없습니다.";
+"settings.request_permission" = "건강 앱 권한 요청";
+"settings.auto_sync" = "자동 동기화";
+"settings.last_sync_label" = "마지막 동기화";
+"settings.sync_now" = "지금 동기화";
+"settings.appearance_mode" = "외관 모드";
+"settings.patient_management" = "환자 관리";
+"settings.family_medication" = "가족 복약 관리";
+"settings.caregiver_alerts" = "보호자 알림";
+"settings.missed_dose_alert" = "미복약 시 알림";
+"settings.appointments" = "진료 예약";
+"settings.create_sample_data" = "샘플 데이터 생성";
+"settings.delete_all" = "모든 데이터 삭제";
+"settings.data_backup" = "데이터 백업";
+"settings.premium_sync_description" = "프리미엄으로 여러 기기 간 동기화와 데이터 백업/복원이 가능합니다.";
+"settings.sync_status_label" = "동기화 상태";
+"settings.sync_active" = "활성화됨";
+"settings.sync_restart_required" = "재시작 필요";
+"settings.sync_disabled" = "비활성화";
+"settings.export_data" = "데이터 내보내기";
+"settings.import_data" = "데이터 가져오기";
+"settings.export_description" = "내보내기된 파일은 다른 기기나 재설치 후 가져오기로 복원할 수 있습니다.";
+"settings.version_label" = "버전";
+"settings.privacy_policy" = "개인정보 처리방침";
+"settings.terms_of_service" = "이용약관";
+"settings.info_section" = "정보";
+"settings.premium_status" = "프리미엄 상태";
+"settings.premium_activated" = "활성화됨";
+"settings.premium_deactivated" = "비활성화됨";
+"settings.reset_tip_count" = "기부 횟수 리셋";
+"settings.total_tips" = "총 기부 횟수";
+"settings.more_developer_options" = "개발자 옵션 더보기";
+"settings.developer_settings" = "개발자 설정";
+
+/* Medication List (Additional) */
+"medication_list.search_prompt" = "약물 검색";
+"medication_list.title_short" = "약물 관리";
+"medication_list.sort_section" = "정렬";
+"medication_list.sort_label" = "정렬";
+"medication_list.filter_section" = "필터";
+"medication_list.filter_label" = "필터";
+"medication_list.delete_alert_title" = "약물 삭제";
+"medication_list.delete_button" = "삭제";
+"medication_list.active_label" = "복용 중";
+"medication_list.no_results" = "검색 결과가 없습니다";
+"medication_list.medication_list_title" = "약물 목록";
+
+/* Alert */
+"alert.import_data_message" = "%@에 %@(버전 %@)에서 내보낸 데이터를 가져오시겠습니까?\n\n총 %d개 항목\n- 환자: %d명\n- 약물: %d개\n- 기록: %d개";
+"alert.import_complete_message" = "%@\n\n총 가져온 항목: %d개";
+"alert.restart_required_message" = "변경 사항은 앱을 재시작한 후 적용됩니다.";
+"alert.icloud_warning_title" = "iCloud 동기화 활성화됨";
+"alert.icloud_warning_message" = "iCloud 동기화가 켜진 상태에서 가져오기를 하면 다른 기기에도 영향을 줄 수 있습니다. 계속하시겠습니까?";
+
+/* Settings Errors */
+"settings.error_export_failed" = "내보내기 실패: %@";
+"settings.error_file_access_denied" = "파일에 접근할 수 없습니다.";
+"settings.error_file_read_failed" = "파일을 읽을 수 없습니다: %@";
+"settings.error_file_selection_failed" = "파일 선택 실패: %@";
+"settings.error_import_failed" = "가져오기 실패: %@";
+"settings.icloud_sync_import_warning" = "iCloud 동기화가 켜진 상태에서 가져오기를 하면 다른 기기에도 영향을 줄 수 있습니다.";
+"settings.debug_footer" = "DEBUG 빌드에서만 표시됩니다. 릴리즈 빌드에서는 자동으로 숨겨집니다.";

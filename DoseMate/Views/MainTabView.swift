@@ -14,13 +14,22 @@ struct MainTabView: View {
     
     @State private var selectedTab: Tab = .home
     
-    enum Tab: String, CaseIterable {
-        case home = "홈"
-        case medications = "약물"
-        case history = "기록"
-        case health = "건강"
-        case settings = "설정"
-        
+    enum Tab: CaseIterable {
+        case home
+        case medications
+        case history
+        case health
+        case settings
+
+        var title: String {
+            switch self {
+            case .home: return DoseMateStrings.Tab.home
+            case .medications: return DoseMateStrings.Tab.medications
+            case .settings: return DoseMateStrings.Tab.settings
+            case .history: return NSLocalizedString("tab.history", comment: "")
+            case .health: return NSLocalizedString("tab.health", comment: "")
+            }
+        }
         var icon: String {
             switch self {
             case .home: return "house.fill"
@@ -36,38 +45,59 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView()
-                .tabItem {
-                    Label(Tab.home.rawValue, systemImage: Tab.home.icon)
-                }
-                .tag(Tab.home)
+            NavigationStack {
+                HomeView()
+            }
+            .tabItem {
+                Label(Tab.home.title, systemImage: Tab.home.icon)
+            }
+            .tag(Tab.home)
             
-            MedicationListView()
-                .tabItem {
-                    Label(Tab.medications.rawValue, systemImage: Tab.medications.icon)
-                }
-                .tag(Tab.medications)
+            NavigationStack {
+                MedicationListView()
+            }
+            .tabItem {
+                Label(Tab.medications.title, systemImage: Tab.medications.icon)
+            }
+            .tag(Tab.medications)
             
-            LogHistoryView()
-                .tabItem {
-                    Label(Tab.history.rawValue, systemImage: Tab.history.icon)
-                }
-                .tag(Tab.history)
+            NavigationStack {
+                LogHistoryView()
+            }
+            .tabItem {
+                Label(Tab.history.title, systemImage: Tab.history.icon)
+            }
+            .tag(Tab.history)
             
-            HealthMetricsView()
-                .tabItem {
-                    Label(Tab.health.rawValue, systemImage: Tab.health.icon)
-                }
-                .tag(Tab.health)
+            NavigationStack {
+                HealthMetricsView()
+            }
+            .tabItem {
+                Label(Tab.health.title, systemImage: Tab.health.icon)
+            }
+            .tag(Tab.health)
             
-            SettingsView()
-                .tabItem {
-                    Label(Tab.settings.rawValue, systemImage: Tab.settings.icon)
-                }
-                .tag(Tab.settings)
+            NavigationStack {
+                SettingsView()
+            }
+            .tabItem {
+                Label(Tab.settings.title, systemImage: Tab.settings.icon)
+            }
+            .tag(Tab.settings)
         }
         .tint(AppColors.primary)
         .onAppear {
+            // NavigationBar 외관 설정 (투명 배경)
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithTransparentBackground()
+            navBarAppearance.backgroundColor = UIColor.clear
+            navBarAppearance.shadowColor = UIColor.clear
+            
+            UINavigationBar.appearance().standardAppearance = navBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+            UINavigationBar.appearance().compactAppearance = navBarAppearance
+            UINavigationBar.appearance().compactScrollEdgeAppearance = navBarAppearance
+            
             // 탭바 외관 설정
             let tabBarAppearance = UITabBarAppearance()
             tabBarAppearance.configureWithOpaqueBackground()

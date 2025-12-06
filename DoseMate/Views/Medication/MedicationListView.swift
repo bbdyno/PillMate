@@ -47,14 +47,14 @@ struct MedicationListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .searchable(
                 text: $viewModel.searchText,
-                prompt: "약물 검색"
+                prompt: DoseMateStrings.MedicationList.searchPrompt
             )
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack(spacing: AppSpacing.xs) {
                         Image(systemName: "pill.fill")
                             .foregroundStyle(AppColors.primaryGradient)
-                        Text("약물 관리")
+                        Text(DoseMateStrings.MedicationList.titleShort)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                     }
@@ -64,17 +64,17 @@ struct MedicationListView: View {
                     HStack(spacing: AppSpacing.sm) {
                         // 필터/정렬 메뉴
                         Menu {
-                            Section("정렬") {
-                                Picker("정렬", selection: $viewModel.sortOption) {
+                            Section(DoseMateStrings.MedicationList.sortSection) {
+                                Picker(DoseMateStrings.MedicationList.sortLabel, selection: $viewModel.sortOption) {
                                     ForEach(MedicationSortOption.allCases) { option in
                                         Label(option.rawValue, systemImage: option.icon)
                                             .tag(option)
                                     }
                                 }
                             }
-                            
-                            Section("필터") {
-                                Picker("필터", selection: $viewModel.filterOption) {
+
+                            Section(DoseMateStrings.MedicationList.filterSection) {
+                                Picker(DoseMateStrings.MedicationList.filterLabel, selection: $viewModel.filterOption) {
                                     ForEach(MedicationFilterOption.allCases) { option in
                                         Text(option.rawValue).tag(option)
                                     }
@@ -100,6 +100,7 @@ struct MedicationListView: View {
                     }
                 }
             }
+            .toolbarBackground(.clear, for: .navigationBar)
             .refreshable {
                 await viewModel.loadMedications()
             }
@@ -116,16 +117,16 @@ struct MedicationListView: View {
             .sheet(isPresented: $showPremiumSheet) {
                 PremiumView()
             }
-            .alert("약물 삭제", isPresented: $viewModel.showDeleteConfirmation) {
-                Button("취소", role: .cancel) {}
-                Button("삭제", role: .destructive) {
+            .alert(DoseMateStrings.MedicationList.deleteAlertTitle, isPresented: $viewModel.showDeleteConfirmation) {
+                Button(DoseMateStrings.Common.cancel, role: .cancel) {}
+                Button(DoseMateStrings.Common.delete, role: .destructive) {
                     Task {
                         await viewModel.executeDelete()
                     }
                 }
             } message: {
                 if let medication = viewModel.medicationToDelete {
-                    Text("\(medication.name)을(를) 삭제하시겠습니까?")
+                    Text(DoseMateStrings.MedicationList.deleteMessage(medication.name))
                 }
             }
         }
@@ -138,21 +139,21 @@ struct MedicationListView: View {
             StatCard(
                 icon: "pills.fill",
                 value: "\(viewModel.activeMedicationsCount)",
-                label: "복용 중",
+                label: DoseMateStrings.MedicationList.activeLabel,
                 color: AppColors.success
             )
-            
+
             StatCard(
                 icon: "exclamationmark.triangle.fill",
                 value: "\(viewModel.lowStockMedicationsCount)",
-                label: "재고 부족",
+                label: DoseMateStrings.MedicationList.lowStock,
                 color: AppColors.warning
             )
-            
+
             StatCard(
                 icon: "square.stack.3d.up.fill",
                 value: "\(viewModel.totalMedicationsCount)",
-                label: "전체",
+                label: DoseMateStrings.MedicationList.total,
                 color: AppColors.primary
             )
         }
@@ -176,19 +177,19 @@ struct MedicationListView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("무료 버전 사용 중")
+                    Text(DoseMateStrings.MedicationList.freeVersion)
                         .font(AppTypography.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(AppColors.textPrimary)
-                    
-                    Text("약물 \(viewModel.totalMedicationsCount)/\(PremiumFeatures.freeMedicationLimit)개 등록됨")
+
+                    Text(DoseMateStrings.MedicationList.medicationsRegistered(viewModel.totalMedicationsCount, PremiumFeatures.freeMedicationLimit))
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                 }
-                
+
                 Spacer()
-                
-                Text("업그레이드")
+
+                Text(DoseMateStrings.MedicationList.upgrade)
                     .font(AppTypography.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
@@ -222,11 +223,11 @@ struct MedicationListView: View {
             }
             
             VStack(spacing: AppSpacing.xs) {
-                Text("등록된 약물이 없습니다")
+                Text(DoseMateStrings.MedicationList.noMedications)
                     .font(AppTypography.title3)
                     .foregroundColor(AppColors.textPrimary)
-                
-                Text("약물을 추가하여 복약 관리를 시작하세요")
+
+                Text(DoseMateStrings.MedicationList.addToStart)
                     .font(AppTypography.subheadline)
                     .foregroundColor(AppColors.textSecondary)
             }
@@ -240,7 +241,7 @@ struct MedicationListView: View {
             } label: {
                 HStack {
                     Image(systemName: "plus.circle.fill")
-                    Text("약물 추가")
+                    Text(DoseMateStrings.Medications.add)
                 }
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -259,11 +260,11 @@ struct MedicationListView: View {
                 .font(.system(size: 40))
                 .foregroundColor(AppColors.textTertiary)
             
-            Text("검색 결과가 없습니다")
+            Text(DoseMateStrings.MedicationList.noResults)
                 .font(AppTypography.headline)
                 .foregroundColor(AppColors.textPrimary)
-            
-            Text("'\(viewModel.searchText)'에 대한 결과를 찾을 수 없습니다")
+
+            Text(DoseMateStrings.MedicationList.noResultsFor(viewModel.searchText))
                 .font(AppTypography.subheadline)
                 .foregroundColor(AppColors.textSecondary)
         }
@@ -276,8 +277,8 @@ struct MedicationListView: View {
     private var medicationList: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
             SectionHeader(
-                title: "약물 목록",
-                subtitle: "\(viewModel.filteredMedications.count)개"
+                title: DoseMateStrings.MedicationList.medicationListTitle,
+                subtitle: "\(viewModel.filteredMedications.count)\(DoseMateStrings.MedicationList.items)"
             )
             
             VStack(spacing: AppSpacing.sm) {
@@ -358,7 +359,7 @@ struct MedicationCard: View {
                         .foregroundColor(AppColors.textPrimary)
                     
                     if !medication.isActive {
-                        Text("중단됨")
+                        Text(DoseMateStrings.MedicationList.discontinued)
                             .font(AppTypography.caption2)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
@@ -389,7 +390,7 @@ struct MedicationCard: View {
                     .fontWeight(.medium)
                     .foregroundColor(medication.isOutOfStock ? AppColors.danger : AppColors.warning)
                 } else if medication.stockCount > 0 {
-                    Text("\(medication.stockCount)개")
+                    Text("\(medication.stockCount)\(DoseMateStrings.MedicationList.items)")
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -411,7 +412,7 @@ struct MedicationCard: View {
             Button {
                 onDelete()
             } label: {
-                Label("삭제", systemImage: "trash")
+                Label(DoseMateStrings.Common.delete, systemImage: "trash")
             }
         }
     }

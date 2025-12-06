@@ -39,3 +39,365 @@
 "settings.language" = "语言";
 "settings.notifications" = "通知";
 "settings.about" = "关于";
+
+/* Calendar */
+"calendar.sunday" = "周日";
+"calendar.monday" = "周一";
+"calendar.tuesday" = "周二";
+"calendar.wednesday" = "周三";
+"calendar.thursday" = "周四";
+"calendar.friday" = "周五";
+"calendar.saturday" = "周六";
+
+/* Period */
+"period.today" = "今天";
+"period.yesterday" = "昨天";
+"period.this_week" = "本周";
+"period.last_week" = "上周";
+"period.this_month" = "本月";
+"period.last_month" = "上月";
+"period.last_3_months" = "过去3个月";
+"period.last_6_months" = "过去6个月";
+"period.this_year" = "今年";
+"period.all_time" = "全部时间";
+
+/* Status */
+"status.pending" = "待处理";
+"status.taken" = "已服用";
+"status.skipped" = "已跳过";
+"status.snoozed" = "已稍后提醒";
+"status.delayed" = "已延迟";
+
+/* Log History */
+"log_history.title" = "用药记录";
+"log_history.view_records" = "查看记录";
+"log_history.no_records" = "暂无记录";
+"log_history.total_records" = "总记录";
+"log_history.adherence_rate" = "依从率";
+"log_history.consecutive_days" = "连续天数";
+"log_history.filter_results" = "筛选结果";
+"log_history.taken" = "已服用";
+"log_history.skipped" = "已跳过";
+"log_history.snoozed" = "已稍后提醒";
+"log_history.delayed" = "已延迟";
+"log_history.pending" = "待处理";
+"log_history.unknown" = "未知";
+"log_history.csv_export" = "导出 CSV";
+
+/* Premium */
+"premium.title" = "高级版";
+"premium.close" = "关闭";
+"premium.restore_alert_title" = "购买状态";
+"premium.confirm" = "确认";
+"premium.upgrade_title" = "升级到高级版";
+"premium.upgrade_subtitle" = "解锁所有功能并享受无广告体验。";
+"premium.current_status" = "您已拥有高级版";
+"premium.features_title" = "功能列表";
+"premium.lifetime_access" = "终身使用权";
+"premium.purchase_button" = "获取高级版";
+"premium.family_sharing" = "支持家庭共享";
+"premium.restore_purchases" = "恢复购买";
+"premium.terms_of_service" = "服务条款";
+"premium.privacy_policy" = "隐私政策";
+"premium.payment_info" = "付款将从您的 Apple ID 账户扣费。";
+"premium.processing" = "处理中...";
+"premium.loading" = "加载中...";
+
+/* Tip Jar */
+"tip_jar.title" = "支持开发者";
+"tip_jar.close" = "关闭";
+"tip_jar.support_developer" = "支持开发者";
+"tip_jar.support_description" = "如果您喜欢此应用，欢迎打赏以支持开发。";
+"tip_jar.total_tips" = "总打赏：%d";
+"tip_jar.loading_products" = "正在加载产品...";
+"tip_jar.info_title" = "信息";
+"tip_jar.info_no_features" = "打赏不会解锁功能。";
+"tip_jar.info_support_only" = "您的打赏仅用于支持。";
+"tip_jar.info_secure_payment" = "通过 App Store 安全支付。";
+"tip_jar.thank_you_title" = "感谢支持！";
+"tip_jar.thank_you_message" = "您的支持非常重要，有助于持续开发。";
+"tip_jar.error_title" = "购买错误";
+"tip_jar.error_unknown" = "发生未知错误。";
+"tip_jar.processing" = "处理中...";
+
+/* Premium Required */
+"premium_required.title" = "高级功能";
+"premium_required.message" = "功能“%@”需要高级版。";
+"premium_required.view_premium" = "查看高级版";
+
+/* Premium Badge */
+"premium_badge.pro" = "PRO";
+
+/* Errors */
+"errors.load_medications_failed" = "加载药物列表失败。";
+"errors.add_medication_premium_limit" = "免费版本最多可添加 %d 种药物。请升级到高级版。";
+"errors.add_medication_failed" = "添加药物失败。";
+"errors.delete_medication_failed" = "删除药物失败。";
+
+/* Common (additional) */
+"common.add" = "添加";
+"common.name" = "名称";
+
+/* Patients */
+"patients.title" = "患者管理";
+"patients.delete_title" = "删除患者";
+"patients.delete_message" = "%@ 的所有药物记录将被删除。";
+"patients.empty_title" = "未注册患者";
+"patients.empty_description" = "要管理家人或受抚养人的药物，请添加患者。";
+"patients.add_button" = "添加患者";
+"patients.header_count" = "共 %d 名患者";
+"patients.header_subtitle" = "正在管理";
+"patients.list_title" = "患者列表";
+"patients.medications_count_format" = "%d 种药物";
+"patients.select_title" = "选择患者";
+"patients.managed_patients" = "管理中的患者";
+"patients.self" = "我";
+"patients.manage_mine" = "我的药物管理";
+"patients.notes_title" = "备注";
+"patients.notes_optional" = "备注（可选）";
+
+/* Patient Detail */
+"patients.detail.today_medication" = "今日药物";
+"patients.detail.adherence" = "依从性";
+"patients.detail.medications_title" = "药物";
+"patients.detail.no_medications" = "未注册药物";
+"patients.detail.add_medication" = "添加药物";
+"patients.detail.appointments_title" = "预约";
+"patients.detail.no_appointments" = "没有即将到来的预约";
+
+/* Add/Edit Patient */
+"patients.add.title" = "添加患者";
+"patients.edit.title" = "编辑患者";
+"patients.common.relationship" = "关系";
+"patients.common.birthdate_input" = "输入出生日期";
+"patients.common.birthdate" = "出生日期";
+"patients.common.profile_color" = "个人资料颜色";
+
+/* Medication Form (Patient flows) */
+"medications.add_title" = "添加药物";
+"medications.name_placeholder" = "药物名称";
+"medications.dosage_placeholder" = "剂量（例如：1片）";
+"medications.strength_placeholder" = "强度（例如：500mg）";
+"medications.form" = "剂型";
+
+/* Appointments */
+"appointments.title" = "预约";
+"appointments.add_title" = "添加预约";
+"appointments.for_name" = "%@ 的预约";
+"appointments.doctor_name" = "医生姓名";
+"appointments.specialty" = "专科";
+"appointments.datetime" = "预约日期和时间";
+"appointments.location" = "位置";
+"appointments.notes" = "备注（可选）";
+"appointments.past_section" = "过去的预约";
+"appointments.upcoming_section" = "即将到来的预约";
+"appointments.delete" = "删除";
+"appointments.complete" = "完成";
+"appointments.empty_title" = "没有预约";
+"appointments.empty_description" = "添加预约以开始使用";
+
+/* Home (Additional) */
+"home.completed" = "已完成";
+"home.pending" = "待处理";
+"home.streak" = "连续服用";
+"home.greeting_morning" = "早上好 ☀️";
+"home.greeting_afternoon" = "下午好 🌤";
+"home.greeting_evening" = "晚上好 🌙";
+"home.greeting_default" = "您好 ✨";
+"home.low_stock" = "库存不足";
+"home.today_appointments" = "今日预约";
+"home.items_remaining" = "剩余 %d 项";
+"home.patient_medication" = "%@ 的药物";
+
+/* Health */
+"health.title" = "健康指标";
+"health.error" = "错误";
+"health.confirm" = "确定";
+"health.premium_feature" = "仅高级版 • 健康应用集成";
+"health.premium_description" = "升级以同步健康数据";
+"health.permission_required" = "需要健康应用权限";
+"health.permission_description" = "需要权限才能同步健康数据";
+"health.sync_from_health" = "从健康应用同步";
+"health.last_sync" = "最后同步：%@";
+"health.sync_description" = "同步以获取健康数据";
+"health.metrics_title" = "健康指标";
+"health.recent_records" = "近期记录";
+"health.no_records" = "暂无记录";
+"health.add_record" = "添加记录";
+"health.select_metric" = "选择指标";
+"health.systolic_bp" = "收缩压";
+"health.diastolic_bp" = "舒张压";
+"health.input_value" = "输入数值";
+"health.notes_optional" = "备注（可选）";
+"health.save" = "保存";
+"health.input_title" = "输入健康指标";
+"health.cancel" = "取消";
+"health.no_record" = "无记录";
+"health.date" = "日期";
+"health.value" = "数值";
+
+/* Settings (Additional) */
+"settings.delete_all_data_alert_title" = "删除数据";
+"settings.reschedule_notifications_alert_title" = "重新安排通知";
+"settings.import_data_alert_title" = "导入数据";
+"settings.import_complete_alert_title" = "导入完成";
+"settings.restart_required_alert_title" = "需要重启应用";
+"settings.delete_all_message" = "所有药物、记录和健康指标将被删除。此操作无法撤销。";
+"settings.reschedule_message" = "是否要重新安排所有药物通知？";
+"settings.import_button" = "导入";
+"settings.later_button" = "稍后";
+"settings.quit_now_button" = "立即退出";
+"settings.continue_button" = "继续";
+"settings.premium_active" = "高级版";
+"settings.premium_in_use" = "使用中";
+"settings.premium_upgrade_title" = "升级到高级版";
+"settings.premium_all_features" = "解锁所有功能 • %@";
+"settings.developer_support" = "支持开发者";
+"settings.restore_purchases" = "恢复购买";
+"settings.support_section" = "支持";
+"settings.already_purchased_hint" = "如果您已购买，请点击恢复。";
+"settings.notification_permission" = "通知权限";
+"settings.open_settings" = "设置";
+"settings.enable_notifications" = "启用通知";
+"settings.notification_sound" = "通知声音";
+"settings.haptic" = "触感反馈";
+"settings.default_snooze" = "默认延迟时间";
+"settings.on_the_hour" = "整点";
+"settings.reminder_before" = "提前提醒";
+"settings.reschedule_button" = "重新安排通知";
+"settings.healthkit_integration" = "健康应用集成";
+"settings.premium_locked" = "通过高级版解锁";
+"settings.healthkit_unavailable" = "此设备上不提供健康应用。";
+"settings.request_permission" = "请求健康权限";
+"settings.auto_sync" = "自动同步";
+"settings.last_sync_label" = "最后同步";
+"settings.sync_now" = "立即同步";
+"settings.appearance_mode" = "外观模式";
+"settings.patient_management" = "患者管理";
+"settings.family_medication" = "家庭药物管理";
+"settings.caregiver_alerts" = "护理者警报";
+"settings.missed_dose_alert" = "遗漏剂量警报";
+"settings.appointments" = "预约";
+"settings.create_sample_data" = "创建示例数据";
+"settings.delete_all" = "删除所有数据";
+"settings.data_backup" = "数据备份";
+"settings.premium_sync_description" = "高级版可启用多设备同步和数据备份/恢复。";
+"settings.sync_status_label" = "同步状态";
+"settings.sync_active" = "活跃";
+"settings.sync_restart_required" = "需要重启";
+"settings.sync_disabled" = "已禁用";
+"settings.export_data" = "导出数据";
+"settings.import_data" = "导入数据";
+"settings.export_description" = "导出的文件可通过在其他设备或重新安装后导入来恢复。";
+"settings.version_label" = "版本";
+"settings.privacy_policy" = "隐私政策";
+"settings.terms_of_service" = "服务条款";
+"settings.info_section" = "关于";
+"settings.premium_status" = "高级版状态";
+"settings.premium_activated" = "已激活";
+"settings.premium_deactivated" = "未激活";
+"settings.reset_tip_count" = "重置提示计数";
+"settings.total_tips" = "总提示";
+"settings.more_developer_options" = "更多开发者选项";
+"settings.developer_settings" = "开发者设置";
+
+/* Medication List (Additional) */
+"medication_list.search_prompt" = "搜索药物";
+"medication_list.title_short" = "药物管理";
+"medication_list.sort_section" = "排序";
+"medication_list.sort_label" = "排序";
+"medication_list.filter_section" = "筛选";
+"medication_list.filter_label" = "筛选";
+"medication_list.delete_alert_title" = "删除药物";
+"medication_list.delete_button" = "删除";
+"medication_list.active_label" = "活跃";
+"medication_list.no_results" = "未找到搜索结果";
+"medication_list.medication_list_title" = "药物列表";
+
+/* Alert */
+"alert.import_data_message" = "导入从 %@ 的 %@（版本 %@）导出的数据？\n\n总计：%d 项\n- 患者：%d 名\n- 药物：%d 种\n- 记录：%d 条";
+"alert.import_complete_message" = "%@\n\n总导入：%d 项";
+"alert.restart_required_message" = "更改将在重启应用后生效。";
+"alert.icloud_warning_title" = "iCloud 同步已激活";
+"alert.icloud_warning_message" = "在 iCloud 同步启用时导入数据可能会影响其他设备。是否继续？";
+
+/* Settings Errors */
+"settings.error_export_failed" = "导出失败：%@";
+"settings.error_file_access_denied" = "无法访问文件。";
+"settings.error_file_read_failed" = "无法读取文件：%@";
+"settings.error_file_selection_failed" = "文件选择失败：%@";
+"settings.error_import_failed" = "导入失败：%@";
+"settings.icloud_sync_import_warning" = "在 iCloud 同步启用时导入数据可能会影响其他设备。";
+"settings.debug_footer" = "仅在 DEBUG 构建中显示。发布构建中会自动隐藏。";
+
+/* Added missing keys to match en.lproj/ko.lproj */
+"tab.health" = "健康";
+"tab.history" = "记录";
+
+"alert.continue" = "继续";
+"alert.delete_all_message" = "所有药物、记录和健康指标将被删除。此操作无法撤销。";
+"alert.delete_all_title" = "删除数据";
+"alert.import_complete_title" = "导入完成";
+"alert.import_data_title" = "导入数据";
+"alert.quit_later" = "稍后";
+"alert.quit_now" = "立即退出";
+"alert.reschedule_notifications_message" = "是否要重新安排所有药物通知？";
+"alert.reschedule_notifications_title" = "重新安排通知";
+"alert.restart_required_title" = "需要重启应用";
+
+"settings.about_section" = "关于";
+"settings.appearance" = "外观";
+"settings.cloud_backup" = "云与备份";
+"settings.data" = "数据";
+"settings.default_snooze_interval" = "默认延迟间隔";
+"settings.delete_all_data" = "删除所有数据";
+"settings.family_medication_management" = "家庭药物管理";
+"settings.healthkit" = "健康";
+"settings.healthkit_sync" = "自动同步";
+"settings.icloud_sync" = "iCloud 同步";
+"settings.icloud_sync_status" = "同步状态";
+"settings.icloud_unavailable" = "iCloud 不可用";
+"settings.last_sync" = "最后同步";
+"settings.sample_data" = "创建示例数据";
+"settings.sound" = "声音";
+"settings.support" = "支持";
+"settings.caregiver_alert_description" = "对遗漏剂量进行提醒";
+"settings.request_healthkit_permission" = "请求健康权限";
+
+"medication_list.active_medications" = "活跃";
+"medication_list.add_to_start" = "添加药物以开始管理";
+"medication_list.count" = "%d 种药物";
+"medication_list.delete_confirmation" = "删除药物";
+"medication_list.delete_message" = "是否要删除 %@？";
+"medication_list.discontinued" = "已停用";
+"medication_list.filter" = "筛选";
+"medication_list.filter_sort" = "筛选与排序";
+"medication_list.free_version" = "使用免费版";
+"medication_list.items" = "项";
+"medication_list.low_stock" = "库存不足";
+"medication_list.medications_registered" = "已注册 %d/%d 种药物";
+"medication_list.no_medications" = "还没有添加药物";
+"medication_list.no_results_for" = "未找到“%@”的结果";
+"medication_list.no_search_results" = "未找到搜索结果";
+"medication_list.search_placeholder" = "搜索药物";
+"medication_list.sort" = "排序";
+"medication_list.title" = "药物管理";
+"medication_list.total" = "总计";
+"medication_list.upgrade" = "升级";
+
+"patient.adherence_rate_label" = "依从率";
+"patient.adherence_today" = "今日依从";
+"patient.age" = "年龄";
+"patient.appointment" = "%@ 的预约";
+"patient.appointment_datetime" = "预约日期和时间";
+"patient.appointment_list_title" = "预约";
+"patient.appointment_location" = "位置";
+"patient.basic_info" = "基本信息";
+"patient.initials" = "姓名缩写";
+"patient.medical_specialty" = "专科";
+"patient.medication" = "%@ 的药物";
+"patient.name_label" = "姓名";
+"patient.notes_optional_label" = "备注（可选）";
+"patient.notes_section" = "备注";
+"patient.profile_color_section" = "个人资料颜色";
+"patient.relationship_label" = "关系";
