@@ -433,3 +433,24 @@
 "settings.error_import_failed" = "Import failed: %@";
 "settings.icloud_sync_import_warning" = "Importing while iCloud sync is enabled may affect other devices.";
 "settings.debug_footer" = "Only shown in DEBUG builds. Automatically hidden in release builds.";
+
+/* Patient Relationship */
+"patient.relationship.myself" = "Myself";
+"patient.relationship.parent" = "Parent";
+"patient.relationship.grandparent" = "Grandparent";
+"patient.relationship.spouse" = "Spouse";
+"patient.relationship.child" = "Child";
+"patient.relationship.sibling" = "Sibling";
+"patient.relationship.relative" = "Relative";
+"patient.relationship.friend" = "Friend";
+"patient.relationship.other" = "Other";
+
+/* Patient Profile Colors (display names) */
+"patient.color.blue" = "Blue";
+"patient.color.green" = "Green";
+"patient.color.orange" = "Orange";
+"patient.color.purple" = "Purple";
+"patient.color.pink" = "Pink";
+"patient.color.red" = "Red";
+"patient.color.teal" = "Teal";
+"patient.color.indigo" = "Indigo";

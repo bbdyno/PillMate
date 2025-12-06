@@ -433,3 +433,25 @@
 "settings.error_import_failed" = "読み込みに失敗しました: %@";
 "settings.icloud_sync_import_warning" = "iCloud同期がオンの状態で読み込みを行うと他のデバイスにも影響する可能性があります。";
 "settings.debug_footer" = "DEBUGビルドでのみ表示されます。リリースビルドでは自動的に非表示になります。";
+
+/* Patient Relationship */
+"patient.relationship.myself" = "自分";
+"patient.relationship.parent" = "親";
+"patient.relationship.grandparent" = "祖父母";
+"patient.relationship.spouse" = "配偶者";
+"patient.relationship.child" = "子ども";
+"patient.relationship.sibling" = "兄弟/姉妹";
+"patient.relationship.relative" = "親戚";
+"patient.relationship.friend" = "知人";
+"patient.relationship.other" = "その他";
+
+/* Patient Profile Colors (display names) */
+"patient.color.blue" = "青";
+"patient.color.green" = "緑";
+"patient.color.orange" = "オレンジ";
+"patient.color.purple" = "紫";
+"patient.color.pink" = "ピンク";
+"patient.color.red" = "赤";
+"patient.color.teal" = "ティール";
+"patient.color.indigo" = "インディゴ";
+

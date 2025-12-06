@@ -433,3 +433,24 @@
 "settings.error_import_failed" = "가져오기 실패: %@";
 "settings.icloud_sync_import_warning" = "iCloud 동기화가 켜진 상태에서 가져오기를 하면 다른 기기에도 영향을 줄 수 있습니다.";
 "settings.debug_footer" = "DEBUG 빌드에서만 표시됩니다. 릴리즈 빌드에서는 자동으로 숨겨집니다.";
+
+/* Patient Relationship */
+"patient.relationship.myself" = "본인";
+"patient.relationship.parent" = "부모님";
+"patient.relationship.grandparent" = "조부모님";
+"patient.relationship.spouse" = "배우자";
+"patient.relationship.child" = "자녀";
+"patient.relationship.sibling" = "형제/자매";
+"patient.relationship.relative" = "친척";
+"patient.relationship.friend" = "지인";
+"patient.relationship.other" = "기타";
+
+/* Patient Profile Colors (display names) */
+"patient.color.blue" = "파랑";
+"patient.color.green" = "초록";
+"patient.color.orange" = "주황";
+"patient.color.purple" = "보라";
+"patient.color.pink" = "분홍";
+"patient.color.red" = "빨강";
+"patient.color.teal" = "청록";
+"patient.color.indigo" = "남색";

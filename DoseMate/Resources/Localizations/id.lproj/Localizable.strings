@@ -433,3 +433,24 @@
 "settings.error_import_failed" = "Gagal mengimpor: %@";
 "settings.icloud_sync_import_warning" = "Mengimpor saat sinkron iCloud aktif dapat memengaruhi perangkat lain.";
 "settings.debug_footer" = "Hanya ditampilkan pada build DEBUG. Secara otomatis disembunyikan pada build rilis.";
+
+/* Patient Relationship */
+"patient.relationship.myself" = "Saya";
+"patient.relationship.parent" = "Orang tua";
+"patient.relationship.grandparent" = "Kakek/Nenek";
+"patient.relationship.spouse" = "Pasangan";
+"patient.relationship.child" = "Anak";
+"patient.relationship.sibling" = "Saudara kandung";
+"patient.relationship.relative" = "Kerabat";
+"patient.relationship.friend" = "Teman";
+"patient.relationship.other" = "Lainnya";
+
+/* Patient Profile Colors (display names) */
+"patient.color.blue" = "Biru";
+"patient.color.green" = "Hijau";
+"patient.color.orange" = "Oranye";
+"patient.color.purple" = "Ungu";
+"patient.color.pink" = "Merah muda";
+"patient.color.red" = "Merah";
+"patient.color.teal" = "Hijau kebiruan";
+"patient.color.indigo" = "Indigo";
