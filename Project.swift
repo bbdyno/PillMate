@@ -1,13 +1,13 @@
 import ProjectDescription
 
 let project = Project(
-    name: "PillMate",
+    name: "DoseMate",
     targets: [
         .target(
-            name: "PillMate",
+            name: "DoseMate",
             destinations: .iOS,
             product: .app,
-            bundleId: "com.bbdyno.app.pillMate",
+            bundleId: "com.bbdyno.app.doseMate",
             deploymentTargets: .iOS("18.0"),
             infoPlist: .extendingDefault(
                 with: [
@@ -46,8 +46,8 @@ let project = Project(
                     ]
                 ]
             ),
-            sources: ["PillMate/**"],
-            resources: ["PillMate/**/*.{xcassets,strings,storyboard,xib}"],
+            sources: ["DoseMate/**"],
+            resources: ["DoseMate/**/*.{xcassets,strings,storyboard,xib}"],
             scripts: [
                 .pre(
                     path: .relativeToRoot("scripts/swiftgen.sh"),
@@ -56,7 +56,7 @@ let project = Project(
                 )
             ],
             dependencies: [
-                .target(name: "PillMateWidget"),
+                .target(name: "DoseMateWidget"),
                 .external(name: "SDWebImage"),
                 .external(name: "SDWebImageSwiftUI")
             ],
@@ -65,15 +65,15 @@ let project = Project(
                     "CODE_SIGN_STYLE": "Manual",
                     "CODE_SIGN_IDENTITY": "iPhone Developer: Taein Kim",
                     "DEVELOPMENT_TEAM": "4U62JZ6987",
-                    "PROVISIONING_PROFILE_SPECIFIER": "PillMate App Provisioning"
+                    "PROVISIONING_PROFILE_SPECIFIER": "DoseMate App Provisioning"
                 ]
             )
         ),
         .target(
-            name: "PillMateWidget",
+            name: "DoseMateWidget",
             destinations: .iOS,
             product: .appExtension,
-            bundleId: "com.bbdyno.app.pillMate.widget",
+            bundleId: "com.bbdyno.app.doseMate.widget",
             deploymentTargets: .iOS("18.0"),
             infoPlist: .extendingDefault(
                 with: [
@@ -82,40 +82,40 @@ let project = Project(
                     ]
                 ]
             ),
-            sources: ["PillMateWidget/**"],
-            resources: ["PillMateWidget/**/*.xcassets"],
+            sources: ["DoseMateWidget/**"],
+            resources: ["DoseMateWidget/**/*.xcassets"],
             dependencies: [],
             settings: .settings(
                 base: [
                     "CODE_SIGN_STYLE": "Manual",
                     "CODE_SIGN_IDENTITY": "iPhone Developer: Taein Kim",
                     "DEVELOPMENT_TEAM": "4U62JZ6987",
-                    "PROVISIONING_PROFILE_SPECIFIER": "PillMate WidgetExtension Provisioning"
+                    "PROVISIONING_PROFILE_SPECIFIER": "DoseMate WidgetExtension Provisioning"
                 ]
             )
         ),
         .target(
-            name: "PillMateTests",
+            name: "DoseMateTests",
             destinations: .iOS,
             product: .unitTests,
-            bundleId: "com.bbdyno.app.pillMate.tests",
+            bundleId: "com.bbdyno.app.doseMate.tests",
             deploymentTargets: .iOS("18.0"),
             infoPlist: .default,
-            sources: ["PillMateTests/**"],
+            sources: ["DoseMateTests/**"],
             dependencies: [
-                .target(name: "PillMate")
+                .target(name: "DoseMate")
             ]
         ),
         .target(
-            name: "PillMateUITests",
+            name: "DoseMateUITests",
             destinations: .iOS,
             product: .uiTests,
-            bundleId: "com.bbdyno.app.pillMate.uitests",
+            bundleId: "com.bbdyno.app.doseMate.uitests",
             deploymentTargets: .iOS("18.0"),
             infoPlist: .default,
-            sources: ["PillMateUITests/**"],
+            sources: ["DoseMateUITests/**"],
             dependencies: [
-                .target(name: "PillMate")
+                .target(name: "DoseMate")
             ]
         )
     ]

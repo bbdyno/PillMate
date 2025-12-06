@@ -13,7 +13,7 @@ import PackageDescription
 #endif
 
 let package = Package(
-    name: "PillMate",
+    name: "DoseMate",
     dependencies: [
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.19.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.1.0")

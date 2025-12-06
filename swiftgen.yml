@@ -1,9 +1,9 @@
 strings:
   inputs:
-    - PillMate/Resources/Localizations/en.lproj
+    - DoseMate/Resources/Localizations/en.lproj
   outputs:
     - templateName: structured-swift5
-      output: PillMate/Generated/Strings.swift
+      output: DoseMate/Generated/Strings.swift
       params:
         enumName: L10n
         publicAccess: true
