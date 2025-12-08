@@ -98,6 +98,7 @@
 "home.greeting_morning" = "早上好 ☀️";
 "home.items_remaining" = "剩余 %d 个";
 "home.low_stock" = "库存不足";
+"home.my_medication" = "我的用药";
 "home.patient_medication" = "%@ 的用药";
 "home.pending" = "待办";
 "home.streak" = "连续";

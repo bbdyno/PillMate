@@ -53,6 +53,9 @@ final class MedicationSchedule {
     
     // MARK: - 맞춤 설정
     
+    /// 간격 일수 (N일마다 복용)
+    var intervalDays: Int = 1
+    
     /// 맞춤 주기 설명
     var customFrequency: String?
     
@@ -136,6 +139,16 @@ final class MedicationSchedule {
         // 종료일 이후면 nil
         if let endDate = endDate, today > endDate { return nil }
         
+        // 간격 설정 체크
+        if scheduleTypeEnum == .interval {
+            let daysSinceStart = calendar.dateComponents([.day], from: calendar.startOfDay(for: startDate), to: calendar.startOfDay(for: today)).day ?? 0
+            
+            // intervalDays로 나누어떨어지지 않으면 오늘은 복용일이 아님
+            if daysSinceStart % intervalDays != 0 {
+                return nil
+            }
+        }
+        
         // 특정 요일 체크
         if scheduleTypeEnum == .specificDays {
             let todayWeekday = calendar.component(.weekday, from: today) - 1 // 0-based
@@ -180,10 +193,20 @@ final class MedicationSchedule {
                 let dayNames = days.map { Weekday(rawValue: $0)?.shortName ?? "" }.joined(separator: ", ")
                 description = dayNames
             }
+        case .interval:
+            if intervalDays == 1 {
+                description = "매일"
+            } else if intervalDays == 7 {
+                description = "매주"
+            } else if intervalDays == 14 {
+                description = "격주"
+            } else if intervalDays == 30 {
+                description = "매월"
+            } else {
+                description = "\(intervalDays)일마다"
+            }
         case .asNeeded:
             description = "필요시"
-        case .custom:
-            description = customFrequency ?? "맞춤"
         }
         
         let timesText = times.map { DateFormatter.shortTime.string(from: $0) }.joined(separator: ", ")
@@ -206,6 +229,7 @@ final class MedicationSchedule {
         frequency: Frequency = .onceDaily,
         times: [Date] = [],
         specificDays: [Int]? = nil,
+        intervalDays: Int = 1,
         startDate: Date = Date(),
         endDate: Date? = nil,
         isTapering: Bool = false,
@@ -222,6 +246,7 @@ final class MedicationSchedule {
         self.frequency = frequency.rawValue
         self.timesData = try? JSONEncoder().encode(times)
         self.specificDaysData = try? JSONEncoder().encode(specificDays)
+        self.intervalDays = intervalDays
         self.startDate = startDate
         self.endDate = endDate
         self.isTapering = isTapering
@@ -254,6 +279,16 @@ final class MedicationSchedule {
         
         // 종료일 이후면 nil
         if let endDate = endDate, date > endDate { return nil }
+        
+        // 간격 설정 체크
+        if scheduleTypeEnum == .interval {
+            let daysSinceStart = calendar.dateComponents([.day], from: calendar.startOfDay(for: startDate), to: calendar.startOfDay(for: date)).day ?? 0
+            
+            // intervalDays로 나누어떨어지지 않으면 해당 날짜는 복용일이 아님
+            if daysSinceStart % intervalDays != 0 {
+                return nil
+            }
+        }
         
         // 특정 요일 체크
         if scheduleTypeEnum == .specificDays {

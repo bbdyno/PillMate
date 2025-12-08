@@ -98,6 +98,7 @@
 "home.greeting_morning" = "Good morning ☀️";
 "home.items_remaining" = "%d items remaining";
 "home.low_stock" = "Low Stock";
+"home.my_medication" = "My Medication";
 "home.patient_medication" = "%@'s Medication";
 "home.pending" = "Pending";
 "home.streak" = "Streak";

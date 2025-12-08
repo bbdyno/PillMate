@@ -634,7 +634,8 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             // 필요시 복용은 예약 알림 없음
             return UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
             
-        case .custom:
+        case .interval:
+            // 간격 설정은 매일 반복으로 설정하고, 실제 알림 시 간격 체크
             return UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
         }
     }

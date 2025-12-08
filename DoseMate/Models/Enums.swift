@@ -13,8 +13,8 @@ import SwiftUI
 enum ScheduleType: String, Codable, CaseIterable, Identifiable {
     case daily = "daily"              // 매일
     case specificDays = "specificDays" // 특정 요일
+    case interval = "interval"         // 간격 (맞춤)
     case asNeeded = "asNeeded"         // 필요시 (PRN)
-    case custom = "custom"             // 맞춤
     
     var id: String { rawValue }
     
@@ -22,8 +22,8 @@ enum ScheduleType: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .daily: return "매일"
         case .specificDays: return "특정 요일"
+        case .interval: return "간격 설정"
         case .asNeeded: return "필요시 (PRN)"
-        case .custom: return "맞춤"
         }
     }
     
@@ -31,8 +31,17 @@ enum ScheduleType: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .daily: return "calendar"
         case .specificDays: return "calendar.badge.clock"
+        case .interval: return "arrow.left.arrow.right"
         case .asNeeded: return "hand.raised"
-        case .custom: return "slider.horizontal.3"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .daily: return "매일 같은 시간에 복용"
+        case .specificDays: return "선택한 요일에만 복용"
+        case .interval: return "N일마다 복용"
+        case .asNeeded: return "필요할 때만 복용"
         }
     }
 }

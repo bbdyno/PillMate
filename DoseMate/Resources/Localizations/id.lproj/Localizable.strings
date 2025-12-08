@@ -98,6 +98,7 @@
 "home.greeting_morning" = "Selamat pagi ☀️";
 "home.items_remaining" = "%d tersisa";
 "home.low_stock" = "Stok menipis";
+"home.my_medication" = "Obat Saya";
 "home.patient_medication" = "Obat %@";
 "home.pending" = "Tertunda";
 "home.streak" = "Beruntun";

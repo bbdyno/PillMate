@@ -53,17 +53,7 @@ struct SettingsView: View {
             .scrollContentBackground(.hidden)
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: AppSpacing.xs) {
-                        Image(systemName: "gearshape.fill")
-                            .foregroundStyle(AppColors.primaryGradient)
-                        Text(DoseMateStrings.Settings.title)
-                            .font(AppTypography.headline)
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-                }
-            }
+            .navigationTitle(DoseMateStrings.Settings.title)
             .toolbarBackground(.clear, for: .navigationBar)
             .onAppear {
                 viewModel.setup(with: modelContext)

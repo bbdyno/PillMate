@@ -98,6 +98,7 @@
 "home.greeting_morning" = "좋은 아침이에요 ☀️";
 "home.items_remaining" = "%d개 남음";
 "home.low_stock" = "재고 부족";
+"home.my_medication" = "내 복약";
 "home.patient_medication" = "%@님의 복약";
 "home.pending" = "대기";
 "home.streak" = "연속";

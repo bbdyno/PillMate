@@ -18,6 +18,7 @@ struct HomeView: View {
     @State private var selectedLogForSkip: MedicationLog?
     @State private var skipReason = ""
     @State private var showPatientSelector = false
+    @State private var showAddMedicationSheet = false
     
     // MARK: - Body
     
@@ -57,16 +58,8 @@ struct HomeView: View {
             }
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(DoseMateStrings.App.name)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: AppSpacing.xs) {
-                        Image(systemName: "pills.fill")
-                            .foregroundStyle(AppColors.primaryGradient)
-                        Text(DoseMateStrings.App.name)
-                            .font(AppTypography.headline)
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
@@ -99,6 +92,11 @@ struct HomeView: View {
                 )
                 .presentationDetents([.medium])
             }
+            .sheet(isPresented: $showAddMedicationSheet) {
+                AddMedicationView { medication in
+                    // 약물 추가 후 자동으로 리프레시됨
+                }
+            }
         }
     }
     
@@ -114,7 +112,7 @@ struct HomeView: View {
                         Text(greetingText)
                             .font(AppTypography.subheadline)
                             .foregroundColor(.white.opacity(0.9))
-                        Text(DoseMateStrings.Home.patientMedication(viewModel.selectedPatientName))
+                        Text(viewModel.medicationTitle)
                             .font(AppTypography.title2)
                             .foregroundColor(.white)
                     }
@@ -422,10 +420,21 @@ struct HomeView: View {
                     .font(AppTypography.headline)
                     .foregroundColor(AppColors.textPrimary)
 
-                Text(DoseMateStrings.Medications.add)
+                Text(DoseMateStrings.MedicationList.addToStart)
                     .font(AppTypography.subheadline)
                     .foregroundColor(AppColors.textSecondary)
             }
+            
+            Button {
+                showAddMedicationSheet = true
+            } label: {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                    Text(DoseMateStrings.Medications.add)
+                }
+            }
+            .buttonStyle(PrimaryButtonStyle())
+            .frame(width: 160)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, AppSpacing.xxl)

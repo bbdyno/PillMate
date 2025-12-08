@@ -43,17 +43,8 @@ struct LogHistoryView: View {
             }
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(DoseMateStrings.LogHistory.title)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: AppSpacing.xs) {
-                        Image(systemName: "list.clipboard.fill")
-                            .foregroundStyle(AppColors.primaryGradient)
-                        Text(DoseMateStrings.LogHistory.title)
-                            .font(AppTypography.headline)
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-                }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button {
@@ -131,6 +122,7 @@ struct LogHistoryView: View {
                 }
             }
             .padding(AppSpacing.lg)
+            .frame(maxWidth: .infinity)
             .background(AppColors.headerGradient)
             
             // 하단 요약
@@ -157,6 +149,7 @@ struct LogHistoryView: View {
                 )
             }
             .padding(.vertical, AppSpacing.sm)
+            .frame(maxWidth: .infinity)
             .background(AppColors.cardBackground)
         }
         .cornerRadius(AppRadius.xl)

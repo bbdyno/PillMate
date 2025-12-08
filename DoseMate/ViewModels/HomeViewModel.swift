@@ -101,9 +101,18 @@ final class HomeViewModel {
     
     /// 선택된 환자 이름
     var selectedPatientName: String {
-        selectedPatient?.name ?? "본인"
+        selectedPatient?.name ?? "나"
     }
-    
+
+    /// 선택된 환자의 복약 타이틀 (본인: "내 복약", 다른 환자: "(이름)님의 복약")
+    var medicationTitle: String {
+        if let patient = selectedPatient {
+            return DoseMateStrings.Home.patientMedication(patient.name)
+        } else {
+            return DoseMateStrings.Home.myMedication
+        }
+    }
+
     /// 선택된 환자 색상
     var selectedPatientColor: Color {
         selectedPatient?.color ?? .blue

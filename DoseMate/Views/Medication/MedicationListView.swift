@@ -49,17 +49,8 @@ struct MedicationListView: View {
                 text: $viewModel.searchText,
                 prompt: DoseMateStrings.MedicationList.searchPrompt
             )
+            .navigationTitle(DoseMateStrings.MedicationList.titleShort)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: AppSpacing.xs) {
-                        Image(systemName: "pill.fill")
-                            .foregroundStyle(AppColors.primaryGradient)
-                        Text(DoseMateStrings.MedicationList.titleShort)
-                            .font(AppTypography.headline)
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-                }
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack(spacing: AppSpacing.sm) {
                         // 필터/정렬 메뉴

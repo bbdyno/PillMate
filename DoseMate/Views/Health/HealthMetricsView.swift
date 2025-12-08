@@ -49,17 +49,8 @@ struct HealthMetricsView: View {
             }
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(DoseMateStrings.Health.title)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: AppSpacing.xs) {
-                        Image(systemName: "heart.fill")
-                            .foregroundStyle(AppColors.danger.gradient)
-                        Text(DoseMateStrings.Health.title)
-                            .font(AppTypography.headline)
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-                }
-
                 // 프리미엄 사용자에게만 + 버튼 표시
                 if PremiumFeatures.canUseHealthKit {
                     ToolbarItem(placement: .topBarTrailing) {

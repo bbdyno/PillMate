@@ -98,6 +98,7 @@
 "home.greeting_morning" = "おはようございます ☀️";
 "home.items_remaining" = "%d件 残り";
 "home.low_stock" = "在庫不足";
+"home.my_medication" = "私の服薬";
 "home.patient_medication" = "%@さんの服薬";
 "home.pending" = "保留";
 "home.streak" = "連続";

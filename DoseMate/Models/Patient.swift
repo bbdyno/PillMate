@@ -159,7 +159,7 @@ final class Patient {
 // MARK: - 환자 관계 타입
 
 enum PatientRelationship: String, CaseIterable, Identifiable {
-    case myself = "본인"
+    case myself = "나"
     case parent = "부모님"
     case grandparent = "조부모님"
     case spouse = "배우자"

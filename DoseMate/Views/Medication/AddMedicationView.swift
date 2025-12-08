@@ -45,6 +45,7 @@ struct AddMedicationView: View {
     @State private var frequency: Frequency = .onceDaily
     @State private var scheduleTimes: [Date] = [Date()]
     @State private var selectedDays: Set<Int> = []
+    @State private var intervalDays = 1 // 간격 설정 (N일마다)
     @State private var mealRelation: MealRelation = .anytime
     @State private var startDate = Date()
     @State private var hasEndDate = false
@@ -88,42 +89,31 @@ struct AddMedicationView: View {
     
     var body: some View {
         NavigationStack {
-            TabView(selection: $currentPage) {
-                basicInfoPage.tag(0)
-                scheduleSettingsPage.tag(1)
-                additionalInfoPage.tag(2)
+            ZStack(alignment: .bottom) {
+                TabView(selection: $currentPage) {
+                    basicInfoPage.tag(0)
+                    scheduleSettingsPage.tag(1)
+                    additionalInfoPage.tag(2)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                
+                // 하단 네비게이션
+                bottomNavigationBar
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .navigationTitle(medicationToEdit == nil ? "약물 추가" : "약물 편집")
+            .background(AppColors.background)
+            .navigationTitle(medicationToEdit == nil ? DoseMateStrings.Medications.add : "약물 편집")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("취소") {
+                    Button(DoseMateStrings.Common.cancel) {
                         dismiss()
                     }
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    if currentPage == 2 {
-                        Button("저장") {
-                            saveMedication()
-                        }
-                        .fontWeight(.semibold)
-                        .disabled(name.isEmpty)
-                    } else {
-                        Button("다음") {
-                            withAnimation {
-                                currentPage += 1
-                            }
-                        }
-                    }
+                    .foregroundColor(AppColors.textSecondary)
                 }
             }
-            .safeAreaInset(edge: .bottom) {
-                pageIndicator
-            }
+            .toolbarBackground(.clear, for: .navigationBar)
             .alert("입력 오류", isPresented: $showValidationError) {
-                Button("확인", role: .cancel) {}
+                Button(DoseMateStrings.Common.ok, role: .cancel) {}
             } message: {
                 Text(validationErrorMessage)
             }
@@ -138,225 +128,491 @@ struct AddMedicationView: View {
     // MARK: - Page 1: Basic Info
     
     private var basicInfoPage: some View {
-        Form {
-            // 이미지 섹션
-            Section {
-                HStack {
-                    Spacer()
+        ScrollView {
+            VStack(spacing: AppSpacing.lg) {
+                // 헤더
+                pageHeaderCard(
+                    icon: "pill.fill",
+                    title: "기본 정보",
+                    subtitle: "약물의 기본 정보를 입력하세요",
+                    color: AppColors.primary
+                )
+                
+                // 이미지 섹션
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "약물 사진", subtitle: "")
                     
                     imageSelector
+                }
+                .cardStyle()
+                
+                // 기본 정보
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "필수 정보", subtitle: "")
                     
-                    Spacer()
-                }
-            }
-            
-            // 기본 정보
-            Section("기본 정보") {
-                TextField("약물 이름 *", text: $name)
-                
-                TextField("용량 (예: 1정, 5mL)", text: $dosage)
-                
-                TextField("강도 (예: 500mg)", text: $strength)
-            }
-            
-            // 형태 및 색상
-            Section("약물 형태") {
-                Picker("형태", selection: $selectedForm) {
-                    ForEach(MedicationForm.allCases) { form in
-                        Label(form.displayName, systemImage: form.icon)
-                            .tag(form)
+                    VStack(spacing: AppSpacing.sm) {
+                        CustomTextField(
+                            icon: "pill",
+                            placeholder: "약물 이름 *",
+                            text: $name
+                        )
+                        
+                        CustomTextField(
+                            icon: "number",
+                            placeholder: "용량 (예: 1정, 5mL)",
+                            text: $dosage
+                        )
+                        
+                        CustomTextField(
+                            icon: "chart.bar",
+                            placeholder: "강도 (예: 500mg)",
+                            text: $strength
+                        )
                     }
                 }
+                .cardStyle()
                 
-                Picker("색상", selection: $selectedColor) {
-                    ForEach(MedicationColor.allCases) { color in
-                        HStack {
-                            Circle()
-                                .fill(color.swiftUIColor)
-                                .frame(width: 20, height: 20)
-                                .overlay(
-                                    Circle()
-                                        .stroke(Color.gray, lineWidth: color == .white ? 1 : 0)
-                                )
-                            Text(color.displayName)
+                // 형태 및 색상
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "약물 형태", subtitle: "")
+                    
+                    VStack(spacing: AppSpacing.md) {
+                        // 형태 선택
+                        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                            Text("형태")
+                                .font(AppTypography.caption)
+                                .foregroundColor(AppColors.textSecondary)
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: AppSpacing.sm) {
+                                    ForEach(MedicationForm.allCases) { form in
+                                        FormSelectionChip(
+                                            form: form,
+                                            isSelected: selectedForm == form,
+                                            onTap: { selectedForm = form }
+                                        )
+                                    }
+                                }
+                            }
                         }
-                        .tag(color)
+                        
+                        Divider()
+                        
+                        // 색상 선택
+                        VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                            Text("색상")
+                                .font(AppTypography.caption)
+                                .foregroundColor(AppColors.textSecondary)
+                            
+                            LazyVGrid(columns: [
+                                GridItem(.adaptive(minimum: 60))
+                            ], spacing: AppSpacing.sm) {
+                                ForEach(MedicationColor.allCases) { color in
+                                    ColorSelectionChip(
+                                        color: color,
+                                        isSelected: selectedColor == color,
+                                        onTap: { selectedColor = color }
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
+                .cardStyle()
+                
+                // 목적
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "복용 목적", subtitle: "")
+                    
+                    CustomTextField(
+                        icon: "target",
+                        placeholder: "질환 또는 복용 목적",
+                        text: $purpose
+                    )
+                }
+                .cardStyle()
             }
-            
-            // 목적
-            Section("복용 목적") {
-                TextField("질환 또는 복용 목적", text: $purpose)
-            }
+            .padding(AppSpacing.md)
+            .padding(.bottom, 80)
         }
     }
     
     // MARK: - Page 2: Schedule
     
     private var scheduleSettingsPage: some View {
-        Form {
-            // 스케줄 타입
-            Section("복용 주기") {
-                Picker("주기 타입", selection: $scheduleType) {
-                    ForEach(ScheduleType.allCases) { type in
-                        Text(type.displayName).tag(type)
-                    }
-                }
-                .pickerStyle(.segmented)
+        ScrollView {
+            VStack(spacing: AppSpacing.lg) {
+                // 헤더
+                pageHeaderCard(
+                    icon: "clock.fill",
+                    title: "복용 일정",
+                    subtitle: "약물 복용 시간과 주기를 설정하세요",
+                    color: AppColors.lavender
+                )
                 
-                if scheduleType == .specificDays {
-                    weekdaySelector
-                }
-            }
-            
-            // 복용 횟수
-            Section("복용 횟수") {
-                Picker("하루 복용 횟수", selection: $frequency) {
-                    ForEach(Frequency.allCases) { freq in
-                        Text(freq.displayName).tag(freq)
+                // 스케줄 타입
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "복용 주기", subtitle: "")
+                    
+                    VStack(spacing: AppSpacing.sm) {
+                        Picker("주기 타입", selection: $scheduleType) {
+                            ForEach(ScheduleType.allCases) { type in
+                                Text(type.displayName).tag(type)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        
+                        // 설명 텍스트
+                        Text(scheduleType.description)
+                            .font(AppTypography.caption)
+                            .foregroundColor(AppColors.textSecondary)
+                            .padding(.horizontal, AppSpacing.xs)
+                        
+                        // 특정 요일 선택
+                        if scheduleType == .specificDays {
+                            weekdaySelector
+                        }
+                        
+                        // 간격 설정
+                        if scheduleType == .interval {
+                            intervalSelector
+                        }
                     }
                 }
+                .cardStyle()
+                
+                // 복용 횟수
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "복용 횟수", subtitle: "")
+                    
+                    Picker("하루 복용 횟수", selection: $frequency) {
+                        ForEach(Frequency.allCases) { freq in
+                            Text(freq.displayName).tag(freq)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                }
+                .cardStyle()
                 .onChange(of: frequency) { _, newValue in
                     updateTimesForFrequency(newValue)
                 }
-            }
-            
-            // 복용 시간
-            Section("복용 시간") {
-                ForEach(scheduleTimes.indices, id: \.self) { index in
-                    DatePicker(
-                        "시간 \(index + 1)",
-                        selection: $scheduleTimes[index],
-                        displayedComponents: .hourAndMinute
-                    )
-                }
                 
-                if frequency == .custom {
-                    Button {
-                        scheduleTimes.append(Date())
-                    } label: {
-                        Label("시간 추가", systemImage: "plus")
+                // 복용 시간
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    HStack {
+                        SectionHeader(title: "복용 시간", subtitle: "")
+                        Spacer()
+                        if frequency == .custom {
+                            Button {
+                                scheduleTimes.append(Date())
+                            } label: {
+                                Label("추가", systemImage: "plus.circle.fill")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.primary)
+                            }
+                        }
+                    }
+                    
+                    VStack(spacing: AppSpacing.sm) {
+                        ForEach(scheduleTimes.indices, id: \.self) { index in
+                            HStack {
+                                IconBadge(icon: "clock", color: AppColors.lavender, size: 36, iconSize: 16)
+                                
+                                Text("시간 \(index + 1)")
+                                    .font(AppTypography.body)
+                                    .foregroundColor(AppColors.textPrimary)
+                                
+                                Spacer()
+                                
+                                DatePicker(
+                                    "",
+                                    selection: $scheduleTimes[index],
+                                    displayedComponents: .hourAndMinute
+                                )
+                                .labelsHidden()
+                            }
+                            .padding(AppSpacing.sm)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+                        }
                     }
                 }
-            }
-            
-            // 식사 관계
-            Section("식사와의 관계") {
-                Picker("", selection: $mealRelation) {
-                    ForEach(MealRelation.allCases) { relation in
-                        Label(relation.displayName, systemImage: relation.icon)
-                            .tag(relation)
+                .cardStyle()
+                
+                // 식사 관계
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "식사와의 관계", subtitle: "")
+                    
+                    VStack(spacing: AppSpacing.xs) {
+                        ForEach(MealRelation.allCases) { relation in
+                            Button {
+                                mealRelation = relation
+                            } label: {
+                                HStack {
+                                    IconBadge(
+                                        icon: relation.icon,
+                                        color: mealRelation == relation ? AppColors.primary : AppColors.textTertiary,
+                                        size: 40,
+                                        iconSize: 18
+                                    )
+                                    
+                                    Text(relation.displayName)
+                                        .font(AppTypography.body)
+                                        .foregroundColor(AppColors.textPrimary)
+                                    
+                                    Spacer()
+                                    
+                                    if mealRelation == relation {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(AppColors.primary)
+                                    }
+                                }
+                                .padding(AppSpacing.sm)
+                                .background(mealRelation == relation ? AppColors.primarySoft : AppColors.background)
+                                .cornerRadius(AppRadius.md)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                 }
-                .pickerStyle(.inline)
-                .labelsHidden()
-            }
-            
-            // 기간
-            Section("복용 기간") {
-                DatePicker("시작일", selection: $startDate, displayedComponents: .date)
+                .cardStyle()
                 
-                Toggle("종료일 설정", isOn: $hasEndDate)
-                
-                if hasEndDate {
-                    DatePicker("종료일", selection: $endDate, displayedComponents: .date)
-                }
-            }
-            
-            // 알림
-            Section("알림") {
-                Toggle("알림 받기", isOn: $notificationEnabled)
-                
-                if notificationEnabled {
-                    Picker("미리 알림", selection: $reminderMinutesBefore) {
-                        Text("정각에").tag(0)
-                        Text("5분 전").tag(5)
-                        Text("10분 전").tag(10)
-                        Text("15분 전").tag(15)
-                        Text("30분 전").tag(30)
+                // 기간
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "복용 기간", subtitle: "")
+                    
+                    VStack(spacing: AppSpacing.sm) {
+                        DatePicker("시작일", selection: $startDate, displayedComponents: .date)
+                            .padding(AppSpacing.sm)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+                        
+                        Toggle("종료일 설정", isOn: $hasEndDate)
+                            .padding(AppSpacing.sm)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+                        
+                        if hasEndDate {
+                            DatePicker("종료일", selection: $endDate, displayedComponents: .date)
+                                .padding(AppSpacing.sm)
+                                .background(AppColors.background)
+                                .cornerRadius(AppRadius.md)
+                        }
                     }
                 }
+                .cardStyle()
+                
+                // 알림
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "알림 설정", subtitle: "")
+                    
+                    VStack(spacing: AppSpacing.sm) {
+                        Toggle("알림 받기", isOn: $notificationEnabled)
+                            .padding(AppSpacing.sm)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+                        
+                        if notificationEnabled {
+                            Picker("미리 알림", selection: $reminderMinutesBefore) {
+                                Text("정각에").tag(0)
+                                Text("5분 전").tag(5)
+                                Text("10분 전").tag(10)
+                                Text("15분 전").tag(15)
+                                Text("30분 전").tag(30)
+                            }
+                            .pickerStyle(.menu)
+                            .padding(AppSpacing.sm)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+                        }
+                    }
+                }
+                .cardStyle()
             }
+            .padding(AppSpacing.md)
+            .padding(.bottom, 80)
         }
     }
     
     // MARK: - Page 3: Additional Info
     
     private var additionalInfoPage: some View {
-        Form {
-            // 의사 정보
-            Section("처방 정보") {
-                TextField("처방 의사", text: $prescribingDoctor)
-            }
-            
-            // 재고
-            Section("재고 관리") {
-                Stepper("현재 재고: \(stockCount)개", value: $stockCount, in: 0...999)
+        ScrollView {
+            VStack(spacing: AppSpacing.lg) {
+                // 헤더
+                pageHeaderCard(
+                    icon: "doc.text.fill",
+                    title: "추가 정보",
+                    subtitle: "약물에 대한 상세 정보를 입력하세요",
+                    color: AppColors.mint
+                )
                 
-                Stepper("부족 알림 기준: \(lowStockThreshold)개", value: $lowStockThreshold, in: 1...50)
+                // 의사 정보
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "처방 정보", subtitle: "")
+                    
+                    CustomTextField(
+                        icon: "stethoscope",
+                        placeholder: "처방 의사",
+                        text: $prescribingDoctor
+                    )
+                }
+                .cardStyle()
+                
+                // 재고
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "재고 관리", subtitle: "")
+                    
+                    VStack(spacing: AppSpacing.sm) {
+                        HStack {
+                            IconBadge(icon: "shippingbox", color: AppColors.mint, size: 40, iconSize: 18)
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("현재 재고")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.textSecondary)
+                                Text("\(stockCount)개")
+                                    .font(AppTypography.headline)
+                                    .foregroundColor(AppColors.textPrimary)
+                            }
+                            
+                            Spacer()
+                            
+                            Stepper("", value: $stockCount, in: 0...999)
+                                .labelsHidden()
+                        }
+                        .padding(AppSpacing.sm)
+                        .background(AppColors.background)
+                        .cornerRadius(AppRadius.md)
+                        
+                        HStack {
+                            IconBadge(icon: "exclamationmark.triangle", color: AppColors.warning, size: 40, iconSize: 18)
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("부족 알림 기준")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.textSecondary)
+                                Text("\(lowStockThreshold)개 이하")
+                                    .font(AppTypography.headline)
+                                    .foregroundColor(AppColors.textPrimary)
+                            }
+                            
+                            Spacer()
+                            
+                            Stepper("", value: $lowStockThreshold, in: 1...50)
+                                .labelsHidden()
+                        }
+                        .padding(AppSpacing.sm)
+                        .background(AppColors.background)
+                        .cornerRadius(AppRadius.md)
+                    }
+                }
+                .cardStyle()
+                
+                // 부작용
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "부작용", subtitle: "")
+                    
+                    TextField("알려진 부작용을 입력하세요", text: $sideEffects, axis: .vertical)
+                        .textFieldStyle(.plain)
+                        .lineLimit(3...5)
+                        .padding(AppSpacing.md)
+                        .background(AppColors.background)
+                        .cornerRadius(AppRadius.md)
+                }
+                .cardStyle()
+                
+                // 주의사항
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "주의사항", subtitle: "")
+                    
+                    TextField("복용 시 주의사항을 입력하세요", text: $precautions, axis: .vertical)
+                        .textFieldStyle(.plain)
+                        .lineLimit(3...5)
+                        .padding(AppSpacing.md)
+                        .background(AppColors.background)
+                        .cornerRadius(AppRadius.md)
+                }
+                .cardStyle()
+                
+                // 메모
+                VStack(alignment: .leading, spacing: AppSpacing.md) {
+                    SectionHeader(title: "메모", subtitle: "")
+                    
+                    TextField("추가 메모를 입력하세요", text: $notes, axis: .vertical)
+                        .textFieldStyle(.plain)
+                        .lineLimit(3...5)
+                        .padding(AppSpacing.md)
+                        .background(AppColors.background)
+                        .cornerRadius(AppRadius.md)
+                }
+                .cardStyle()
             }
-            
-            // 부작용
-            Section("부작용") {
-                TextField("알려진 부작용", text: $sideEffects, axis: .vertical)
-                    .lineLimit(3...5)
-            }
-            
-            // 주의사항
-            Section("주의사항") {
-                TextField("복용 주의사항", text: $precautions, axis: .vertical)
-                    .lineLimit(3...5)
-            }
-            
-            // 메모
-            Section("메모") {
-                TextField("추가 메모", text: $notes, axis: .vertical)
-                    .lineLimit(3...5)
-            }
+            .padding(AppSpacing.md)
+            .padding(.bottom, 80)
         }
     }
     
     // MARK: - Image Selector
     
     private var imageSelector: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: AppSpacing.md) {
             if let imageData = selectedImageData,
                let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 120, height: 120)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .frame(width: 140, height: 140)
+                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: AppRadius.lg)
+                            .stroke(AppColors.divider, lineWidth: 1)
+                    )
+                    .shadow(color: Color.black.opacity(0.1), radius: 8, y: 4)
                 
-                Button("사진 변경") {
+                Button {
                     selectedImageData = nil
+                } label: {
+                    Text("사진 변경")
+                        .font(AppTypography.caption)
+                        .foregroundColor(AppColors.primary)
                 }
-                .font(.caption)
             } else {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(width: 120, height: 120)
+                RoundedRectangle(cornerRadius: AppRadius.lg)
+                    .fill(AppColors.primarySoft)
+                    .frame(width: 140, height: 140)
                     .overlay {
-                        Image(systemName: "pill.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.gray)
+                        Image(systemName: selectedForm.icon)
+                            .font(.system(size: 50))
+                            .foregroundStyle(AppColors.primaryGradient)
                     }
                 
-                HStack(spacing: 20) {
+                HStack(spacing: AppSpacing.lg) {
                     PhotosPicker(selection: $selectedPhoto, matching: .images) {
-                        Label("갤러리", systemImage: "photo")
+                        VStack(spacing: 4) {
+                            Image(systemName: "photo")
+                                .font(.system(size: 24))
+                            Text("갤러리")
+                                .font(AppTypography.caption)
+                        }
+                        .foregroundColor(AppColors.primary)
                     }
                     
                     Button {
                         showCamera = true
                     } label: {
-                        Label("카메라", systemImage: "camera")
+                        VStack(spacing: 4) {
+                            Image(systemName: "camera")
+                                .font(.system(size: 24))
+                            Text("카메라")
+                                .font(AppTypography.caption)
+                        }
+                        .foregroundColor(AppColors.primary)
                     }
                 }
-                .font(.subheadline)
             }
         }
+        .frame(maxWidth: .infinity)
         .onChange(of: selectedPhoto) { _, newValue in
             Task {
                 if let data = try? await newValue?.loadTransferable(type: Data.self) {
@@ -369,7 +625,7 @@ struct AddMedicationView: View {
     // MARK: - Weekday Selector
     
     private var weekdaySelector: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: AppSpacing.sm) {
             ForEach(Weekday.allCases) { weekday in
                 Button {
                     if selectedDays.contains(weekday.rawValue) {
@@ -379,39 +635,213 @@ struct AddMedicationView: View {
                     }
                 } label: {
                     Text(weekday.shortName)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .frame(width: 36, height: 36)
+                        .font(AppTypography.caption)
+                        .fontWeight(.semibold)
+                        .frame(width: 40, height: 40)
                         .background(
                             selectedDays.contains(weekday.rawValue)
-                            ? Color.blue
-                            : Color.gray.opacity(0.2)
+                            ? AppColors.primaryGradient
+                            : LinearGradient(colors: [AppColors.divider], startPoint: .top, endPoint: .bottom)
                         )
                         .foregroundColor(
                             selectedDays.contains(weekday.rawValue)
                             ? .white
-                            : .primary
+                            : AppColors.textSecondary
                         )
                         .clipShape(Circle())
+                        .shadow(
+                            color: selectedDays.contains(weekday.rawValue) ? AppColors.primary.opacity(0.3) : .clear,
+                            radius: 4,
+                            y: 2
+                        )
                 }
                 .buttonStyle(.plain)
             }
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, AppSpacing.xs)
     }
     
-    // MARK: - Page Indicator
+    // MARK: - Interval Selector
     
-    private var pageIndicator: some View {
-        HStack(spacing: 8) {
-            ForEach(0..<3) { index in
-                Circle()
-                    .fill(currentPage == index ? Color.blue : Color.gray.opacity(0.3))
-                    .frame(width: 8, height: 8)
+    private var intervalSelector: some View {
+        VStack(spacing: AppSpacing.md) {
+            HStack {
+                IconBadge(icon: "calendar.badge.clock", color: AppColors.lavender, size: 40, iconSize: 18)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("복용 간격")
+                        .font(AppTypography.body)
+                        .foregroundColor(AppColors.textPrimary)
+                    
+                    Text("시작일로부터 \(intervalDays)일마다 복용")
+                        .font(AppTypography.caption)
+                        .foregroundColor(AppColors.textSecondary)
+                }
+                
+                Spacer()
+            }
+            .padding(AppSpacing.sm)
+            .background(AppColors.background)
+            .cornerRadius(AppRadius.md)
+            
+            // 간격 선택 옵션들
+            VStack(spacing: AppSpacing.xs) {
+                ForEach([1, 2, 3, 5, 7, 14, 30], id: \.self) { days in
+                    Button {
+                        intervalDays = days
+                    } label: {
+                        HStack {
+                            Image(systemName: intervalDays == days ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(intervalDays == days ? AppColors.primary : AppColors.textTertiary)
+                            
+                            Text(intervalDisplayText(for: days))
+                                .font(AppTypography.body)
+                                .foregroundColor(AppColors.textPrimary)
+                            
+                            Spacer()
+                            
+                            if days == 1 {
+                                Text("(매일)")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.textSecondary)
+                            } else if days == 7 {
+                                Text("(매주)")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.textSecondary)
+                            } else if days == 14 {
+                                Text("(격주)")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.textSecondary)
+                            } else if days == 30 {
+                                Text("(매월)")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.textSecondary)
+                            }
+                        }
+                        .padding(AppSpacing.sm)
+                        .background(intervalDays == days ? AppColors.primarySoft : AppColors.background)
+                        .cornerRadius(AppRadius.md)
+                    }
+                    .buttonStyle(.plain)
+                }
             }
         }
-        .padding()
-        .background(Color.appBackground)
+    }
+    
+    private func intervalDisplayText(for days: Int) -> String {
+        if days == 1 {
+            return "매일"
+        } else {
+            return "\(days)일마다"
+        }
+    }
+    
+    // MARK: - Bottom Navigation Bar
+    
+    private var bottomNavigationBar: some View {
+        VStack(spacing: 0) {
+            Divider()
+            
+            HStack(spacing: AppSpacing.md) {
+                // 페이지 인디케이터
+                HStack(spacing: AppSpacing.xs) {
+                    ForEach(0..<3) { index in
+                        Circle()
+                            .fill(currentPage >= index ? AppColors.primaryGradient : LinearGradient(colors: [AppColors.divider], startPoint: .top, endPoint: .bottom))
+                            .frame(width: 8, height: 8)
+                    }
+                }
+                
+                Spacer()
+                
+                // 이전 버튼
+                if currentPage > 0 {
+                    Button {
+                        withAnimation(.spring(response: 0.3)) {
+                            currentPage -= 1
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "chevron.left")
+                            Text("이전")
+                        }
+                        .font(AppTypography.body)
+                        .foregroundColor(AppColors.textSecondary)
+                        .padding(.horizontal, AppSpacing.md)
+                        .padding(.vertical, AppSpacing.sm)
+                    }
+                }
+                
+                // 다음/저장 버튼
+                if currentPage < 2 {
+                    Button {
+                        withAnimation(.spring(response: 0.3)) {
+                            currentPage += 1
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Text("다음")
+                            Image(systemName: "chevron.right")
+                        }
+                        .font(AppTypography.body)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, AppSpacing.lg)
+                        .padding(.vertical, AppSpacing.sm)
+                        .background((currentPage == 0 && name.isEmpty) ? LinearGradient(colors: [AppColors.divider], startPoint: .top, endPoint: .bottom) : AppColors.primaryGradient)
+                        .cornerRadius(AppRadius.full)
+                        .shadow(color: (currentPage == 0 && name.isEmpty) ? .clear : AppColors.primary.opacity(0.3), radius: 8, y: 4)
+                        .opacity((currentPage == 0 && name.isEmpty) ? 0.5 : 1.0)
+                    }
+                    .disabled(currentPage == 0 && name.isEmpty)
+                } else {
+                    Button {
+                        saveMedication()
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "checkmark")
+                            Text("저장")
+                        }
+                        .font(AppTypography.body)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, AppSpacing.lg)
+                        .padding(.vertical, AppSpacing.sm)
+                        .background(name.isEmpty ? LinearGradient(colors: [AppColors.divider], startPoint: .top, endPoint: .bottom) : AppColors.successGradient)
+                        .cornerRadius(AppRadius.full)
+                        .shadow(color: name.isEmpty ? .clear : AppColors.success.opacity(0.3), radius: 8, y: 4)
+                        .opacity(name.isEmpty ? 0.5 : 1.0)
+                    }
+                    .disabled(name.isEmpty)
+                }
+            }
+            .padding(.horizontal, AppSpacing.md)
+            .padding(.vertical, AppSpacing.sm)
+            .background(AppColors.cardBackground)
+        }
+    }
+    
+    // MARK: - Page Header Card
+    
+    private func pageHeaderCard(icon: String, title: String, subtitle: String, color: Color) -> some View {
+        HStack(spacing: AppSpacing.md) {
+            IconBadge(icon: icon, color: color, size: 50, iconSize: 24)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(AppTypography.title3)
+                    .foregroundColor(AppColors.textPrimary)
+                
+                Text(subtitle)
+                    .font(AppTypography.caption)
+                    .foregroundColor(AppColors.textSecondary)
+            }
+            
+            Spacer()
+        }
+        .padding(AppSpacing.md)
+        .background(color.opacity(0.1))
+        .cornerRadius(AppRadius.lg)
     }
     
     // MARK: - Methods
@@ -492,10 +922,122 @@ struct AddMedicationView: View {
                 imageData: selectedImageData,
                 notes: notes.isEmpty ? nil : notes
             )
+            
+            // 스케줄 생성 (새 약물인 경우만)
+            let schedule = MedicationSchedule(
+                scheduleType: scheduleType,
+                frequency: frequency,
+                times: scheduleTimes,
+                specificDays: scheduleType == .specificDays ? Array(selectedDays) : nil,
+                intervalDays: scheduleType == .interval ? intervalDays : 1,
+                startDate: startDate,
+                endDate: hasEndDate ? endDate : nil,
+                mealRelation: mealRelation,
+                notificationEnabled: notificationEnabled,
+                reminderMinutesBefore: reminderMinutesBefore
+            )
+            
+            // 약물과 스케줄 연결
+            schedule.medication = medication
+            medication.schedules.append(schedule)
         }
         
         onSave(medication)
         dismiss()
+    }
+}
+
+// MARK: - Custom TextField
+
+struct CustomTextField: View {
+    let icon: String
+    let placeholder: String
+    @Binding var text: String
+    
+    var body: some View {
+        HStack(spacing: AppSpacing.sm) {
+            Image(systemName: icon)
+                .font(.system(size: 16))
+                .foregroundColor(AppColors.textTertiary)
+                .frame(width: 24)
+            
+            TextField(placeholder, text: $text)
+                .font(AppTypography.body)
+        }
+        .padding(AppSpacing.md)
+        .background(AppColors.background)
+        .cornerRadius(AppRadius.md)
+    }
+}
+
+// MARK: - Form Selection Chip
+
+struct FormSelectionChip: View {
+    let form: MedicationForm
+    let isSelected: Bool
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button(action: onTap) {
+            VStack(spacing: AppSpacing.xs) {
+                ZStack {
+                    Circle()
+                        .fill(isSelected ? AppColors.primaryGradient : LinearGradient(colors: [AppColors.divider.opacity(0.3)], startPoint: .top, endPoint: .bottom))
+                        .frame(width: 50, height: 50)
+                    
+                    Image(systemName: form.icon)
+                        .font(.system(size: 22))
+                        .foregroundColor(isSelected ? .white : AppColors.textSecondary)
+                }
+                .shadow(color: isSelected ? AppColors.primary.opacity(0.3) : .clear, radius: 8, y: 4)
+                
+                Text(form.displayName)
+                    .font(AppTypography.caption2)
+                    .foregroundColor(isSelected ? AppColors.primary : AppColors.textSecondary)
+            }
+            .padding(.horizontal, AppSpacing.xs)
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Color Selection Chip
+
+struct ColorSelectionChip: View {
+    let color: MedicationColor
+    let isSelected: Bool
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button(action: onTap) {
+            VStack(spacing: AppSpacing.xs) {
+                ZStack {
+                    Circle()
+                        .fill(color.swiftUIColor)
+                        .frame(width: 44, height: 44)
+                        .overlay(
+                            Circle()
+                                .stroke(color == .white ? AppColors.divider : .clear, lineWidth: 1)
+                        )
+                        .overlay(
+                            Circle()
+                                .stroke(isSelected ? AppColors.primary : .clear, lineWidth: 3)
+                        )
+                    
+                    if isSelected {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundColor(color == .white || color == .yellow ? AppColors.primary : .white)
+                    }
+                }
+                .shadow(color: isSelected ? AppColors.primary.opacity(0.3) : .clear, radius: 8, y: 4)
+                
+                Text(color.displayName)
+                    .font(AppTypography.caption2)
+                    .foregroundColor(isSelected ? AppColors.primary : AppColors.textSecondary)
+            }
+        }
+        .buttonStyle(.plain)
     }
 }
 
