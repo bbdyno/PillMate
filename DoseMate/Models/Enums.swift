@@ -20,10 +20,10 @@ enum ScheduleType: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .daily: return "매일"
-        case .specificDays: return "특정 요일"
-        case .interval: return "간격 설정"
-        case .asNeeded: return "필요시 (PRN)"
+        case .daily: return DoseMateStrings.ScheduleType.daily
+        case .specificDays: return DoseMateStrings.ScheduleType.specificDays
+        case .interval: return DoseMateStrings.ScheduleType.interval
+        case .asNeeded: return DoseMateStrings.ScheduleType.asNeeded
         }
     }
     
@@ -38,10 +38,10 @@ enum ScheduleType: String, Codable, CaseIterable, Identifiable {
     
     var description: String {
         switch self {
-        case .daily: return "매일 같은 시간에 복용"
-        case .specificDays: return "선택한 요일에만 복용"
-        case .interval: return "N일마다 복용"
-        case .asNeeded: return "필요할 때만 복용"
+        case .daily: return DoseMateStrings.ScheduleType.dailyDesc
+        case .specificDays: return DoseMateStrings.ScheduleType.specificDaysDesc
+        case .interval: return DoseMateStrings.ScheduleType.intervalDesc
+        case .asNeeded: return DoseMateStrings.ScheduleType.asNeededDesc
         }
     }
 }
@@ -59,11 +59,11 @@ enum Frequency: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .onceDaily: return "하루 1회"
-        case .twiceDaily: return "하루 2회"
-        case .threeTimesDaily: return "하루 3회"
-        case .fourTimesDaily: return "하루 4회"
-        case .custom: return "맞춤"
+        case .onceDaily: return DoseMateStrings.Frequency.onceDaily
+        case .twiceDaily: return DoseMateStrings.Frequency.twiceDaily
+        case .threeTimesDaily: return DoseMateStrings.Frequency.threeTimesDaily
+        case .fourTimesDaily: return DoseMateStrings.Frequency.fourTimesDaily
+        case .custom: return DoseMateStrings.Frequency.custom
         }
     }
     
@@ -139,17 +139,17 @@ enum MetricType: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .weight: return "체중"
-        case .bloodPressure: return "혈압"
-        case .bloodGlucose: return "혈당"
-        case .hbA1C: return "당화혈색소"
-        case .waterIntake: return "수분 섭취"
-        case .bodyTemperature: return "체온"
-        case .oxygenSaturation: return "산소포화도"
-        case .mood: return "기분"
-        case .heartRate: return "심박수"
-        case .steps: return "걸음수"
-        case .sleep: return "수면"
+        case .weight: return DoseMateStrings.MetricType.weight
+        case .bloodPressure: return DoseMateStrings.MetricType.bloodPressure
+        case .bloodGlucose: return DoseMateStrings.MetricType.bloodGlucose
+        case .hbA1C: return DoseMateStrings.MetricType.hba1c
+        case .waterIntake: return DoseMateStrings.MetricType.waterIntake
+        case .bodyTemperature: return DoseMateStrings.MetricType.bodyTemperature
+        case .oxygenSaturation: return DoseMateStrings.MetricType.oxygenSaturation
+        case .mood: return DoseMateStrings.MetricType.mood
+        case .heartRate: return DoseMateStrings.MetricType.heartRate
+        case .steps: return DoseMateStrings.MetricType.steps
+        case .sleep: return DoseMateStrings.MetricType.sleep
         }
     }
     
@@ -164,8 +164,8 @@ enum MetricType: String, Codable, CaseIterable, Identifiable {
         case .oxygenSaturation: return "%"
         case .mood: return ""
         case .heartRate: return "BPM"
-        case .steps: return "걸음"
-        case .sleep: return "시간"
+        case .steps: return DoseMateStrings.MetricUnit.steps
+        case .sleep: return DoseMateStrings.MetricUnit.hours
         }
     }
     
@@ -220,8 +220,8 @@ enum DataSource: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .manual: return "수동 입력"
-        case .healthKit: return "건강 앱"
+        case .manual: return DoseMateStrings.DataSource.manual
+        case .healthKit: return DoseMateStrings.DataSource.healthApp
         }
     }
     
@@ -244,9 +244,9 @@ enum NotificationPreference: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .all: return "모든 알림"
-        case .missedOnly: return "놓친 복약만"
-        case .none: return "알림 없음"
+        case .all: return DoseMateStrings.NotificationPref.all
+        case .missedOnly: return DoseMateStrings.NotificationPref.missedOnly
+        case .none: return DoseMateStrings.NotificationPref.none
         }
     }
 }
@@ -269,16 +269,16 @@ enum MedicationForm: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .tablet: return "알약"
-        case .capsule: return "캡슐"
-        case .syrup: return "시럽"
-        case .injection: return "주사"
-        case .patch: return "패치"
-        case .cream: return "크림/연고"
-        case .inhaler: return "흡입기"
-        case .drops: return "점안액/점이액"
-        case .powder: return "가루약"
-        case .other: return "기타"
+        case .tablet: return DoseMateStrings.MedicationForm.tablet
+        case .capsule: return DoseMateStrings.MedicationForm.capsule
+        case .syrup: return DoseMateStrings.MedicationForm.syrup
+        case .injection: return DoseMateStrings.MedicationForm.injection
+        case .patch: return DoseMateStrings.MedicationForm.patch
+        case .cream: return DoseMateStrings.MedicationForm.cream
+        case .inhaler: return DoseMateStrings.MedicationForm.inhaler
+        case .drops: return DoseMateStrings.MedicationForm.drops
+        case .powder: return DoseMateStrings.MedicationForm.powder
+        case .other: return DoseMateStrings.MedicationForm.other
         }
     }
     
@@ -311,11 +311,11 @@ enum MealRelation: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .beforeMeal: return "식전"
-        case .afterMeal: return "식후"
-        case .withMeal: return "식사와 함께"
-        case .anytime: return "식사와 무관"
-        case .emptyStomach: return "공복"
+        case .beforeMeal: return DoseMateStrings.MealRelation.beforeMeal
+        case .afterMeal: return DoseMateStrings.MealRelation.afterMeal
+        case .withMeal: return DoseMateStrings.MealRelation.withMeal
+        case .anytime: return DoseMateStrings.MealRelation.anytime
+        case .emptyStomach: return DoseMateStrings.MealRelation.emptyStomach
         }
     }
     
@@ -343,11 +343,11 @@ enum MoodLevel: Int, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .veryBad: return "매우 나쁨"
-        case .bad: return "나쁨"
-        case .neutral: return "보통"
-        case .good: return "좋음"
-        case .veryGood: return "매우 좋음"
+        case .veryBad: return DoseMateStrings.MoodLevel.veryBad
+        case .bad: return DoseMateStrings.MoodLevel.bad
+        case .neutral: return DoseMateStrings.MoodLevel.neutral
+        case .good: return DoseMateStrings.MoodLevel.good
+        case .veryGood: return DoseMateStrings.MoodLevel.veryGood
         }
     }
     
@@ -387,25 +387,25 @@ enum Weekday: Int, Codable, CaseIterable, Identifiable {
     
     var shortName: String {
         switch self {
-        case .sunday: return "일"
-        case .monday: return "월"
-        case .tuesday: return "화"
-        case .wednesday: return "수"
-        case .thursday: return "목"
-        case .friday: return "금"
-        case .saturday: return "토"
+        case .sunday: return DoseMateStrings.Weekday.sunShort
+        case .monday: return DoseMateStrings.Weekday.monShort
+        case .tuesday: return DoseMateStrings.Weekday.tueShort
+        case .wednesday: return DoseMateStrings.Weekday.wedShort
+        case .thursday: return DoseMateStrings.Weekday.thuShort
+        case .friday: return DoseMateStrings.Weekday.friShort
+        case .saturday: return DoseMateStrings.Weekday.satShort
         }
     }
     
     var fullName: String {
         switch self {
-        case .sunday: return "일요일"
-        case .monday: return "월요일"
-        case .tuesday: return "화요일"
-        case .wednesday: return "수요일"
-        case .thursday: return "목요일"
-        case .friday: return "금요일"
-        case .saturday: return "토요일"
+        case .sunday: return DoseMateStrings.Weekday.sunday
+        case .monday: return DoseMateStrings.Weekday.monday
+        case .tuesday: return DoseMateStrings.Weekday.tuesday
+        case .wednesday: return DoseMateStrings.Weekday.wednesday
+        case .thursday: return DoseMateStrings.Weekday.thursday
+        case .friday: return DoseMateStrings.Weekday.friday
+        case .saturday: return DoseMateStrings.Weekday.saturday
         }
     }
 }
@@ -423,11 +423,11 @@ enum TimeOfDay: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .morning: return "아침"
-        case .afternoon: return "점심"
-        case .evening: return "저녁"
-        case .night: return "밤"
-        case .bedtime: return "취침 전"
+        case .morning: return DoseMateStrings.TimeOfDay.morning
+        case .afternoon: return DoseMateStrings.TimeOfDay.afternoon
+        case .evening: return DoseMateStrings.TimeOfDay.evening
+        case .night: return DoseMateStrings.TimeOfDay.night
+        case .bedtime: return DoseMateStrings.TimeOfDay.bedtime
         }
     }
     
@@ -465,11 +465,11 @@ enum SnoozeOption: Int, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .fiveMinutes: return "5분"
-        case .tenMinutes: return "10분"
-        case .fifteenMinutes: return "15분"
-        case .thirtyMinutes: return "30분"
-        case .oneHour: return "1시간"
+        case .fiveMinutes: return DoseMateStrings.SnoozeOption.fiveMinutes
+        case .tenMinutes: return DoseMateStrings.SnoozeOption.tenMinutes
+        case .fifteenMinutes: return DoseMateStrings.SnoozeOption.fifteenMinutes
+        case .thirtyMinutes: return DoseMateStrings.SnoozeOption.thirtyMinutes
+        case .oneHour: return DoseMateStrings.SnoozeOption.oneHour
         }
     }
 }
@@ -486,10 +486,10 @@ enum StatisticsPeriod: String, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .week: return "1주"
-        case .month: return "1개월"
-        case .threeMonths: return "3개월"
-        case .year: return "1년"
+        case .week: return DoseMateStrings.StatisticsPeriod.week
+        case .month: return DoseMateStrings.StatisticsPeriod.month
+        case .threeMonths: return DoseMateStrings.StatisticsPeriod.threeMonths
+        case .year: return DoseMateStrings.StatisticsPeriod.year
         }
     }
     
@@ -522,17 +522,17 @@ enum MedicationColor: String, Codable, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .white: return "흰색"
-        case .yellow: return "노란색"
-        case .orange: return "주황색"
-        case .pink: return "분홍색"
-        case .red: return "빨간색"
-        case .brown: return "갈색"
-        case .green: return "초록색"
-        case .blue: return "파란색"
-        case .purple: return "보라색"
-        case .black: return "검정색"
-        case .multicolor: return "여러색"
+        case .white: return DoseMateStrings.MedicationColor.white
+        case .yellow: return DoseMateStrings.MedicationColor.yellow
+        case .orange: return DoseMateStrings.MedicationColor.orange
+        case .pink: return DoseMateStrings.MedicationColor.pink
+        case .red: return DoseMateStrings.MedicationColor.red
+        case .brown: return DoseMateStrings.MedicationColor.brown
+        case .green: return DoseMateStrings.MedicationColor.green
+        case .blue: return DoseMateStrings.MedicationColor.blue
+        case .purple: return DoseMateStrings.MedicationColor.purple
+        case .black: return DoseMateStrings.MedicationColor.black
+        case .multicolor: return DoseMateStrings.MedicationColor.multicolor
         }
     }
 
@@ -576,16 +576,16 @@ enum MedicationCategory: String, Codable, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .cardiovascular: return "심혈관계"
-        case .diabetes: return "당뇨병"
-        case .respiratory: return "호흡기"
-        case .pain: return "진통제"
-        case .gastrointestinal: return "소화기계"
-        case .mental: return "정신건강"
-        case .antibiotic: return "항생제"
-        case .vitamin: return "비타민/보충제"
-        case .thyroid: return "갑상선"
-        case .other: return "기타"
+        case .cardiovascular: return DoseMateStrings.MedicationCategory.cardiovascular
+        case .diabetes: return DoseMateStrings.MedicationCategory.diabetes
+        case .respiratory: return DoseMateStrings.MedicationCategory.respiratory
+        case .pain: return DoseMateStrings.MedicationCategory.pain
+        case .gastrointestinal: return DoseMateStrings.MedicationCategory.gastrointestinal
+        case .mental: return DoseMateStrings.MedicationCategory.mental
+        case .antibiotic: return DoseMateStrings.MedicationCategory.antibiotic
+        case .vitamin: return DoseMateStrings.MedicationCategory.vitamin
+        case .thyroid: return DoseMateStrings.MedicationCategory.thyroid
+        case .other: return DoseMateStrings.MedicationCategory.other
         }
     }
 
