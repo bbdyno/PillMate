@@ -79,22 +79,66 @@ final class HomeViewModel {
         self.modelContext = context
         Task {
             await loadPatients()
+            await migrateOrphanedMedications()
             await loadData()
         }
     }
     
     // MARK: - Patient Management
-    
+
+    /// Patient가 없는 약물/예약을 본인 Patient와 연결 (마이그레이션)
+    private func migrateOrphanedMedications() async {
+        guard let context = modelContext else { return }
+
+        // 본인(나) Patient 찾기
+        let myselfPatient = patients.first { $0.isMyself }
+        guard let myself = myselfPatient else { return }
+
+        var needsSave = false
+
+        // Patient가 nil인 약물 찾기
+        let medicationDescriptor = FetchDescriptor<Medication>()
+        if let allMedications = try? context.fetch(medicationDescriptor) {
+            let orphanedMedications = allMedications.filter { $0.patient == nil }
+
+            for medication in orphanedMedications {
+                medication.patient = myself
+                needsSave = true
+            }
+        }
+
+        // Patient가 nil인 예약 찾기
+        let appointmentDescriptor = FetchDescriptor<Appointment>()
+        if let allAppointments = try? context.fetch(appointmentDescriptor) {
+            let orphanedAppointments = allAppointments.filter { $0.patient == nil }
+
+            for appointment in orphanedAppointments {
+                appointment.patient = myself
+                needsSave = true
+            }
+        }
+
+        if needsSave {
+            try? context.save()
+            print("[HomeViewModel] Migrated orphaned medications and appointments to myself patient")
+        }
+    }
+
     /// 환자 목록 로드
     func loadPatients() async {
         guard let context = modelContext else { return }
-        
+
         let descriptor = FetchDescriptor<Patient>(
             predicate: #Predicate { $0.isActive },
             sortBy: [SortDescriptor(\.createdAt)]
         )
-        
+
         patients = (try? context.fetch(descriptor)) ?? []
+
+        // 기본적으로 본인(나)를 선택
+        if selectedPatient == nil {
+            selectedPatient = patients.first { $0.isMyself }
+        }
     }
     
     /// 환자 선택
@@ -107,16 +151,19 @@ final class HomeViewModel {
     
     /// 선택된 환자 이름
     var selectedPatientName: String {
-        selectedPatient?.name ?? "나"
+        selectedPatient?.displayName ?? ""
     }
 
-    /// 선택된 환자의 복약 타이틀 (본인: "내 복약", 다른 환자: "(이름)님의 복약")
+    /// 선택된 환자의 복약 타이틀
     var medicationTitle: String {
         if let patient = selectedPatient {
-            return DoseMateStrings.Home.patientMedication(patient.name)
-        } else {
-            return DoseMateStrings.Home.myMedication
+            if patient.isMyself {
+                return DoseMateStrings.Home.myMedication
+            } else {
+                return DoseMateStrings.Home.patientMedication(patient.name)
+            }
         }
+        return DoseMateStrings.Home.myMedication
     }
 
     /// 선택된 환자 색상
@@ -154,12 +201,9 @@ final class HomeViewModel {
         
         // 선택된 환자의 스케줄만 필터링
         let filteredSchedules = schedules.filter { schedule in
-            guard let medication = schedule.medication else { return false }
-            if let selected = selectedPatient {
-                return medication.patient?.id == selected.id
-            } else {
-                return medication.patient == nil
-            }
+            guard let medication = schedule.medication,
+                  let selected = selectedPatient else { return false }
+            return medication.patient?.id == selected.id
         }
         
         let calendar = Calendar.current
@@ -218,12 +262,9 @@ final class HomeViewModel {
             
             // 선택된 환자의 로그만 필터링
             todayLogs = allLogs.filter { log in
-                guard let medication = log.medication else { return false }
-                if let selected = selectedPatient {
-                    return medication.patient?.id == selected.id
-                } else {
-                    return medication.patient == nil
-                }
+                guard let medication = log.medication,
+                      let selected = selectedPatient else { return false }
+                return medication.patient?.id == selected.id
             }
         } catch {
             errorMessage = "복약 기록을 불러오는데 실패했습니다."
@@ -285,12 +326,9 @@ final class HomeViewModel {
         
         // 선택된 환자의 로그만 필터링
         let logs = allLogs.filter { log in
-            guard let medication = log.medication else { return false }
-            if let selected = selectedPatient {
-                return medication.patient?.id == selected.id
-            } else {
-                return medication.patient == nil
-            }
+            guard let medication = log.medication,
+                  let selected = selectedPatient else { return false }
+            return medication.patient?.id == selected.id
         }
         
         guard !logs.isEmpty else { return 0.0 }
@@ -327,12 +365,9 @@ final class HomeViewModel {
             
             // 선택된 환자의 로그만 필터링
             let logs = allLogs.filter { log in
-                guard let medication = log.medication else { return false }
-                if let selected = selectedPatient {
-                    return medication.patient?.id == selected.id
-                } else {
-                    return medication.patient == nil
-                }
+                guard let medication = log.medication,
+                      let selected = selectedPatient else { return false }
+                return medication.patient?.id == selected.id
             }
             
             guard !logs.isEmpty else { break }
@@ -367,11 +402,8 @@ final class HomeViewModel {
         
         // 선택된 환자의 약물만 필터링
         let medications = allMedications.filter { medication in
-            if let selected = selectedPatient {
-                return medication.patient?.id == selected.id
-            } else {
-                return medication.patient == nil
-            }
+            guard let selected = selectedPatient else { return false }
+            return medication.patient?.id == selected.id
         }
         
         lowStockMedications = medications.filter { $0.isLowStock }
@@ -398,11 +430,8 @@ final class HomeViewModel {
         
         // 선택된 환자의 예약만 필터링
         todayAppointments = allAppointments.filter { appointment in
-            if let selected = selectedPatient {
-                return appointment.patient?.id == selected.id
-            } else {
-                return appointment.patient == nil
-            }
+            guard let selected = selectedPatient else { return false }
+            return appointment.patient?.id == selected.id
         }
     }
     

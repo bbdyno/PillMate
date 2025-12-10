@@ -300,39 +300,87 @@ final class SettingsViewModel {
     /// 모든 데이터 삭제
     func deleteAllData() async {
         guard let context = modelContext else { return }
-        
+
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
-            try context.delete(model: MedicationLog.self)
-            try context.delete(model: MedicationSchedule.self)
-            try context.delete(model: Medication.self)
-            try context.delete(model: HealthMetric.self)
-            try context.delete(model: Appointment.self)
-            
+            // 일괄 삭제(Batch Delete)는 관계 규칙을 무시하므로
+            // 개별 삭제를 사용하여 관계가 올바르게 처리되도록 함
+
+            // 1. MedicationLog 삭제 (가장 하위 엔티티)
+            let logDescriptor = FetchDescriptor<MedicationLog>()
+            let logs = try context.fetch(logDescriptor)
+            for log in logs {
+                context.delete(log)
+            }
+
+            // 2. MedicationSchedule 삭제
+            let scheduleDescriptor = FetchDescriptor<MedicationSchedule>()
+            let schedules = try context.fetch(scheduleDescriptor)
+            for schedule in schedules {
+                context.delete(schedule)
+            }
+
+            // 3. HealthMetric 삭제
+            let metricDescriptor = FetchDescriptor<HealthMetric>()
+            let metrics = try context.fetch(metricDescriptor)
+            for metric in metrics {
+                context.delete(metric)
+            }
+
+            // 4. Medication 삭제
+            let medicationDescriptor = FetchDescriptor<Medication>()
+            let medications = try context.fetch(medicationDescriptor)
+            for medication in medications {
+                context.delete(medication)
+            }
+
+            // 5. Appointment 삭제
+            let appointmentDescriptor = FetchDescriptor<Appointment>()
+            let appointments = try context.fetch(appointmentDescriptor)
+            for appointment in appointments {
+                context.delete(appointment)
+            }
+
+            // 6. Patient 삭제 (본인 제외하고 가족만 삭제할지 결정)
+            // Patient는 유지하는 것이 나을 수 있음 (본인 정보)
+
             try context.save()
-            
+
             // 알림도 모두 제거
             notificationManager.removeAllNotifications()
-            
+
+            // 위젯 데이터 업데이트
+            WidgetDataUpdater.shared.updateWidgetData(context: context)
+
             successMessage = "모든 데이터가 삭제되었습니다."
         } catch {
-            errorMessage = "데이터 삭제에 실패했습니다."
+            print("[SettingsViewModel] Delete all data failed: \(error)")
+            errorMessage = "데이터 삭제에 실패했습니다: \(error.localizedDescription)"
         }
     }
     
     /// 샘플 데이터 생성
     func createSampleData() async {
         guard let context = modelContext else { return }
-        
+
         isLoading = true
         defer { isLoading = false }
-        
+
+        // 본인(나) Patient 찾기
+        let patientDescriptor = FetchDescriptor<Patient>(
+            predicate: #Predicate { $0.isActive }
+        )
+        let patients = (try? context.fetch(patientDescriptor)) ?? []
+        let myselfPatient = patients.first { $0.isMyself }
+
         // 약물 추가
         for medication in Medication.sampleData {
+            // 본인 Patient와 연결
+            medication.patient = myselfPatient
             context.insert(medication)
-            
+
             // 스케줄 추가
             let schedule = MedicationSchedule(
                 scheduleType: .daily,
@@ -342,13 +390,19 @@ final class SettingsViewModel {
             schedule.medication = medication
             context.insert(schedule)
         }
-        
+
         // 진료 예약 추가
         for appointment in Appointment.sampleData {
+            // 본인 Patient와 연결
+            appointment.patient = myselfPatient
             context.insert(appointment)
         }
-        
+
         try? context.save()
+
+        // 로그 생성
+        DataManager.shared.generateTodayLogs()
+
         successMessage = "샘플 데이터가 생성되었습니다."
     }
     

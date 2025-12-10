@@ -114,9 +114,6 @@ struct DoseMateApp: App {
             }
         }
 
-        // 기본 "나" 환자 생성 (필요한 경우)
-        createDefaultPatientIfNeeded(context: modelContainer.mainContext)
-
         // 외관 설정
         configureAppearance()
     }
@@ -195,23 +192,6 @@ struct DoseMateApp: App {
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 
-    /// 기본 "나" 환자 생성
-    private func createDefaultPatientIfNeeded(context: ModelContext) {
-        do {
-            let descriptor = FetchDescriptor<Patient>()
-            let existingPatients = try context.fetch(descriptor)
-            
-            if existingPatients.isEmpty {
-                let myself = Patient(name: "나", relationship: .myself, profileColor: .blue)
-                context.insert(myself)
-                try context.save()
-                print("기본 '나' 환자 생성됨")
-            }
-        } catch {
-            print("기본 환자 생성 또는 확인 실패: \(error)")
-        }
-    }
-    
     /// 알림 설정
     private func setupNotifications() {
         Task {

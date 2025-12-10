@@ -28,9 +28,9 @@ struct HomeView: View {
                 VStack(spacing: AppSpacing.lg) {
                     // 헤더 카드
                     headerCard
-                    
-                    // 환자 선택 바
-                    if !viewModel.patients.isEmpty {
+
+                    // 환자 선택 바 (환자가 2명 이상일 때만 표시)
+                    if viewModel.patients.count > 1 {
                         patientSelectorBar
                     }
                     
@@ -142,9 +142,9 @@ struct HomeView: View {
                     }
                     
                     Spacer()
-                    
-                    // 환자 선택 버튼
-                    if !viewModel.patients.isEmpty {
+
+                    // 환자 선택 버튼 (환자가 2명 이상일 때만 표시)
+                    if viewModel.patients.count > 1 {
                         Button {
                             showPatientSelector = true
                         } label: {
@@ -155,9 +155,6 @@ struct HomeView: View {
                                     if let patient = viewModel.selectedPatient {
                                         Text(patient.initials)
                                             .font(AppTypography.headline)
-                                            .foregroundColor(.white)
-                                    } else {
-                                        Image(systemName: "person.fill")
                                             .foregroundColor(.white)
                                     }
                                 }
@@ -283,24 +280,14 @@ struct HomeView: View {
     }
     
     // MARK: - Patient Selector Bar
-    
+
     private var patientSelectorBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: AppSpacing.sm) {
-                // 본인 버튼
-                PatientChipView(
-                    name: DoseMateStrings.Common.ok,
-                    color: AppColors.primary,
-                    isSelected: viewModel.selectedPatient == nil,
-                    onTap: {
-                        viewModel.selectPatient(nil)
-                    }
-                )
-                
-                // 환자 목록
+                // 환자 목록 (본인 포함)
                 ForEach(viewModel.patients) { patient in
                     PatientChipView(
-                        name: patient.name,
+                        name: patient.displayName,
                         color: patient.color,
                         isSelected: viewModel.selectedPatient?.id == patient.id,
                         onTap: {
@@ -873,41 +860,21 @@ struct PatientSelectorSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: AppSpacing.md) {
-                    // 본인 옵션
-                    PatientSelectionRow(
-                        name: DoseMateStrings.Common.ok,
-                        subtitle: DoseMateStrings.Reminders.title,
-                        color: AppColors.primary,
-                        isSelected: selectedPatient == nil,
-                        onTap: { onSelect(nil) }
-                    )
-                    
-                    if !patients.isEmpty {
-                        Divider()
-                            .padding(.vertical, AppSpacing.xs)
-                        
-                        Text(DoseMateStrings.Settings.title)
-                            .font(AppTypography.caption)
-                            .fontWeight(.semibold)
-                            .foregroundColor(AppColors.textSecondary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        ForEach(patients) { patient in
-                            PatientSelectionRow(
-                                name: patient.name,
-                                subtitle: "\(patient.relationshipType.rawValue) • 약물 \(patient.activeMedicationCount)개",
-                                color: patient.color,
-                                initials: patient.initials,
-                                isSelected: selectedPatient?.id == patient.id,
-                                onTap: { onSelect(patient) }
-                            )
-                        }
+                    ForEach(patients) { patient in
+                        PatientSelectionRow(
+                            name: patient.displayName,
+                            subtitle: "약물 \(patient.activeMedicationCount)개",
+                            color: patient.color,
+                            initials: patient.initials,
+                            isSelected: selectedPatient?.id == patient.id,
+                            onTap: { onSelect(patient) }
+                        )
                     }
                 }
                 .padding(AppSpacing.lg)
             }
             .background(AppColors.background)
-            .navigationTitle(DoseMateStrings.Settings.title)
+            .navigationTitle("환자 선택")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

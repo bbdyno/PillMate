@@ -15,11 +15,9 @@ struct SettingsView: View {
     
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = SettingsViewModel()
-    @State private var storeManager = StoreKitManager.shared
-    
-    // 프리미엄/기부 시트 표시 상태
-    @State private var showPremiumSheet = false
-    @State private var showTipJarSheet = false
+
+    // 후원 시트 표시 상태
+    @State private var showSupportSheet = false
     
     // 데이터 내보내기/가져오기
     @State private var showImportFilePicker = false
@@ -36,15 +34,14 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                premiumSection
+                supportSection
                 notificationSection
                 healthKitSection
                 appearanceSection
                 dataSection
                 backupSection
-                supportSection
                 aboutSection
-                
+
                 #if DEBUG
                 developerSection
                 #endif
@@ -86,11 +83,8 @@ struct SettingsView: View {
                         .background(Color.black.opacity(0.3))
                 }
             }
-            .sheet(isPresented: $showPremiumSheet) {
-                PremiumView()
-            }
-            .sheet(isPresented: $showTipJarSheet) {
-                TipJarView()
+            .sheet(isPresented: $showSupportSheet) {
+                SupportDeveloperView()
             }
         }
         .tint(AppColors.primary)
@@ -235,21 +229,20 @@ struct SettingsView: View {
         }
     }
     
-    // MARK: - Premium Section
-    // 프리미엄 정책 변경 시 이 섹션 수정
-    
-    private var premiumSection: some View {
+    // MARK: - Support Section
+
+    private var supportSection: some View {
         Section {
             Button {
-                showPremiumSheet = true
+                showSupportSheet = true
             } label: {
                 HStack {
                     // 아이콘
-                    Image(systemName: "crown.fill")
+                    Image(systemName: "heart.circle.fill")
                         .font(.title2)
                         .foregroundStyle(
                             LinearGradient(
-                                colors: [AppColors.lemon, AppColors.peach],
+                                colors: [AppColors.premiumPink, AppColors.danger],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
@@ -257,95 +250,33 @@ struct SettingsView: View {
                         .frame(width: 32)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        HStack {
-                            Text(storeManager.isPremium ? DoseMateStrings.Settings.premiumActive : DoseMateStrings.Settings.premiumUpgradeTitle)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.primary)
+                        Text(DoseMateStrings.Settings.developerSupport)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
 
-                            if storeManager.isPremium {
-                                Text(DoseMateStrings.Settings.premiumInUse)
-                                    .font(.caption)
-                                    .foregroundColor(AppColors.success)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(AppColors.success.opacity(0.15))
-                                    .cornerRadius(4)
-                            }
-                        }
-
-                        if !storeManager.isPremium {
-                            Text(DoseMateStrings.Settings.premiumAllFeatures(storeManager.premiumPriceString))
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
+                        Text("암호화폐 및 일반 후원")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
                     }
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "chevron.right")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
             }
             .listRowBackground(
-                Group {
-                    if storeManager.isPremium {
-                        AppColors.success.opacity(0.1)
-                    } else {
-                        LinearGradient(
-                            colors: [AppColors.lemon.opacity(0.1), AppColors.peach.opacity(0.1)],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    }
-                }
+                LinearGradient(
+                    colors: [AppColors.premiumPink.opacity(0.1), AppColors.danger.opacity(0.05)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
             )
-        } header: {
-            if !storeManager.isPremium {
-                Text(DoseMateStrings.Settings.premiumActive)
-            }
-        }
-    }
-    
-    // MARK: - Support Section
-    
-    private var supportSection: some View {
-        Section {
-            // 기부하기
-            Button {
-                showTipJarSheet = true
-            } label: {
-                HStack {
-                    Label(DoseMateStrings.Settings.developerSupport, systemImage: "heart.fill")
-                        .foregroundColor(AppColors.premiumPink)
-
-                    Spacer()
-
-                    if storeManager.totalTipCount > 0 {
-                        Text("\(storeManager.totalTipCount)회 💕")
-                            .font(.caption)
-                            .foregroundColor(AppColors.premiumPink)
-                    }
-
-                    Image(systemName: "chevron.right")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-
-            // 구매 복원
-            Button {
-                Task {
-                    await storeManager.restorePurchases()
-                }
-            } label: {
-                Label(DoseMateStrings.Settings.restorePurchases, systemImage: "arrow.clockwise")
-            }
-            .disabled(storeManager.isLoading)
         } header: {
             Text(DoseMateStrings.Settings.supportSection)
         } footer: {
-            Text(DoseMateStrings.Settings.alreadyPurchasedHint)
+            Text("DoseMate는 완전 무료 앱입니다. 자발적 후원은 앱 개발에 큰 도움이 됩니다.")
         }
     }
     
@@ -416,80 +347,56 @@ struct SettingsView: View {
     
     private var healthKitSection: some View {
         Section {
-            if !PremiumFeatures.canUseHealthKit {
+            HStack {
+                Label(DoseMateStrings.Settings.healthkitIntegration, systemImage: "heart.fill")
+                    .foregroundColor(AppColors.danger)
+                Spacer()
+                Text(viewModel.healthKitStatusText)
+                    .foregroundColor(.secondary)
+            }
+
+            if !HealthKitManager.shared.isAvailable {
+                Text(DoseMateStrings.Settings.healthkitUnavailable)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            } else if !viewModel.healthKitAuthorized {
+                Button {
+                    Task {
+                        await viewModel.requestHealthKitPermission()
+                    }
+                } label: {
+                    Label(DoseMateStrings.Settings.requestPermission, systemImage: "hand.raised")
+                }
+            } else {
+                Toggle(isOn: $viewModel.healthKitEnabled) {
+                    Label(DoseMateStrings.Settings.autoSync, systemImage: "arrow.triangle.2.circlepath")
+                }
+
+                // 마지막 동기화
                 HStack {
-                    Label(DoseMateStrings.Settings.healthkitIntegration, systemImage: "heart.fill")
-                        .foregroundColor(AppColors.danger)
-
+                    Text(DoseMateStrings.Settings.lastSyncLabel)
                     Spacer()
-
-                    PremiumBadge()
+                    Text(viewModel.lastSyncText)
+                        .foregroundColor(.secondary)
                 }
 
                 Button {
-                    showPremiumSheet = true
+                    Task {
+                        await viewModel.syncHealthKit()
+                    }
                 } label: {
-                    Text(DoseMateStrings.Settings.premiumLocked)
-                        .font(.subheadline)
-                        .foregroundColor(AppColors.primary)
-                }
-            } else {
-                HStack {
-                    Label(DoseMateStrings.Settings.healthkitIntegration, systemImage: "heart.fill")
-                        .foregroundColor(AppColors.danger)
-                    Spacer()
-                    Text(viewModel.healthKitStatusText)
-                        .foregroundColor(.secondary)
-                }
-
-                if !HealthKitManager.shared.isAvailable {
-                    Text(DoseMateStrings.Settings.healthkitUnavailable)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                } else if !viewModel.healthKitAuthorized {
-                    Button {
-                        Task {
-                            await viewModel.requestHealthKitPermission()
-                        }
-                    } label: {
-                        Label(DoseMateStrings.Settings.requestPermission, systemImage: "hand.raised")
-                    }
-                } else {
-                    Toggle(isOn: $viewModel.healthKitEnabled) {
-                        Label(DoseMateStrings.Settings.autoSync, systemImage: "arrow.triangle.2.circlepath")
-                    }
-
-                    // 마지막 동기화
                     HStack {
-                        Text(DoseMateStrings.Settings.lastSyncLabel)
+                        Label(DoseMateStrings.Settings.syncNow, systemImage: "arrow.clockwise")
                         Spacer()
-                        Text(viewModel.lastSyncText)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Button {
-                        Task {
-                            await viewModel.syncHealthKit()
-                        }
-                    } label: {
-                        HStack {
-                            Label(DoseMateStrings.Settings.syncNow, systemImage: "arrow.clockwise")
-                            Spacer()
-                            if viewModel.isSyncing {
-                                ProgressView()
-                            }
+                        if viewModel.isSyncing {
+                            ProgressView()
                         }
                     }
-                    .disabled(viewModel.isSyncing)
                 }
+                .disabled(viewModel.isSyncing)
             }
         } header: {
-            HStack {
-                Text(DoseMateStrings.Settings.healthkit)
-                if !PremiumFeatures.canUseHealthKit {
-                    PremiumBadge()
-                }
-            }
+            Text(DoseMateStrings.Settings.healthkit)
         }
     }
     
@@ -559,122 +466,86 @@ struct SettingsView: View {
     
     private var backupSection: some View {
         Section {
-            if !StoreKitManager.shared.isPremium {
-                VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                    HStack {
-                        Label(DoseMateStrings.Settings.icloudSync, systemImage: "icloud.fill")
-                            .foregroundColor(AppColors.primary)
-                        Spacer()
-                        PremiumBadge()
-                    }
-
-                    HStack {
-                        Label(DoseMateStrings.Settings.dataBackup, systemImage: "externaldrive.fill")
-                        Spacer()
-                        PremiumBadge()
-                    }
-                }
-
-                Text(DoseMateStrings.Settings.premiumSyncDescription)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                Button {
-                    showPremiumSheet = true
-                } label: {
-                    Text(DoseMateStrings.Settings.premiumLocked)
-                        .font(.subheadline)
+            Toggle(isOn: $viewModel.iCloudSyncEnabled) {
+                HStack {
+                    Label(DoseMateStrings.Settings.icloudSync, systemImage: "icloud.fill")
                         .foregroundColor(AppColors.primary)
                 }
-            } else {
-                Toggle(isOn: $viewModel.iCloudSyncEnabled) {
-                    HStack {
-                        Label(DoseMateStrings.Settings.icloudSync, systemImage: "icloud.fill")
-                            .foregroundColor(AppColors.primary)
-                    }
-                }
-                .onChange(of: viewModel.iCloudSyncEnabled) { _, newValue in
-                    viewModel.showRestartAlert = true
-                }
-
-                HStack {
-                    Text(DoseMateStrings.Settings.syncStatusLabel)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    if viewModel.isICloudAvailable {
-                        if viewModel.iCloudSyncEnabled && DoseMateApp.isCloudSyncEnabled {
-                            Label(DoseMateStrings.Settings.syncActive, systemImage: "checkmark.circle.fill")
-                                .font(.caption)
-                                .foregroundColor(AppColors.success)
-                        } else if viewModel.iCloudSyncEnabled && !DoseMateApp.isCloudSyncEnabled {
-                            Label(DoseMateStrings.Settings.syncRestartRequired, systemImage: "exclamationmark.circle.fill")
-                                .font(.caption)
-                                .foregroundColor(AppColors.warning)
-                        } else {
-                            Text(DoseMateStrings.Settings.syncDisabled)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    } else {
-                        Label(DoseMateStrings.Settings.icloudUnavailable, systemImage: "xmark.circle.fill")
-                            .font(.caption)
-                            .foregroundColor(AppColors.danger)
-                    }
-                }
-
-                Divider()
-
-                Button {
-                    Task {
-                        await exportData()
-                    }
-                } label: {
-                    HStack {
-                        Label(DoseMateStrings.Settings.exportData, systemImage: "square.and.arrow.up")
-                        Spacer()
-                        if viewModel.isExporting {
-                            ProgressView()
-                        } else {
-                            Text("JSON")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
-                .disabled(viewModel.isExporting)
-
-                Button {
-                    // iCloud 동기화 중이면 경고
-                    if viewModel.iCloudSyncEnabled && DoseMateApp.isCloudSyncEnabled {
-                        viewModel.showImportWithICloudWarning = true
-                    } else {
-                        showImportFilePicker = true
-                    }
-                } label: {
-                    HStack {
-                        Label(DoseMateStrings.Settings.importData, systemImage: "square.and.arrow.down")
-                        Spacer()
-                        if viewModel.isImporting {
-                            ProgressView()
-                        }
-                    }
-                }
-                .disabled(viewModel.isImporting)
             }
-        } header: {
+            .onChange(of: viewModel.iCloudSyncEnabled) { _, newValue in
+                viewModel.showRestartAlert = true
+            }
+
             HStack {
-                Text(DoseMateStrings.Settings.cloudBackup)
-                if !StoreKitManager.shared.isPremium {
-                    PremiumBadge()
+                Text(DoseMateStrings.Settings.syncStatusLabel)
+                    .foregroundColor(.secondary)
+                Spacer()
+                if viewModel.isICloudAvailable {
+                    if viewModel.iCloudSyncEnabled && DoseMateApp.isCloudSyncEnabled {
+                        Label(DoseMateStrings.Settings.syncActive, systemImage: "checkmark.circle.fill")
+                            .font(.caption)
+                            .foregroundColor(AppColors.success)
+                    } else if viewModel.iCloudSyncEnabled && !DoseMateApp.isCloudSyncEnabled {
+                        Label(DoseMateStrings.Settings.syncRestartRequired, systemImage: "exclamationmark.circle.fill")
+                            .font(.caption)
+                            .foregroundColor(AppColors.warning)
+                    } else {
+                        Text(DoseMateStrings.Settings.syncDisabled)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    Label(DoseMateStrings.Settings.icloudUnavailable, systemImage: "xmark.circle.fill")
+                        .font(.caption)
+                        .foregroundColor(AppColors.danger)
                 }
             }
-        } footer: {
-            if StoreKitManager.shared.isPremium {
-                if viewModel.iCloudSyncEnabled {
-                    Text(DoseMateStrings.Settings.icloudSyncImportWarning)
-                } else {
-                    Text(DoseMateStrings.Settings.exportDescription)
+
+            Divider()
+
+            Button {
+                Task {
+                    await exportData()
                 }
+            } label: {
+                HStack {
+                    Label(DoseMateStrings.Settings.exportData, systemImage: "square.and.arrow.up")
+                    Spacer()
+                    if viewModel.isExporting {
+                        ProgressView()
+                    } else {
+                        Text("JSON")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            .disabled(viewModel.isExporting)
+
+            Button {
+                // iCloud 동기화 중이면 경고
+                if viewModel.iCloudSyncEnabled && DoseMateApp.isCloudSyncEnabled {
+                    viewModel.showImportWithICloudWarning = true
+                } else {
+                    showImportFilePicker = true
+                }
+            } label: {
+                HStack {
+                    Label(DoseMateStrings.Settings.importData, systemImage: "square.and.arrow.down")
+                    Spacer()
+                    if viewModel.isImporting {
+                        ProgressView()
+                    }
+                }
+            }
+            .disabled(viewModel.isImporting)
+        } header: {
+            Text(DoseMateStrings.Settings.cloudBackup)
+        } footer: {
+            if viewModel.iCloudSyncEnabled {
+                Text(DoseMateStrings.Settings.icloudSyncImportWarning)
+            } else {
+                Text(DoseMateStrings.Settings.exportDescription)
             }
         }
     }
@@ -707,39 +578,6 @@ struct SettingsView: View {
     #if DEBUG
     private var developerSection: some View {
         Section {
-            // 프리미엄 상태 토글
-            Toggle(isOn: Binding(
-                get: { storeManager.isPremium },
-                set: { newValue in
-                    storeManager.debugSetPremium(newValue)
-                }
-            )) {
-                Label {
-                    VStack(alignment: .leading) {
-                        Text(DoseMateStrings.Settings.premiumStatus)
-                        Text(storeManager.isPremium ? DoseMateStrings.Settings.premiumActivated : DoseMateStrings.Settings.premiumDeactivated)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                } icon: {
-                    Image(systemName: "crown.fill")
-                        .foregroundColor(storeManager.isPremium ? AppColors.premiumGold : AppColors.chartGray)
-                }
-            }
-
-            Button {
-                storeManager.debugResetTipCount()
-            } label: {
-                Label(DoseMateStrings.Settings.resetTipCount, systemImage: "arrow.counterclockwise")
-            }
-
-            HStack {
-                Text(DoseMateStrings.Settings.totalTips)
-                Spacer()
-                Text("\(storeManager.totalTipCount)회")
-                    .foregroundColor(.secondary)
-            }
-
             NavigationLink {
                 DeveloperSettingsView()
             } label: {
