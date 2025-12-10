@@ -30,7 +30,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.pillmate.premium",
+      "productID" : "com.dosemate.premium",
       "referenceName" : "Premium Lifetime",
       "type" : "NonConsumable"
     },
@@ -50,7 +50,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.pillmate.tip.small",
+      "productID" : "com.dosemate.tip.small",
       "referenceName" : "Tip Small",
       "type" : "Consumable"
     },
@@ -70,7 +70,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.pillmate.tip.medium",
+      "productID" : "com.dosemate.tip.medium",
       "referenceName" : "Tip Medium",
       "type" : "Consumable"
     },
@@ -90,7 +90,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.pillmate.tip.large",
+      "productID" : "com.dosemate.tip.large",
       "referenceName" : "Tip Large",
       "type" : "Consumable"
     }

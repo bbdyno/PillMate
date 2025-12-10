@@ -77,14 +77,14 @@ struct LogHistoryView: View {
                 // 준수율 링
                 ZStack {
                     Circle()
-                        .stroke(.white.opacity(0.3), lineWidth: 8)
-                    
+                        .stroke(Color.white.opacity(0.3), lineWidth: 8)
+
                     Circle()
                         .trim(from: 0, to: viewModel.overallAdherenceRate)
-                        .stroke(.white, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                        .stroke(Color.white, style: StrokeStyle(lineWidth: 8, lineCap: .round))
                         .rotationEffect(.degrees(-90))
                         .animation(.spring(duration: 0.8), value: viewModel.overallAdherenceRate)
-                    
+
                     VStack(spacing: 0) {
                         Text("\(Int(viewModel.overallAdherenceRate * 100))")
                             .font(AppTypography.title)
@@ -92,7 +92,7 @@ struct LogHistoryView: View {
                             .foregroundColor(.white)
                         Text("%")
                             .font(AppTypography.caption)
-                            .foregroundColor(.white.opacity(0.8))
+                            .foregroundColor(Color.white.opacity(0.9))
                     }
                 }
                 .frame(width: 90, height: 90)

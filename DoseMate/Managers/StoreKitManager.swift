@@ -23,19 +23,19 @@ enum ProductID: String, CaseIterable {
     
     /// 프리미엄 평생 이용권
     /// 가격: ₩12,900 (권장)
-    case premium = "com.pillmate.premium"
+    case premium = "com.dosemate.premium"
     
     // MARK: 기부/팁 (Consumable)
     // 기부 금액은 App Store Connect에서 설정
     
     /// 작은 기부 (₩1,000)
-    case tipSmall = "com.pillmate.tip.small"
+    case tipSmall = "com.dosemate.tip.small"
     
     /// 중간 기부 (₩3,900)
-    case tipMedium = "com.pillmate.tip.medium"
+    case tipMedium = "com.dosemate.tip.medium"
     
     /// 큰 기부 (₩9,900)
-    case tipLarge = "com.pillmate.tip.large"
+    case tipLarge = "com.dosemate.tip.large"
     
     // MARK: - 제품 분류
     

@@ -228,45 +228,211 @@ struct AddCaregiverView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                Section("기본 정보") {
-                    TextField("이름 *", text: $name)
-                    
-                    Picker("관계", selection: $relationship) {
-                        ForEach(CaregiverRelationship.allCases) { rel in
-                            Text(rel.displayName).tag(rel)
+            ScrollView {
+                VStack(spacing: AppSpacing.lg) {
+                    // 기본 정보
+                    VStack(alignment: .leading, spacing: AppSpacing.md) {
+                        Text("기본 정보")
+                            .font(AppTypography.headline)
+                            .foregroundColor(AppColors.textPrimary)
+
+                        VStack(spacing: AppSpacing.sm) {
+                            // 이름
+                            TextField("이름 *", text: $name)
+                                .textFieldStyle(.plain)
+                                .padding(AppSpacing.md)
+                                .background(AppColors.background)
+                                .cornerRadius(AppRadius.md)
+
+                            // 관계 선택
+                            VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                                Text("관계")
+                                    .font(AppTypography.caption)
+                                    .foregroundColor(AppColors.textSecondary)
+
+                                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: AppSpacing.xs) {
+                                    ForEach(CaregiverRelationship.allCases) { rel in
+                                        Button {
+                                            relationship = rel
+                                        } label: {
+                                            VStack(spacing: 4) {
+                                                Image(systemName: rel.icon)
+                                                    .font(.caption)
+                                                Text(rel.displayName)
+                                                    .font(AppTypography.caption)
+                                            }
+                                            .frame(maxWidth: .infinity)
+                                            .padding(.vertical, AppSpacing.sm)
+                                            .background(relationship == rel ? AppColors.primary.opacity(0.15) : AppColors.background)
+                                            .foregroundColor(relationship == rel ? AppColors.primary : AppColors.textSecondary)
+                                            .cornerRadius(AppRadius.md)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: AppRadius.md)
+                                                    .stroke(relationship == rel ? AppColors.primary.opacity(0.5) : AppColors.divider, lineWidth: 1)
+                                            )
+                                        }
+                                        .buttonStyle(.plain)
+                                    }
+                                }
+                            }
                         }
+                        .cardStyle()
+                    }
+
+                    // 연락처
+                    VStack(alignment: .leading, spacing: AppSpacing.md) {
+                        Text("연락처")
+                            .font(AppTypography.headline)
+                            .foregroundColor(AppColors.textPrimary)
+
+                        VStack(spacing: AppSpacing.sm) {
+                            // 전화번호
+                            HStack(spacing: AppSpacing.sm) {
+                                Image(systemName: "phone.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(AppColors.primary)
+                                    .frame(width: 32)
+
+                                TextField("전화번호", text: $phoneNumber)
+                                    .keyboardType(.phonePad)
+                                    .textFieldStyle(.plain)
+                            }
+                            .padding(AppSpacing.md)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+
+                            // 이메일
+                            HStack(spacing: AppSpacing.sm) {
+                                Image(systemName: "envelope.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(AppColors.primary)
+                                    .frame(width: 32)
+
+                                TextField("이메일 (선택)", text: $email)
+                                    .keyboardType(.emailAddress)
+                                    .textInputAutocapitalization(.never)
+                                    .textFieldStyle(.plain)
+                            }
+                            .padding(AppSpacing.md)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+                        }
+                        .cardStyle()
+                    }
+
+                    // 알림 설정
+                    VStack(alignment: .leading, spacing: AppSpacing.md) {
+                        Text("알림 설정")
+                            .font(AppTypography.headline)
+                            .foregroundColor(AppColors.textPrimary)
+
+                        VStack(spacing: AppSpacing.sm) {
+                            Toggle(isOn: $shouldNotifyOnMissedDose) {
+                                HStack(spacing: AppSpacing.sm) {
+                                    Image(systemName: "bell.fill")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(shouldNotifyOnMissedDose ? AppColors.primary : AppColors.textTertiary)
+
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("복약 미이행 시 알림")
+                                            .font(AppTypography.body)
+                                            .foregroundColor(AppColors.textPrimary)
+
+                                        Text("복약을 놓치면 보호자에게 알림")
+                                            .font(AppTypography.caption)
+                                            .foregroundColor(AppColors.textSecondary)
+                                    }
+                                }
+                            }
+                            .tint(AppColors.primary)
+                            .padding(AppSpacing.md)
+                            .background(AppColors.background)
+                            .cornerRadius(AppRadius.md)
+
+                            if shouldNotifyOnMissedDose {
+                                VStack(spacing: AppSpacing.sm) {
+                                    // 알림 조건
+                                    VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                                        Text("알림 조건")
+                                            .font(AppTypography.caption)
+                                            .foregroundColor(AppColors.textSecondary)
+
+                                        HStack(spacing: AppSpacing.xs) {
+                                            Button {
+                                                notificationPreference = .missedOnly
+                                            } label: {
+                                                Text("미이행 시만")
+                                                    .font(AppTypography.subheadline)
+                                                    .frame(maxWidth: .infinity)
+                                                    .padding(.vertical, AppSpacing.sm)
+                                                    .background(notificationPreference == .missedOnly ? AppColors.primary.opacity(0.15) : AppColors.background)
+                                                    .foregroundColor(notificationPreference == .missedOnly ? AppColors.primary : AppColors.textSecondary)
+                                                    .cornerRadius(AppRadius.md)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: AppRadius.md)
+                                                            .stroke(notificationPreference == .missedOnly ? AppColors.primary.opacity(0.5) : AppColors.divider, lineWidth: 1)
+                                                    )
+                                            }
+                                            .buttonStyle(.plain)
+
+                                            Button {
+                                                notificationPreference = .all
+                                            } label: {
+                                                Text("모든 상태")
+                                                    .font(AppTypography.subheadline)
+                                                    .frame(maxWidth: .infinity)
+                                                    .padding(.vertical, AppSpacing.sm)
+                                                    .background(notificationPreference == .all ? AppColors.primary.opacity(0.15) : AppColors.background)
+                                                    .foregroundColor(notificationPreference == .all ? AppColors.primary : AppColors.textSecondary)
+                                                    .cornerRadius(AppRadius.md)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: AppRadius.md)
+                                                            .stroke(notificationPreference == .all ? AppColors.primary.opacity(0.5) : AppColors.divider, lineWidth: 1)
+                                                    )
+                                            }
+                                            .buttonStyle(.plain)
+                                        }
+                                    }
+
+                                    // 알림 지연 시간
+                                    VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                                        Text("알림 지연 시간")
+                                            .font(AppTypography.caption)
+                                            .foregroundColor(AppColors.textSecondary)
+
+                                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: AppSpacing.xs) {
+                                            ForEach([0, 15, 30, 60, 120], id: \.self) { minutes in
+                                                Button {
+                                                    notificationDelayMinutes = minutes
+                                                } label: {
+                                                    Text(delayText(for: minutes))
+                                                        .font(AppTypography.caption)
+                                                        .frame(maxWidth: .infinity)
+                                                        .padding(.vertical, AppSpacing.sm)
+                                                        .background(notificationDelayMinutes == minutes ? AppColors.primary.opacity(0.15) : AppColors.background)
+                                                        .foregroundColor(notificationDelayMinutes == minutes ? AppColors.primary : AppColors.textSecondary)
+                                                        .cornerRadius(AppRadius.md)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: AppRadius.md)
+                                                                .stroke(notificationDelayMinutes == minutes ? AppColors.primary.opacity(0.5) : AppColors.divider, lineWidth: 1)
+                                                        )
+                                                }
+                                                .buttonStyle(.plain)
+                                            }
+                                        }
+                                    }
+                                }
+                                .padding(AppSpacing.md)
+                                .background(AppColors.background)
+                                .cornerRadius(AppRadius.md)
+                            }
+                        }
+                        .cardStyle()
                     }
                 }
-                
-                Section("연락처") {
-                    TextField("전화번호", text: $phoneNumber)
-                        .keyboardType(.phonePad)
-                    
-                    TextField("이메일", text: $email)
-                        .keyboardType(.emailAddress)
-                        .textInputAutocapitalization(.never)
-                }
-                
-                Section("알림 설정") {
-                    Toggle("복약 미이행 시 알림", isOn: $shouldNotifyOnMissedDose)
-                    
-                    if shouldNotifyOnMissedDose {
-                        Picker("알림 조건", selection: $notificationPreference) {
-                            Text("복약 미이행 시만").tag(NotificationPreference.missedOnly)
-                            Text("모든 복약 상태").tag(NotificationPreference.all)
-                        }
-                        
-                        Picker("알림 지연 시간", selection: $notificationDelayMinutes) {
-                            Text("즉시").tag(0)
-                            Text("15분 후").tag(15)
-                            Text("30분 후").tag(30)
-                            Text("1시간 후").tag(60)
-                            Text("2시간 후").tag(120)
-                        }
-                    }
-                }
+                .padding(AppSpacing.md)
             }
+            .background(AppColors.background)
             .navigationTitle("보호자 추가")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -274,15 +440,29 @@ struct AddCaregiverView: View {
                     Button("취소") {
                         dismiss()
                     }
+                    .foregroundColor(AppColors.textSecondary)
                 }
-                
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("저장") {
                         saveCaregiver()
                     }
+                    .fontWeight(.semibold)
+                    .foregroundColor(name.isEmpty ? AppColors.textTertiary : AppColors.primary)
                     .disabled(name.isEmpty)
                 }
             }
+        }
+    }
+
+    private func delayText(for minutes: Int) -> String {
+        switch minutes {
+        case 0: return "즉시"
+        case 15: return "15분 후"
+        case 30: return "30분 후"
+        case 60: return "1시간 후"
+        case 120: return "2시간 후"
+        default: return "\(minutes)분"
         }
     }
     
@@ -425,7 +605,7 @@ struct EditCaregiverView: View {
 
 extension CaregiverRelationship: Identifiable {
     var id: String { rawValue }
-    
+
     var displayName: String {
         switch self {
         case .spouse: return "배우자"
@@ -437,7 +617,7 @@ extension CaregiverRelationship: Identifiable {
         case .other: return "기타"
         }
     }
-    
+
     static var allCases: [CaregiverRelationship] {
         [.spouse, .child, .parent, .sibling, .friend, .caregiver, .other]
     }

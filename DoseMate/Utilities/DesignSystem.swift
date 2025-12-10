@@ -206,12 +206,12 @@ struct AppColors {
         endPoint: .bottomTrailing
     )
 
-    /// 헤더 그라데이션
+    /// 헤더 그라데이션 (다크모드에서 눈의 피로도를 줄이기 위해 어두운 버전 사용)
     static let headerGradient = LinearGradient(
         colors: [
-            Color.adaptive(light: Color(hex: "4A90D9"), dark: Color(hex: "5B9FE3")),
-            Color.adaptive(light: Color(hex: "6BA8E5"), dark: Color(hex: "7CB8EF")),
-            Color.adaptive(light: Color(hex: "7EB8F0"), dark: Color(hex: "90C8F5"))
+            Color.adaptive(light: Color(hex: "4A90D9"), dark: Color(hex: "2A5080")),
+            Color.adaptive(light: Color(hex: "6BA8E5"), dark: Color(hex: "355F92")),
+            Color.adaptive(light: Color(hex: "7EB8F0"), dark: Color(hex: "4070A8"))
         ],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
@@ -522,7 +522,7 @@ extension View {
     }
 }
 
-// MARK: - Empty State View
+// MARK: - Empty State View (표준 Empty State)
 
 struct EmptyStateView: View {
     let icon: String
@@ -530,31 +530,101 @@ struct EmptyStateView: View {
     let description: String
     var buttonTitle: String? = nil
     var action: (() -> Void)? = nil
-    
+
     var body: some View {
-        VStack(spacing: AppSpacing.lg) {
-            Image(systemName: icon)
-                .font(.system(size: 60))
-                .foregroundStyle(AppColors.primaryGradient)
-            
-            VStack(spacing: AppSpacing.xs) {
+        VStack(spacing: AppSpacing.xl) {
+            ZStack {
+                Circle()
+                    .fill(AppColors.primarySoft)
+                    .frame(width: 120, height: 120)
+
+                Image(systemName: icon)
+                    .font(.system(size: 50))
+                    .foregroundStyle(AppColors.primaryGradient)
+            }
+
+            VStack(spacing: AppSpacing.sm) {
                 Text(title)
                     .font(AppTypography.title3)
                     .foregroundColor(AppColors.textPrimary)
-                
+
                 Text(description)
                     .font(AppTypography.body)
                     .foregroundColor(AppColors.textSecondary)
                     .multilineTextAlignment(.center)
             }
-            
+
             if let buttonTitle = buttonTitle, let action = action {
-                Button(buttonTitle, action: action)
-                    .buttonStyle(PrimaryButtonStyle())
-                    .frame(width: 200)
+                Button {
+                    action()
+                } label: {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text(buttonTitle)
+                    }
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .frame(width: 200)
             }
         }
-        .padding(AppSpacing.xxl)
+        .padding(AppSpacing.xl)
+    }
+}
+
+// MARK: - Standard Header Card (표준 헤더 카드)
+
+struct StandardHeaderCard: View {
+    let icon: String
+    let title: String
+    let subtitle: String
+    var iconSize: CGFloat = 24
+    var circleSize: CGFloat = 60
+
+    var body: some View {
+        HStack(spacing: AppSpacing.md) {
+            // 아이콘
+            ZStack {
+                Circle()
+                    .fill(AppColors.primaryGradient)
+                    .frame(width: circleSize, height: circleSize)
+
+                Image(systemName: icon)
+                    .font(.system(size: iconSize))
+                    .foregroundColor(.white)
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(AppTypography.title3)
+                    .foregroundColor(AppColors.textPrimary)
+
+                Text(subtitle)
+                    .font(AppTypography.subheadline)
+                    .foregroundColor(AppColors.textSecondary)
+            }
+
+            Spacer()
+        }
+        .padding(AppSpacing.lg)
+        .background(AppColors.cardBackground)
+        .cornerRadius(AppRadius.xl)
+        .shadow(color: Color.black.opacity(0.05), radius: 10, y: 4)
+    }
+}
+
+// MARK: - Add Button (표준 추가 버튼)
+
+struct AddButton: View {
+    let action: () -> Void
+
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: "plus.circle.fill")
+                .font(.title3)
+                .foregroundColor(AppColors.primary)
+        }
     }
 }
 

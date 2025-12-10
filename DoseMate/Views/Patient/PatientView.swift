@@ -41,26 +41,12 @@ struct PatientView: View {
                 }
             }
             .background(AppColors.background)
+            .navigationTitle("환자 관리")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.clear, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: AppSpacing.xs) {
-                        Image(systemName: "person.2.fill")
-                            .foregroundStyle(AppColors.primaryGradient)
-                        Text("환자 관리")
-                            .font(AppTypography.headline)
-                            .foregroundColor(AppColors.textPrimary)
-                    }
-                }
-                
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showAddSheet = true
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(AppColors.primaryGradient)
-                    }
+                    AddButton { showAddSheet = true }
                 }
             }
             .sheet(isPresented: $showAddSheet) {
@@ -85,79 +71,29 @@ struct PatientView: View {
     }
     
     // MARK: - Empty State
-    
+
     private var emptyStateView: some View {
-        VStack(spacing: AppSpacing.xl) {
+        VStack {
             Spacer()
-            
-            ZStack {
-                Circle()
-                    .fill(AppColors.primarySoft)
-                    .frame(width: 120, height: 120)
-                
-                Image(systemName: "person.2.fill")
-                    .font(.system(size: 50))
-                    .foregroundStyle(AppColors.primaryGradient)
-            }
-            
-            VStack(spacing: AppSpacing.sm) {
-                Text("등록된 환자가 없습니다")
-                    .font(AppTypography.title3)
-                    .foregroundColor(AppColors.textPrimary)
-                
-                Text("가족이나 피보호자의 복약을 관리하려면\n환자를 등록하세요.")
-                    .font(AppTypography.body)
-                    .foregroundColor(AppColors.textSecondary)
-                    .multilineTextAlignment(.center)
-            }
-            
-            Button {
-                showAddSheet = true
-            } label: {
-                HStack {
-                    Image(systemName: "plus.circle.fill")
-                    Text("환자 등록하기")
-                }
-            }
-            .buttonStyle(PrimaryButtonStyle())
-            .frame(width: 200)
-            
+            EmptyStateView(
+                icon: "person.2.fill",
+                title: "등록된 환자가 없습니다",
+                description: "가족이나 피보호자의 복약을 관리하려면\n환자를 등록하세요.",
+                buttonTitle: "환자 등록하기",
+                action: { showAddSheet = true }
+            )
             Spacer()
         }
-        .padding(AppSpacing.xl)
     }
     
     // MARK: - Header Card
-    
+
     private var headerCard: some View {
-        HStack(spacing: AppSpacing.md) {
-            // 아이콘
-            ZStack {
-                Circle()
-                    .fill(AppColors.primaryGradient)
-                    .frame(width: 60, height: 60)
-                
-                Image(systemName: "person.2.fill")
-                    .font(.system(size: 24))
-                    .foregroundColor(.white)
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("총 \(patients.count)명의 환자")
-                    .font(AppTypography.title3)
-                    .foregroundColor(AppColors.textPrimary)
-                
-                Text("복약을 관리하고 있습니다")
-                    .font(AppTypography.subheadline)
-                    .foregroundColor(AppColors.textSecondary)
-            }
-            
-            Spacer()
-        }
-        .padding(AppSpacing.lg)
-        .background(AppColors.cardBackground)
-        .cornerRadius(AppRadius.xl)
-        .shadow(color: Color.black.opacity(0.05), radius: 10, y: 4)
+        StandardHeaderCard(
+            icon: "person.2.fill",
+            title: "총 \(patients.count)명의 환자",
+            subtitle: "복약을 관리하고 있습니다"
+        )
     }
     
     // MARK: - Patient List
@@ -606,30 +542,61 @@ struct AddPatientView: View {
                             
                             // 관계 선택
                             VStack(alignment: .leading, spacing: AppSpacing.xs) {
-                                Text("관계")
-                                    .font(AppTypography.caption)
-                                    .foregroundColor(AppColors.textSecondary)
-                                
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: AppSpacing.xs) {
-                                        ForEach(PatientRelationship.allCases) { rel in
-                                            Button {
-                                                relationship = rel
-                                            } label: {
-                                                HStack(spacing: 4) {
-                                                    Image(systemName: rel.icon)
-                                                        .font(.caption)
-                                                    Text(rel.rawValue)
-                                                        .font(AppTypography.caption)
+                                HStack {
+                                    Text("관계")
+                                        .font(AppTypography.caption)
+                                        .foregroundColor(AppColors.textSecondary)
+
+                                    Spacer()
+
+                                    // 스크롤 힌트
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "arrow.left")
+                                        Image(systemName: "arrow.right")
+                                    }
+                                    .font(.caption2)
+                                    .foregroundColor(AppColors.textTertiary)
+                                }
+
+                                ZStack(alignment: .leading) {
+                                    ScrollView(.horizontal, showsIndicators: true) {
+                                        HStack(spacing: AppSpacing.xs) {
+                                            ForEach(PatientRelationship.allCases) { rel in
+                                                Button {
+                                                    relationship = rel
+                                                } label: {
+                                                    HStack(spacing: 4) {
+                                                        Image(systemName: rel.icon)
+                                                            .font(.caption)
+                                                        Text(rel.rawValue)
+                                                            .font(AppTypography.caption)
+                                                    }
+                                                    .padding(.horizontal, AppSpacing.sm)
+                                                    .padding(.vertical, AppSpacing.xs)
+                                                    .background(relationship == rel ? AppColors.primary.opacity(0.15) : AppColors.background)
+                                                    .foregroundColor(relationship == rel ? AppColors.primary : AppColors.textSecondary)
+                                                    .cornerRadius(AppRadius.full)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: AppRadius.full)
+                                                            .stroke(relationship == rel ? AppColors.primary.opacity(0.5) : AppColors.divider, lineWidth: 1)
+                                                    )
                                                 }
-                                                .padding(.horizontal, AppSpacing.sm)
-                                                .padding(.vertical, AppSpacing.xs)
-                                                .background(relationship == rel ? AppColors.primary.opacity(0.15) : AppColors.background)
-                                                .foregroundColor(relationship == rel ? AppColors.primary : AppColors.textSecondary)
-                                                .cornerRadius(AppRadius.full)
+                                                .buttonStyle(.plain)
                                             }
-                                            .buttonStyle(.plain)
                                         }
+                                        .padding(.horizontal, 1)
+                                    }
+
+                                    // 오른쪽 페이드 효과
+                                    HStack {
+                                        Spacer()
+                                        LinearGradient(
+                                            colors: [AppColors.cardBackground.opacity(0), AppColors.cardBackground],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                        .frame(width: 30)
+                                        .allowsHitTesting(false)
                                     }
                                 }
                             }

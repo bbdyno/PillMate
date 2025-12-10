@@ -141,12 +141,37 @@ struct PremiumView: View {
                         Text(DoseMateStrings.Premium.lifetimeAccess)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                    } else {
+                    } else if storeManager.isLoading {
                         // 제품 로딩 중
                         ProgressView()
+                        Text("제품 정보를 불러오는 중...")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    } else {
+                        // 제품 로드 실패
+                        VStack(spacing: 8) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.title2)
+                                .foregroundColor(AppColors.warning)
+
+                            Text("제품을 불러올 수 없습니다")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+
+                            Button {
+                                Task {
+                                    await storeManager.loadProducts()
+                                }
+                            } label: {
+                                Label("다시 시도", systemImage: "arrow.clockwise")
+                                    .font(.caption)
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.small)
+                        }
                     }
                 }
-                
+
                 // 구매 버튼
                 Button {
                     Task {
@@ -169,7 +194,7 @@ struct PremiumView: View {
                     .foregroundColor(.white)
                     .cornerRadius(14)
                 }
-                .disabled(storeManager.premiumProduct == nil)
+                .disabled(storeManager.premiumProduct == nil || storeManager.isLoading)
                 
                 // 가족 공유 안내
                 HStack {
@@ -330,13 +355,45 @@ struct TipJarView: View {
                     .padding(.top)
                     
                     // 기부 옵션들
-                    if storeManager.tipProducts.isEmpty {
+                    if storeManager.isLoading {
                         // 제품 로딩 중
                         VStack(spacing: 12) {
                             ProgressView()
                             Text(DoseMateStrings.TipJar.loadingProducts)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 40)
+                        .background(Color.appCardBackground)
+                        .cornerRadius(16)
+                    } else if storeManager.tipProducts.isEmpty {
+                        // 제품 로드 실패 또는 없음
+                        VStack(spacing: 16) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.system(size: 40))
+                                .foregroundColor(AppColors.warning)
+
+                            Text("제품을 불러올 수 없습니다")
+                                .font(.headline)
+
+                            if let errorMessage = storeManager.errorMessage {
+                                Text(errorMessage)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                            }
+
+                            Button {
+                                Task {
+                                    await storeManager.loadProducts()
+                                }
+                            } label: {
+                                Label("다시 시도", systemImage: "arrow.clockwise")
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 10)
+                            }
+                            .buttonStyle(.bordered)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 40)

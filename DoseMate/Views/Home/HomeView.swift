@@ -135,7 +135,7 @@ struct HomeView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(greetingText)
                             .font(AppTypography.subheadline)
-                            .foregroundColor(.white.opacity(0.9))
+                            .foregroundColor(Color.white.opacity(0.95))
                         Text(viewModel.medicationTitle)
                             .font(AppTypography.title2)
                             .foregroundColor(.white)
@@ -240,27 +240,27 @@ struct HomeView: View {
         VStack(spacing: AppSpacing.xs) {
             ZStack {
                 Circle()
-                    .stroke(.white.opacity(0.3), lineWidth: size == 85 ? 8 : 6)
-                
+                    .stroke(Color.white.opacity(0.3), lineWidth: size == 85 ? 8 : 6)
+
                 Circle()
                     .trim(from: 0, to: rate)
                     .stroke(
-                        .white,
+                        Color.white,
                         style: StrokeStyle(lineWidth: size == 85 ? 8 : 6, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.spring(duration: 0.8), value: rate)
-                
+
                 Text("\(Int(rate * 100))%")
                     .font(size == 85 ? AppTypography.headline : AppTypography.subheadline)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
             }
             .frame(width: size, height: size)
-            
+
             Text(title)
                 .font(AppTypography.caption)
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(Color.white.opacity(0.95))
         }
     }
     
@@ -434,34 +434,13 @@ struct HomeView: View {
     }
     
     private var emptyScheduleView: some View {
-        VStack(spacing: AppSpacing.md) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 50))
-                .foregroundStyle(AppColors.successGradient)
-            
-            VStack(spacing: 4) {
-                Text(DoseMateStrings.LogHistory.noRecords)
-                    .font(AppTypography.headline)
-                    .foregroundColor(AppColors.textPrimary)
-
-                Text(DoseMateStrings.MedicationList.addToStart)
-                    .font(AppTypography.subheadline)
-                    .foregroundColor(AppColors.textSecondary)
-            }
-            
-            Button {
-                showAddMedicationSheet = true
-            } label: {
-                HStack {
-                    Image(systemName: "plus.circle.fill")
-                    Text(DoseMateStrings.Medications.add)
-                }
-            }
-            .buttonStyle(PrimaryButtonStyle())
-            .frame(width: 160)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, AppSpacing.xxl)
+        EmptyStateView(
+            icon: "checkmark.seal.fill",
+            title: DoseMateStrings.LogHistory.noRecords,
+            description: DoseMateStrings.MedicationList.addToStart,
+            buttonTitle: DoseMateStrings.Medications.add,
+            action: { showAddMedicationSheet = true }
+        )
         .cardStyle()
     }
     
