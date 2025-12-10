@@ -15,7 +15,6 @@ enum NotificationCategory: String {
     case medicationReminder = "MEDICATION_REMINDER"
     case criticalMedication = "CRITICAL_MEDICATION"
     case lowStock = "LOW_STOCK"
-    case caregiverAlert = "CAREGIVER_ALERT"
     case appointmentReminder = "APPOINTMENT_REMINDER"
 }
 
@@ -155,14 +154,6 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         )
         
         // 보호자 알림 카테고리
-        let caregiverCategory = UNNotificationCategory(
-            identifier: NotificationCategory.caregiverAlert.rawValue,
-            actions: [viewDetailsAction],
-            intentIdentifiers: [],
-            options: []
-        )
-        
-        // 진료 예약 알림 카테고리
         let appointmentCategory = UNNotificationCategory(
             identifier: NotificationCategory.appointmentReminder.rawValue,
             actions: [viewDetailsAction],
@@ -174,7 +165,6 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             medicationCategory,
             criticalCategory,
             lowStockCategory,
-            caregiverCategory,
             appointmentCategory
         ]
         
@@ -380,42 +370,6 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         await updateScheduledNotificationsCount()
     }
     
-    /// 보호자 알림 전송
-    func sendCaregiverNotification(
-        _ caregiver: Caregiver,
-        missedMedication: Medication
-    ) async throws {
-        guard isAuthorized else {
-            throw NotificationError.notAuthorized
-        }
-        
-        let identifier = makeCaregiverNotificationIdentifier(
-            caregiverId: caregiver.id,
-            medicationId: missedMedication.id
-        )
-        
-        let content = UNMutableNotificationContent()
-        content.title = "⚠️ 복약 누락 알림"
-        content.body = "\(caregiver.name)님께: \(missedMedication.name) 복용이 누락되었습니다."
-        content.sound = .default
-        content.categoryIdentifier = NotificationCategory.caregiverAlert.rawValue
-        content.userInfo = [
-            "caregiverId": caregiver.id.uuidString,
-            "medicationId": missedMedication.id.uuidString,
-            "type": "caregiverAlert"
-        ]
-        
-        let request = UNNotificationRequest(
-            identifier: identifier,
-            content: content,
-            trigger: nil // 즉시 발송
-        )
-        
-        try await notificationCenter.add(request)
-        
-        caregiver.recordNotification()
-    }
-    
     /// 재고 부족 알림
     func sendLowStockNotification(for medication: Medication) async throws {
         guard isAuthorized else {
@@ -556,10 +510,6 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     
     private func makeSnoozeNotificationIdentifier(logId: UUID) -> String {
         "\(notificationPrefix)snooze.\(logId.uuidString)"
-    }
-    
-    private func makeCaregiverNotificationIdentifier(caregiverId: UUID, medicationId: UUID) -> String {
-        "\(notificationPrefix)caregiver.\(caregiverId.uuidString).\(medicationId.uuidString)"
     }
     
     private func makeLowStockNotificationIdentifier(medicationId: UUID) -> String {

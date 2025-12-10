@@ -310,7 +310,6 @@ final class SettingsViewModel {
             try context.delete(model: Medication.self)
             try context.delete(model: HealthMetric.self)
             try context.delete(model: Appointment.self)
-            try context.delete(model: Caregiver.self)
             
             try context.save()
             
@@ -342,11 +341,6 @@ final class SettingsViewModel {
             schedule.setDefaultTimes(for: .twiceDaily)
             schedule.medication = medication
             context.insert(schedule)
-        }
-        
-        // 보호자 추가
-        for caregiver in Caregiver.sampleData {
-            context.insert(caregiver)
         }
         
         // 진료 예약 추가

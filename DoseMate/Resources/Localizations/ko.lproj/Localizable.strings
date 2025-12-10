@@ -54,13 +54,6 @@
 "calendar.thursday" = "목";
 "calendar.tuesday" = "화";
 "calendar.wednesday" = "수";
-"caregiver.relationship.caregiver" = "간병인";
-"caregiver.relationship.child" = "자녀";
-"caregiver.relationship.friend" = "친구";
-"caregiver.relationship.other" = "기타";
-"caregiver.relationship.parent" = "부모";
-"caregiver.relationship.sibling" = "형제자매";
-"caregiver.relationship.spouse" = "배우자";
 "common.add" = "추가";
 "common.age_suffix" = "세";
 "common.cancel" = "취소";
@@ -430,8 +423,6 @@
 "settings.appearance_mode" = "외관 모드";
 "settings.appointments" = "진료 예약";
 "settings.auto_sync" = "자동 동기화";
-"settings.caregiver_alert_description" = "미복약 시 알림";
-"settings.caregiver_alerts" = "보호자 알림";
 "settings.cloud_backup" = "클라우드 및 백업";
 "settings.continue_button" = "계속";
 "settings.create_sample_data" = "샘플 데이터 생성";

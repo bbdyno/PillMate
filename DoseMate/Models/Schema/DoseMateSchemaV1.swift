@@ -19,7 +19,6 @@ enum DoseMateSchemaV1: VersionedSchema {
             MedicationLog.self,
             HealthMetric.self,
             Appointment.self,
-            Caregiver.self,
             Patient.self
         ]
     }

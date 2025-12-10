@@ -990,7 +990,6 @@ struct PatientSelectionRow: View {
             MedicationLog.self,
             HealthMetric.self,
             Appointment.self,
-            Caregiver.self,
             Patient.self
         ], inMemory: true)
 }

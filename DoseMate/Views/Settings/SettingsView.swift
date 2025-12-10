@@ -526,19 +526,6 @@ struct SettingsView: View {
                 }
             }
 
-            // 보호자 관리 (알림 연락처)
-            NavigationLink {
-                CaregiverListView()
-            } label: {
-                HStack {
-                    Label(DoseMateStrings.Settings.caregiverAlerts, systemImage: "bell.badge.fill")
-                    Spacer()
-                    Text(DoseMateStrings.Settings.missedDoseAlert)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-            }
-
             // 진료 예약 관리
             NavigationLink {
                 AppointmentListView()
@@ -776,7 +763,6 @@ struct SettingsView: View {
             MedicationSchedule.self,
             MedicationLog.self,
             HealthMetric.self,
-            Appointment.self,
-            Caregiver.self
+            Appointment.self
         ], inMemory: true)
 }

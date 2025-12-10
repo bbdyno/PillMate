@@ -21,7 +21,6 @@ struct DeveloperSettingsView: View {
     @Query private var medications: [Medication]
     @Query private var logs: [MedicationLog]
     @Query private var appointments: [Appointment]
-    @Query private var caregivers: [Caregiver]
     @Query private var healthMetrics: [HealthMetric]
     @Query private var patients: [Patient]
     
@@ -134,7 +133,6 @@ struct DeveloperSettingsView: View {
             dataRow("약물", count: medications.count, icon: "pills.fill", color: .blue)
             dataRow("복약 기록", count: logs.count, icon: "list.clipboard.fill", color: .green)
             dataRow("진료 예약", count: appointments.count, icon: "calendar", color: .orange)
-            dataRow("보호자", count: caregivers.count, icon: "person.2.fill", color: .purple)
             dataRow("건강 지표", count: healthMetrics.count, icon: "heart.fill", color: .red)
             
             // 총 데이터
@@ -164,7 +162,7 @@ struct DeveloperSettingsView: View {
     }
     
     private var totalDataCount: Int {
-        patients.count + medications.count + logs.count + appointments.count + caregivers.count + healthMetrics.count
+        patients.count + medications.count + logs.count + appointments.count + healthMetrics.count
     }
     
     // MARK: - Test Tools Section
@@ -239,7 +237,6 @@ struct DeveloperSettingsView: View {
         medications.forEach { modelContext.delete($0) }
         logs.forEach { modelContext.delete($0) }
         appointments.forEach { modelContext.delete($0) }
-        caregivers.forEach { modelContext.delete($0) }
         healthMetrics.forEach { modelContext.delete($0) }
         
         try? modelContext.save()
@@ -306,7 +303,6 @@ struct DeveloperSettingsView: View {
         MedicationSchedule.self,
         MedicationLog.self,
         Appointment.self,
-        Caregiver.self,
         HealthMetric.self,
         Patient.self
     ], inMemory: true)

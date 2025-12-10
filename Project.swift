@@ -48,7 +48,7 @@ let project = Project(
             ),
             sources: ["DoseMate/**"],
             resources: ["DoseMate/**/*.{xcassets,strings,storyboard,xib}"],
-            entitlements: .file(path: "DoseMate/DoseMate.entitlements"),
+            entitlements: .file(path: "DoseMate/Resources/DoseMate.entitlements"),
             scripts: [
                 .pre(
                     path: .relativeToRoot("scripts/swiftgen.sh"),

@@ -166,14 +166,20 @@ struct PatientCard: View {
                         .font(AppTypography.headline)
                         .foregroundColor(AppColors.textPrimary)
                     
-                    Text(patient.relationshipType.rawValue)
-                        .font(AppTypography.caption)
-                        .fontWeight(.medium)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(patient.color.opacity(0.15))
-                        .foregroundColor(patient.color)
-                        .cornerRadius(AppRadius.sm)
+                    if patient.relationshipType == .myself {
+                        Image(systemName: "person.fill")
+                            .font(.caption)
+                            .foregroundColor(AppColors.primary)
+                    } else {
+                        Text(patient.relationshipType.rawValue)
+                            .font(AppTypography.caption)
+                            .fontWeight(.medium)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(patient.color.opacity(0.15))
+                            .foregroundColor(patient.color)
+                            .cornerRadius(AppRadius.sm)
+                    }
                 }
                 
                 HStack(spacing: AppSpacing.md) {
@@ -300,8 +306,14 @@ struct PatientDetailView: View {
                     .foregroundColor(AppColors.textPrimary)
                 
                 HStack(spacing: AppSpacing.xs) {
-                    Image(systemName: patient.relationshipType.icon)
-                    Text(patient.relationshipType.rawValue)
+                    if patient.relationshipType == .myself {
+                        Image(systemName: "person.fill")
+                        Text("나")
+                    } else {
+                        Image(systemName: patient.relationshipType.icon)
+                        Text(patient.relationshipType.rawValue)
+                    }
+
                     if let ageText = patient.ageText {
                         Text("•")
                         Text(ageText)

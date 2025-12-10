@@ -91,6 +91,5 @@ struct ContentView: View {
             MedicationLog.self,
             HealthMetric.self,
             Appointment.self,
-            Caregiver.self
         ], inMemory: true)
 }

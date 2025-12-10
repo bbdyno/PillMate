@@ -17,45 +17,27 @@ enum DoseMateSchemaHistory: SchemaMigrationPlan {
     /// 모든 스키마 버전 (순서대로)
     static var schemas: [any VersionedSchema.Type] {
         [
-            DoseMateSchemaV1.self
-            // 향후 버전 추가 시:
-            // DoseMateSchemaV2.self,
-            // DoseMateSchemaV3.self
+            DoseMateSchemaV1.self,
+            DoseMateSchemaV2.self,
+            DoseMateSchemaV3.self
         ]
     }
 
     /// 버전 간 마이그레이션 단계
     static var stages: [MigrationStage] {
         [
-            // 향후 V1 -> V2 마이그레이션 단계 추가 예시:
-            // migrateV1toV2
+            migrateV1toV2,
+            migrateV2toV3,
         ]
     }
 
-    // MARK: - Migration Stages
+    static let migrateV1toV2 = MigrationStage.lightweight(
+        fromVersion: DoseMateSchemaV1.self,
+        toVersion: DoseMateSchemaV2.self
+    )
 
-    // 향후 마이그레이션 단계 추가 예시:
-    //
-    // static let migrateV1toV2 = MigrationStage.custom(
-    //     fromVersion: DoseMateSchemaV1.self,
-    //     toVersion: DoseMateSchemaV2.self,
-    //     willMigrate: { context in
-    //         print("스키마 마이그레이션 시작: V1 -> V2")
-    //     },
-    //     didMigrate: { context in
-    //         print("스키마 마이그레이션 완료: V1 -> V2")
-    //
-    //         // 커스텀 데이터 변환 작업
-    //         // 예: 새로운 필드에 기본값 설정
-    //         do {
-    //             let medications = try context.fetch(FetchDescriptor<Medication>())
-    //             for medication in medications {
-    //                 // 새 필드 초기화
-    //             }
-    //             try context.save()
-    //         } catch {
-    //             print("마이그레이션 중 오류: \(error)")
-    //         }
-    //     }
-    // )
+    static let migrateV2toV3 = MigrationStage.lightweight(
+        fromVersion: DoseMateSchemaV2.self,
+        toVersion: DoseMateSchemaV3.self
+    )
 }

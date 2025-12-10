@@ -42,7 +42,6 @@ struct ExportedData: Codable {
     let logs: [MedicationLogDTO]
     let healthMetrics: [HealthMetricDTO]
     let appointments: [AppointmentDTO]
-    let caregivers: [CaregiverDTO]
 }
 
 // MARK: - Data Transfer Objects (DTOs)
@@ -321,47 +320,6 @@ struct AppointmentDTO: Codable, Identifiable {
     }
 }
 
-/// 보호자 DTO
-struct CaregiverDTO: Codable, Identifiable {
-    let id: UUID
-    let name: String
-    let relationship: String
-    let phoneNumber: String
-    let email: String?
-    let shouldNotifyOnMissedDose: Bool
-    let notificationPreferences: String
-    let notificationDelayMinutes: Int
-    let isActive: Bool
-    let createdAt: Date
-    
-    init(from caregiver: Caregiver) {
-        self.id = caregiver.id
-        self.name = caregiver.name
-        self.relationship = caregiver.relationship
-        self.phoneNumber = caregiver.phoneNumber
-        self.email = caregiver.email
-        self.shouldNotifyOnMissedDose = caregiver.shouldNotifyOnMissedDose
-        self.notificationPreferences = caregiver.notificationPreferences
-        self.notificationDelayMinutes = caregiver.notificationDelayMinutes
-        self.isActive = caregiver.isActive
-        self.createdAt = caregiver.createdAt
-    }
-    
-    func toModel() -> Caregiver {
-        let caregiver = Caregiver(
-            name: name,
-            relationship: relationship,
-            phoneNumber: phoneNumber,
-            email: email,
-            shouldNotifyOnMissedDose: shouldNotifyOnMissedDose,
-            notificationPreference: NotificationPreference(rawValue: notificationPreferences) ?? .missedOnly,
-            notificationDelayMinutes: notificationDelayMinutes,
-            isActive: isActive
-        )
-        return caregiver
-    }
-}
-
 // MARK: - Data Export Manager
 
 /// 데이터 내보내기/가져오기 관리자
@@ -384,7 +342,6 @@ final class DataExportManager {
         let logs = try context.fetch(FetchDescriptor<MedicationLog>())
         let healthMetrics = try context.fetch(FetchDescriptor<HealthMetric>())
         let appointments = try context.fetch(FetchDescriptor<Appointment>())
-        let caregivers = try context.fetch(FetchDescriptor<Caregiver>())
         
         // DTO로 변환
         let exportedData = ExportedData(
@@ -394,7 +351,6 @@ final class DataExportManager {
             logs: logs.map { MedicationLogDTO(from: $0) },
             healthMetrics: healthMetrics.map { HealthMetricDTO(from: $0) },
             appointments: appointments.map { AppointmentDTO(from: $0) },
-            caregivers: caregivers.map { CaregiverDTO(from: $0) }
         )
         
         let exportData = DoseMateExportData(
@@ -524,13 +480,6 @@ final class DataExportManager {
             result.appointmentsImported += 1
         }
         
-        // 7. 보호자 가져오기
-        for dto in importedData.data.caregivers {
-            let caregiver = dto.toModel()
-            context.insert(caregiver)
-            result.caregiversImported += 1
-        }
-        
         // 저장
         try context.save()
         
@@ -545,7 +494,6 @@ final class DataExportManager {
         try context.delete(model: Medication.self)
         try context.delete(model: HealthMetric.self)
         try context.delete(model: Appointment.self)
-        try context.delete(model: Caregiver.self)
         try context.delete(model: Patient.self)
         
         try context.save()
@@ -572,8 +520,7 @@ final class DataExportManager {
             scheduleCount: importedData.data.schedules.count,
             logCount: importedData.data.logs.count,
             healthMetricCount: importedData.data.healthMetrics.count,
-            appointmentCount: importedData.data.appointments.count,
-            caregiverCount: importedData.data.caregivers.count
+            appointmentCount: importedData.data.appointments.count
         )
     }
 }
@@ -626,11 +573,10 @@ struct ImportValidationResult {
     let logCount: Int
     let healthMetricCount: Int
     let appointmentCount: Int
-    let caregiverCount: Int
     
     var totalCount: Int {
         patientCount + medicationCount + scheduleCount +
-        logCount + healthMetricCount + appointmentCount + caregiverCount
+        logCount + healthMetricCount + appointmentCount
     }
 }
 

@@ -54,13 +54,6 @@
 "calendar.thursday" = "Kam";
 "calendar.tuesday" = "Sel";
 "calendar.wednesday" = "Rab";
-"caregiver.relationship.caregiver" = "Pengasuh";
-"caregiver.relationship.child" = "Anak";
-"caregiver.relationship.friend" = "Teman";
-"caregiver.relationship.other" = "Lainnya";
-"caregiver.relationship.parent" = "Orang Tua";
-"caregiver.relationship.sibling" = "Saudara";
-"caregiver.relationship.spouse" = "Pasangan";
 "common.add" = "Tambah";
 "common.age_suffix" = "tahun";
 "common.cancel" = "Batal";
@@ -430,8 +423,6 @@
 "settings.appearance_mode" = "Mode tampilan";
 "settings.appointments" = "Janji medis";
 "settings.auto_sync" = "Sinkron otomatis";
-"settings.caregiver_alert_description" = "Peringatan jika dosis terlewat";
-"settings.caregiver_alerts" = "Peringatan pengasuh";
 "settings.cloud_backup" = "Cloud & Cadangan";
 "settings.continue_button" = "Lanjutkan";
 "settings.create_sample_data" = "Buat data contoh";

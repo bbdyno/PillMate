@@ -40,7 +40,7 @@ final class DataManager: ObservableObject {
             }
 
             // MigrationPlan과 함께 컨테이너 생성
-            let schema = Schema(versionedSchema: DoseMateSchemaV1.self)
+            let schema = Schema(versionedSchema: DoseMateSchemaV3.self)
             let storeURL = groupContainerURL.appendingPathComponent("DoseMate.sqlite")
             let config = ModelConfiguration(
                 url: storeURL,
@@ -384,50 +384,6 @@ final class DataManager: ObservableObject {
         }
     }
     
-    // MARK: - CRUD Operations - Caregiver
-    
-    /// 보호자 추가
-    func addCaregiver(_ caregiver: Caregiver) {
-        context.insert(caregiver)
-        save()
-    }
-    
-    /// 보호자 삭제
-    func deleteCaregiver(_ caregiver: Caregiver) {
-        context.delete(caregiver)
-        save()
-    }
-    
-    /// 모든 보호자 가져오기
-    func fetchAllCaregivers() -> [Caregiver] {
-        let descriptor = FetchDescriptor<Caregiver>(
-            sortBy: [SortDescriptor(\.name)]
-        )
-        
-        do {
-            return try context.fetch(descriptor)
-        } catch {
-            print("Failed to fetch caregivers: \(error)")
-            return []
-        }
-    }
-    
-    /// 활성 보호자 가져오기
-    func fetchActiveCaregivers() -> [Caregiver] {
-        let predicate = #Predicate<Caregiver> { $0.isActive }
-        let descriptor = FetchDescriptor<Caregiver>(
-            predicate: predicate,
-            sortBy: [SortDescriptor(\.name)]
-        )
-        
-        do {
-            return try context.fetch(descriptor)
-        } catch {
-            print("Failed to fetch active caregivers: \(error)")
-            return []
-        }
-    }
-    
     // MARK: - Statistics
     
     /// 오늘 복약 준수율 계산
@@ -560,11 +516,6 @@ final class DataManager: ObservableObject {
             addSchedule(schedule, to: medication)
         }
         
-        // 보호자 추가
-        for caregiver in Caregiver.sampleData {
-            addCaregiver(caregiver)
-        }
-        
         // 진료 예약 추가
         for appointment in Appointment.sampleData {
             addAppointment(appointment)
@@ -582,7 +533,6 @@ final class DataManager: ObservableObject {
             try context.delete(model: Medication.self)
             try context.delete(model: HealthMetric.self)
             try context.delete(model: Appointment.self)
-            try context.delete(model: Caregiver.self)
             save()
         } catch {
             print("Failed to delete all data: \(error)")

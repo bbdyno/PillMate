@@ -54,13 +54,6 @@
 "calendar.thursday" = "木";
 "calendar.tuesday" = "火";
 "calendar.wednesday" = "水";
-"caregiver.relationship.caregiver" = "介護者";
-"caregiver.relationship.child" = "子供";
-"caregiver.relationship.friend" = "友人";
-"caregiver.relationship.other" = "その他";
-"caregiver.relationship.parent" = "親";
-"caregiver.relationship.sibling" = "兄弟姉妹";
-"caregiver.relationship.spouse" = "配偶者";
 "common.add" = "追加";
 "common.age_suffix" = "歳";
 "common.cancel" = "キャンセル";
@@ -430,8 +423,6 @@
 "settings.appearance_mode" = "外観モード";
 "settings.appointments" = "診療予約";
 "settings.auto_sync" = "自動同期";
-"settings.caregiver_alert_description" = "服用漏れ時に通知";
-"settings.caregiver_alerts" = "介護者通知";
 "settings.cloud_backup" = "クラウドとバックアップ";
 "settings.continue_button" = "続行";
 "settings.create_sample_data" = "サンプルデータを生成";

@@ -54,13 +54,6 @@
 "calendar.thursday" = "四";
 "calendar.tuesday" = "二";
 "calendar.wednesday" = "三";
-"caregiver.relationship.caregiver" = "护理人员";
-"caregiver.relationship.child" = "子女";
-"caregiver.relationship.friend" = "朋友";
-"caregiver.relationship.other" = "其他";
-"caregiver.relationship.parent" = "父母";
-"caregiver.relationship.sibling" = "兄弟姐妹";
-"caregiver.relationship.spouse" = "配偶";
 "common.add" = "添加";
 "common.age_suffix" = "岁";
 "common.cancel" = "取消";
@@ -430,8 +423,6 @@
 "settings.appearance_mode" = "外观模式";
 "settings.appointments" = "就诊预约";
 "settings.auto_sync" = "自动同步";
-"settings.caregiver_alert_description" = "漏服时提醒";
-"settings.caregiver_alerts" = "照护者提醒";
 "settings.cloud_backup" = "云与备份";
 "settings.continue_button" = "继续";
 "settings.create_sample_data" = "生成示例数据";
