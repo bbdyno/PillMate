@@ -455,8 +455,6 @@ struct TraditionalSupportRow: View {
 
     private func getMethodColor() -> Color {
         switch method {
-        case .toss:
-            return Color.blue
         case .buyMeACoffee:
             return Color.brown
         case .kofi:

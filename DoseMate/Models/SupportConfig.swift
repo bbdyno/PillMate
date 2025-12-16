@@ -18,39 +18,36 @@ struct SupportConfig {
 
     /// Ethereum (ETH) 및 ERC-20 토큰 (USDT 등) 주소
     /// MetaMask 지갑 주소 (0x로 시작)
-    static let ethereumAddress = "0x0000000000000000000000000000000000000000" // TODO: 실제 주소로 교체
+    static let ethereumAddress = "0x5f35523757d0e672fa3ffbc0f1d50d35fd6b2571"
 
     /// Bitcoin (BTC) 주소
     /// Bitcoin 네트워크 주소 (bc1 또는 1, 3으로 시작)
-    static let bitcoinAddress = "bc1q0000000000000000000000000000000000000" // TODO: 실제 주소로 교체
+    static let bitcoinAddress = "bc1qz5neag5j4cg6j8sj53889udws70v7223zlvgd3"
 
     // MARK: - 전통적 후원 방법
 
-    /// Toss 송금 URL
-    static let tossURL = "https://toss.me/yourname" // TODO: 실제 Toss 링크로 교체
+    /// Buy Me a Coffee URL
+    static let buyMeACoffeeURL = "https://buymeacoffee.com/bbdyno"
 
-    /// Buy Me a Coffee URL (국제 사용자용)
-    static let buyMeACoffeeURL = "https://buymeacoffee.com/yourname" // TODO: 실제 링크로 교체
+    /// Ko-fi URL
+    static let kofiURL = "https://ko-fi.com/bbdyno"
 
-    /// Ko-fi URL (선택사항)
-    static let kofiURL = "https://ko-fi.com/yourname" // TODO: 실제 링크로 교체
-
-    /// GitHub Sponsors (선택사항)
-    static let githubSponsorsURL = "https://github.com/sponsors/yourname" // TODO: 실제 링크로 교체
+    /// GitHub Sponsors
+    static let githubSponsorsURL = "https://github.com/sponsors/bbdyno"
 
     // MARK: - 지원 토큰 정보
 
     /// 지원하는 암호화폐 목록
     static let supportedCryptos: [CryptoType] = [
         .ethereum,
-        .bitcoin,
-        .usdtERC20
+        .bitcoin
     ]
 
     /// 지원하는 전통적 방법
     static let supportedTraditionalMethods: [TraditionalSupportMethod] = [
-        .toss,
-        .buyMeACoffee
+        .buyMeACoffee,
+        .githubSponsors,
+        .kofi
     ]
 }
 
@@ -186,7 +183,6 @@ enum CryptoType: String, CaseIterable {
 
 /// 전통적인 후원 방법
 enum TraditionalSupportMethod: String, CaseIterable {
-    case toss = "Toss"
     case buyMeACoffee = "Buy Me a Coffee"
     case kofi = "Ko-fi"
     case githubSponsors = "GitHub Sponsors"
@@ -199,8 +195,6 @@ enum TraditionalSupportMethod: String, CaseIterable {
     /// 아이콘
     var icon: String {
         switch self {
-        case .toss:
-            return "creditcard.fill"
         case .buyMeACoffee:
             return "cup.and.saucer.fill"
         case .kofi:
@@ -213,8 +207,6 @@ enum TraditionalSupportMethod: String, CaseIterable {
     /// URL
     var url: String {
         switch self {
-        case .toss:
-            return SupportConfig.tossURL
         case .buyMeACoffee:
             return SupportConfig.buyMeACoffeeURL
         case .kofi:
@@ -227,8 +219,6 @@ enum TraditionalSupportMethod: String, CaseIterable {
     /// 설명 (한국어)
     var descriptionKorean: String {
         switch self {
-        case .toss:
-            return "토스 송금으로 간편하게 후원"
         case .buyMeACoffee:
             return "커피 한 잔 값으로 후원 (국제 사용자)"
         case .kofi:
@@ -241,8 +231,6 @@ enum TraditionalSupportMethod: String, CaseIterable {
     /// 설명 (영어)
     var descriptionEnglish: String {
         switch self {
-        case .toss:
-            return "Support via Toss (Korea only)"
         case .buyMeACoffee:
             return "Buy me a coffee (International)"
         case .kofi:
@@ -254,12 +242,7 @@ enum TraditionalSupportMethod: String, CaseIterable {
 
     /// 한국 전용 여부
     var isKoreaOnly: Bool {
-        switch self {
-        case .toss:
-            return true
-        default:
-            return false
-        }
+        return false
     }
 
     /// 월간 후원 지원 여부
