@@ -49,11 +49,9 @@
 
 ## 📸 Screenshots
 
-*(Screenshots placeholder - Add your beautiful app screenshots here)*
-
 | Home | Medication List | Statistics | Settings |
 |:---:|:---:|:---:|:---:|
-| <img src="" alt="Home" width="200" /> | <img src="" alt="List" width="200" /> | <img src="" alt="Stats" width="200" /> | <img src="" alt="Settings" width="200" /> |
+| <img src="Screenshots/1.png" alt="Home" width="200" /> | <img src="Screenshots/2.png" alt="List" width="200" /> | <img src="Screenshots/3.png" alt="Stats" width="200" /> | <img src="Screenshots/4.png" alt="Settings" width="200" /> |
 
 <br>
 
