@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 #if DEBUG
@@ -39,19 +41,19 @@ struct DeveloperSettingsView: View {
             // 앱 정보
             appInfoSection
         }
-        .navigationTitle("개발자 설정")
+        .navigationTitle(DMateResourceStrings.Developer.title)
         .navigationBarTitleDisplayMode(.inline)
-        .alert("모든 데이터 삭제", isPresented: $showResetAlert) {
-            Button("취소", role: .cancel) {}
-            Button("삭제", role: .destructive) {
+        .alert(DMateResourceStrings.Developer.deleteAllTitle, isPresented: $showResetAlert) {
+            Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+            Button(DMateResourceStrings.Common.delete, role: .destructive) {
                 resetAllData()
             }
         } message: {
             Text("모든 데이터가 삭제됩니다. 이 작업은 되돌릴 수 없습니다.")
         }
-        .alert("샘플 데이터 추가", isPresented: $showSampleDataAlert) {
-            Button("취소", role: .cancel) {}
-            Button("추가") {
+        .alert(DMateResourceStrings.Developer.addSampleData, isPresented: $showSampleDataAlert) {
+            Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+            Button(DMateResourceStrings.Common.add) {
                 addSampleData()
             }
         } message: {
@@ -63,15 +65,15 @@ struct DeveloperSettingsView: View {
     
     private var dataStatusSection: some View {
         Section {
-            dataRow("환자", count: patients.count, icon: "person.crop.circle.fill", color: .teal)
-            dataRow("약물", count: medications.count, icon: "pills.fill", color: .blue)
-            dataRow("복약 기록", count: logs.count, icon: "list.clipboard.fill", color: .green)
-            dataRow("진료 예약", count: appointments.count, icon: "calendar", color: .orange)
-            dataRow("건강 지표", count: healthMetrics.count, icon: "heart.fill", color: .red)
-            
+            dataRow(DMateResourceStrings.Developer.dataPatients, count: patients.count, icon: "person.crop.circle.fill", color: .teal)
+            dataRow(DMateResourceStrings.Developer.dataMedications, count: medications.count, icon: "pills.fill", color: .blue)
+            dataRow(DMateResourceStrings.Developer.dataLogs, count: logs.count, icon: "list.clipboard.fill", color: .green)
+            dataRow(DMateResourceStrings.Developer.dataAppointments, count: appointments.count, icon: "calendar", color: .orange)
+            dataRow(DMateResourceStrings.Developer.dataHealthMetrics, count: healthMetrics.count, icon: "heart.fill", color: .red)
+
             // 총 데이터
             HStack {
-                Text("총 데이터")
+                Text(DMateResourceStrings.Developer.totalData)
                     .fontWeight(.semibold)
                 Spacer()
                 Text("\(totalDataCount)개")
@@ -79,7 +81,7 @@ struct DeveloperSettingsView: View {
                     .foregroundColor(.primary)
             }
         } header: {
-            Label("데이터 현황", systemImage: "chart.bar.fill")
+            Label(DMateResourceStrings.Developer.dataStatus, systemImage: "chart.bar.fill")
         }
     }
     
@@ -107,16 +109,16 @@ struct DeveloperSettingsView: View {
             Button {
                 showSampleDataAlert = true
             } label: {
-                Label("샘플 데이터 추가", systemImage: "plus.rectangle.on.rectangle")
+                Label(DMateResourceStrings.Developer.addSampleData, systemImage: "plus.rectangle.on.rectangle")
             }
-            
+
             // 모든 데이터 삭제
             Button(role: .destructive) {
                 showResetAlert = true
             } label: {
-                Label("모든 데이터 삭제", systemImage: "trash.fill")
+                Label(DMateResourceStrings.Developer.deleteAllTitle, systemImage: "trash.fill")
             }
-            
+
             // UserDefaults 초기화
             Button(role: .destructive) {
                 resetUserDefaults()
@@ -124,7 +126,7 @@ struct DeveloperSettingsView: View {
                 Label("UserDefaults 초기화", systemImage: "arrow.counterclockwise")
             }
         } header: {
-            Label("테스트 도구", systemImage: "hammer.fill")
+            Label(DMateResourceStrings.Developer.testTools, systemImage: "hammer.fill")
         } footer: {
             Text("테스트 및 디버깅을 위한 도구입니다.")
         }
@@ -134,14 +136,14 @@ struct DeveloperSettingsView: View {
     
     private var appInfoSection: some View {
         Section {
-            infoRow("빌드 타입", value: "DEBUG")
+            infoRow(DMateResourceStrings.Developer.buildType, value: "DEBUG")
             infoRow("Bundle ID", value: Bundle.main.bundleIdentifier ?? "-")
-            infoRow("버전", value: appVersion)
-            infoRow("빌드", value: buildNumber)
+            infoRow(DMateResourceStrings.Developer.version, value: appVersion)
+            infoRow(DMateResourceStrings.Developer.build, value: buildNumber)
             infoRow("iOS", value: UIDevice.current.systemVersion)
-            infoRow("기기", value: UIDevice.current.model)
+            infoRow(DMateResourceStrings.Developer.device, value: UIDevice.current.model)
         } header: {
-            Label("앱 정보", systemImage: "info.circle")
+            Label(DMateResourceStrings.Developer.appInfo, systemImage: "info.circle")
         }
     }
     

@@ -7,6 +7,7 @@
 
 import WidgetKit
 import SwiftUI
+import DMateResource
 
 // MARK: - Widget Bundle
 
@@ -158,11 +159,11 @@ struct Provider: TimelineProvider {
     /// 상태 표시 이름 변환
     private func getStatusDisplayName(_ status: String) -> String {
         switch status {
-        case "taken": return DoseMateStrings.Widget.Status.completed
-        case "pending": return DoseMateStrings.Widget.Status.pending
-        case "skipped": return DoseMateStrings.Widget.Status.skipped
-        case "delayed": return DoseMateStrings.Widget.Status.delayed
-        case "snoozed": return DoseMateStrings.Widget.Status.snoozed
+        case "taken": return DMateResourceStrings.Widget.Status.completed
+        case "pending": return DMateResourceStrings.Widget.Status.pending
+        case "skipped": return DMateResourceStrings.Widget.Status.skipped
+        case "delayed": return DMateResourceStrings.Widget.Status.delayed
+        case "snoozed": return DMateResourceStrings.Widget.Status.snoozed
         default: return status
         }
     }
@@ -189,12 +190,12 @@ struct SmallWidgetView: View {
                 }
 
                 VStack(spacing: 4) {
-                    Text(DoseMateStrings.Widget.noData)
+                    Text(DMateResourceStrings.Widget.noData)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
 
-                    Text(DoseMateStrings.Widget.addInApp)
+                    Text(DMateResourceStrings.Widget.addInApp)
                         .font(.caption2)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -224,7 +225,7 @@ struct SmallWidgetView: View {
                             .fontWeight(.bold)
                             .foregroundColor(adherenceColor)
 
-                        Text(DoseMateStrings.Widget.adherenceRate)
+                        Text(DMateResourceStrings.Widget.adherenceRate)
                             .font(.caption2)
                             .fontWeight(.medium)
                             .foregroundColor(.secondary)
@@ -241,7 +242,7 @@ struct SmallWidgetView: View {
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
 
-                            Text(DoseMateStrings.Widget.nextDose)
+                            Text(DMateResourceStrings.Widget.nextDose)
                                 .font(.caption2)
                                 .fontWeight(.medium)
                                 .foregroundColor(.secondary)
@@ -269,7 +270,7 @@ struct SmallWidgetView: View {
                             .font(.body)
                             .foregroundColor(.green)
 
-                        Text(DoseMateStrings.Widget.allCompleteToday)
+                        Text(DMateResourceStrings.Widget.allCompleteToday)
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
@@ -307,12 +308,12 @@ struct MediumWidgetView: View {
                 .padding(.leading, 8)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(DoseMateStrings.Widget.noMedicationData)
+                    Text(DMateResourceStrings.Widget.noMedicationData)
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
 
-                    Text(DoseMateStrings.Widget.addMedicationsInApp)
+                    Text(DMateResourceStrings.Widget.addMedicationsInApp)
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .lineLimit(2)
@@ -677,8 +678,8 @@ struct PillReminderWidget: Widget {
                     )
                 }
         }
-        .configurationDisplayName(DoseMateStrings.Widget.configurationDisplayName)
-        .description(DoseMateStrings.Widget.configurationDescription)
+        .configurationDisplayName(DMateResourceStrings.Widget.configurationDisplayName)
+        .description(DMateResourceStrings.Widget.configurationDescription)
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }

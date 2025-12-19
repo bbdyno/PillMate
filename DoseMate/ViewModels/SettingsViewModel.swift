@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 import UserNotifications
 
@@ -225,7 +227,7 @@ final class SettingsViewModel {
             await checkPermissions()
             successMessage = "알림 권한이 허용되었습니다."
         } catch {
-            errorMessage = DoseMateStrings.Error.notificationRequestFailed
+            errorMessage = DMateResourceStrings.Error.notificationRequestFailed
         }
     }
     
@@ -237,7 +239,7 @@ final class SettingsViewModel {
             healthKitEnabled = true
             successMessage = "건강 앱 연동이 활성화되었습니다."
         } catch {
-            errorMessage = DoseMateStrings.Error.healthkitRequestFailed
+            errorMessage = DMateResourceStrings.Error.healthkitRequestFailed
         }
     }
     
@@ -251,7 +253,7 @@ final class SettingsViewModel {
     /// HealthKit 동기화
     func syncHealthKit() async {
         guard healthKitEnabled && healthKitAuthorized else {
-            errorMessage = DoseMateStrings.Error.healthkitNotActivated
+            errorMessage = DMateResourceStrings.Error.healthkitNotActivated
             return
         }
         
@@ -277,7 +279,7 @@ final class SettingsViewModel {
         )
         
         guard let schedules = try? context.fetch(descriptor) else {
-            errorMessage = DoseMateStrings.Error.scheduleLoadFailed
+            errorMessage = DMateResourceStrings.Error.scheduleLoadFailed
             return
         }
         
@@ -285,7 +287,7 @@ final class SettingsViewModel {
             try await notificationManager.rescheduleAllNotifications(schedules: schedules)
             successMessage = "알림이 재설정되었습니다."
         } catch {
-            errorMessage = DoseMateStrings.Error.notificationRescheduleFailed
+            errorMessage = DMateResourceStrings.Error.notificationRescheduleFailed
         }
     }
     
@@ -357,7 +359,7 @@ final class SettingsViewModel {
             successMessage = "모든 데이터가 삭제되었습니다."
         } catch {
             print("[SettingsViewModel] Delete all data failed: \(error)")
-            errorMessage = "\(DoseMateStrings.Error.dataDeleteFailed): \(error.localizedDescription)"
+            errorMessage = "\(DMateResourceStrings.Error.dataDeleteFailed): \(error.localizedDescription)"
         }
     }
     
@@ -412,28 +414,28 @@ final class SettingsViewModel {
     var notificationStatusText: String {
         switch notificationAuthorizationStatus {
         case .notDetermined:
-            return DoseMateStrings.Settings.Status.permissionRequired
+            return DMateResourceStrings.Settings.Status.permissionRequired
         case .denied:
-            return DoseMateStrings.Settings.Status.denied
+            return DMateResourceStrings.Settings.Status.denied
         case .authorized:
-            return DoseMateStrings.Settings.Status.authorized
+            return DMateResourceStrings.Settings.Status.authorized
         case .provisional:
-            return DoseMateStrings.Settings.Status.provisional
+            return DMateResourceStrings.Settings.Status.provisional
         case .ephemeral:
-            return DoseMateStrings.Settings.Status.ephemeral
+            return DMateResourceStrings.Settings.Status.ephemeral
         @unknown default:
-            return DoseMateStrings.Settings.Status.unknown
+            return DMateResourceStrings.Settings.Status.unknown
         }
     }
     
     /// HealthKit 상태 텍스트
     var healthKitStatusText: String {
         if !HealthKitManager.shared.isAvailable {
-            return DoseMateStrings.Settings.Status.unavailable
+            return DMateResourceStrings.Settings.Status.unavailable
         } else if healthKitAuthorized {
-            return DoseMateStrings.Settings.Status.connected
+            return DMateResourceStrings.Settings.Status.connected
         } else {
-            return DoseMateStrings.Settings.Status.notConnected
+            return DMateResourceStrings.Settings.Status.notConnected
         }
     }
     

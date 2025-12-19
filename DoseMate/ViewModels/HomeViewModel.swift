@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 import Combine
 
@@ -158,12 +160,12 @@ final class HomeViewModel {
     var medicationTitle: String {
         if let patient = selectedPatient {
             if patient.isMyself {
-                return DoseMateStrings.Home.myMedication
+                return DMateResourceStrings.Home.myMedication
             } else {
-                return DoseMateStrings.Home.patientMedication(patient.name)
+                return DMateResourceStrings.Home.patientMedication(patient.name)
             }
         }
-        return DoseMateStrings.Home.myMedication
+        return DMateResourceStrings.Home.myMedication
     }
 
     /// 선택된 환자 색상
@@ -616,16 +618,16 @@ final class HomeViewModel {
         var groups: [(title: String, logs: [MedicationLog])] = []
         
         if !morning.isEmpty {
-            groups.append(("아침", morning))
+            groups.append((DMateResourceStrings.TimeOfDay.morning, morning))
         }
         if !afternoon.isEmpty {
-            groups.append(("점심", afternoon))
+            groups.append((DMateResourceStrings.TimeOfDay.afternoon, afternoon))
         }
         if !evening.isEmpty {
-            groups.append(("저녁", evening))
+            groups.append((DMateResourceStrings.TimeOfDay.evening, evening))
         }
         if !night.isEmpty {
-            groups.append(("밤", night))
+            groups.append((DMateResourceStrings.TimeOfDay.night, night))
         }
         
         return groups

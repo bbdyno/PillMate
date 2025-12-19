@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 struct OnboardingView: View {
@@ -26,12 +28,12 @@ struct OnboardingView: View {
                 .padding(.bottom, AppSpacing.lg)
             
             VStack(spacing: AppSpacing.sm) {
-                Text(DoseMateStrings.App.welcome)
+                Text(DMateResourceStrings.App.welcome)
                     .font(AppTypography.title2)
                     .fontWeight(.bold)
                     .foregroundColor(AppColors.textPrimary)
 
-                Text(DoseMateStrings.Onboarding.askName)
+                Text(DMateResourceStrings.Onboarding.askName)
                     .font(AppTypography.body)
                     .foregroundColor(AppColors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -41,7 +43,7 @@ struct OnboardingView: View {
             Spacer()
 
             // 이름 입력
-            TextField(DoseMateStrings.Onboarding.namePlaceholder, text: $name)
+            TextField(DMateResourceStrings.Onboarding.namePlaceholder, text: $name)
                 .font(AppTypography.title3)
                 .padding(AppSpacing.md)
                 .background(AppColors.cardBackground)
@@ -56,7 +58,7 @@ struct OnboardingView: View {
                 savePatient()
                 onboardingCompleted = true
             }) {
-                Text(DoseMateStrings.Onboarding.getStarted)
+                Text(DMateResourceStrings.Onboarding.getStarted)
                     .font(AppTypography.headline)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)

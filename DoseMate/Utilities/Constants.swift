@@ -7,12 +7,13 @@
 
 import Foundation
 import SwiftUI
+import DMateResource
 
 /// 앱 전체 상수
 enum AppConstants {
     // MARK: - App Info
-    
-    static let appName = "복약 관리"
+
+    static let appName = DMateResourceStrings.App.medicationManagement
     static let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     static let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
     static let bundleIdentifier = Bundle.main.bundleIdentifier ?? "com.pillreminder"
@@ -189,9 +190,9 @@ enum ColorTheme {
     
     var displayName: String {
         switch self {
-        case .light: return "라이트"
-        case .dark: return "다크"
-        case .system: return "시스템"
+        case .light: return DMateResourceStrings.Appearance.light
+        case .dark: return DMateResourceStrings.Appearance.dark
+        case .system: return DMateResourceStrings.Appearance.system
         }
     }
     

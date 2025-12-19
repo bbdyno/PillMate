@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 import Charts
 
@@ -52,7 +54,7 @@ struct HealthMetricsView: View {
             }
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(DoseMateStrings.Health.title)
+            .navigationTitle(DMateResourceStrings.Health.title)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -77,8 +79,8 @@ struct HealthMetricsView: View {
         .sheet(isPresented: $viewModel.showInputSheet) {
             metricInputSheet
         }
-        .alert(DoseMateStrings.Health.error, isPresented: .constant(viewModel.errorMessage != nil)) {
-            Button(DoseMateStrings.Health.confirm) {
+        .alert(DMateResourceStrings.Health.error, isPresented: .constant(viewModel.errorMessage != nil)) {
+            Button(DMateResourceStrings.Health.confirm) {
                 viewModel.errorMessage = nil
             }
         } message: {
@@ -127,11 +129,11 @@ struct HealthMetricsView: View {
                     }
 
                     VStack(spacing: AppSpacing.xs) {
-                        Text(DoseMateStrings.Health.permissionRequired)
+                        Text(DMateResourceStrings.Health.permissionRequired)
                             .font(AppTypography.title3)
                             .foregroundColor(AppColors.textPrimary)
 
-                        Text(DoseMateStrings.Health.permissionDescription)
+                        Text(DMateResourceStrings.Health.permissionDescription)
                             .font(AppTypography.subheadline)
                             .foregroundColor(AppColors.textSecondary)
                             .multilineTextAlignment(.center)
@@ -144,7 +146,7 @@ struct HealthMetricsView: View {
                     } label: {
                         HStack {
                             Image(systemName: "hand.raised.fill")
-                            Text(DoseMateStrings.Health.permissionRequired)
+                            Text(DMateResourceStrings.Health.permissionRequired)
                         }
                     }
                     .buttonStyle(PrimaryButtonStyle())
@@ -179,16 +181,16 @@ struct HealthMetricsView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(DoseMateStrings.Health.syncFromHealth)
+                            Text(DMateResourceStrings.Health.syncFromHealth)
                                 .font(AppTypography.headline)
                                 .foregroundColor(AppColors.textPrimary)
                             
                             if let lastSync = healthKitManager.lastSyncDate {
-                                Text(DoseMateStrings.Health.lastSync(lastSync.relativeTimeString))
+                                Text(DMateResourceStrings.Health.lastSync(lastSync.relativeTimeString))
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
                             } else {
-                                Text(DoseMateStrings.Health.syncDescription)
+                                Text(DMateResourceStrings.Health.syncDescription)
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
                             }
@@ -223,7 +225,7 @@ struct HealthMetricsView: View {
     
     private var metricsGrid: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: DoseMateStrings.Health.metricsTitle)
+            SectionHeader(title: DMateResourceStrings.Health.metricsTitle)
             
             LazyVGrid(columns: [
                 GridItem(.flexible(), spacing: AppSpacing.sm),
@@ -261,7 +263,7 @@ struct HealthMetricsView: View {
                         .font(AppTypography.headline)
                         .foregroundColor(AppColors.textPrimary)
                     
-                    Text(DoseMateStrings.Health.recentRecords)
+                    Text(DMateResourceStrings.Health.recentRecords)
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -285,15 +287,15 @@ struct HealthMetricsView: View {
             if !history.isEmpty {
                 Chart(history) { metric in
                     LineMark(
-                        x: .value(DoseMateStrings.Health.chartDate, metric.recordedAt),
-                        y: .value(DoseMateStrings.Health.chartValue, metric.value)
+                        x: .value(DMateResourceStrings.Health.chartDate, metric.recordedAt),
+                        y: .value(DMateResourceStrings.Health.chartValue, metric.value)
                     )
                     .foregroundStyle(type.color.gradient)
                     .lineStyle(StrokeStyle(lineWidth: 2.5, lineCap: .round))
                     
                     AreaMark(
-                        x: .value(DoseMateStrings.Health.chartDate, metric.recordedAt),
-                        y: .value(DoseMateStrings.Health.chartValue, metric.value)
+                        x: .value(DMateResourceStrings.Health.chartDate, metric.recordedAt),
+                        y: .value(DMateResourceStrings.Health.chartValue, metric.value)
                     )
                     .foregroundStyle(
                         LinearGradient(
@@ -304,8 +306,8 @@ struct HealthMetricsView: View {
                     )
                     
                     PointMark(
-                        x: .value(DoseMateStrings.Health.chartDate, metric.recordedAt),
-                        y: .value(DoseMateStrings.Health.chartValue, metric.value)
+                        x: .value(DMateResourceStrings.Health.chartDate, metric.recordedAt),
+                        y: .value(DMateResourceStrings.Health.chartValue, metric.value)
                     )
                     .foregroundStyle(type.color)
                     .symbolSize(40)
@@ -355,14 +357,14 @@ struct HealthMetricsView: View {
                         .font(.system(size: 40))
                         .foregroundColor(AppColors.textTertiary)
                     
-                    Text(DoseMateStrings.Health.noRecords)
+                    Text(DMateResourceStrings.Health.noRecords)
                         .font(AppTypography.subheadline)
                         .foregroundColor(AppColors.textSecondary)
                     
                     Button {
                         viewModel.openInputSheet(for: type)
                     } label: {
-                        Label(DoseMateStrings.Health.addRecord, systemImage: "plus")
+                        Label(DMateResourceStrings.Health.addRecord, systemImage: "plus")
                     }
                     .buttonStyle(SecondaryButtonStyle())
                     .frame(width: 140)
@@ -382,7 +384,7 @@ struct HealthMetricsView: View {
                 // 지표 타입 선택
                 if viewModel.inputMetricType == nil {
                     VStack(alignment: .leading, spacing: AppSpacing.md) {
-                        Text(DoseMateStrings.Health.selectMetric)
+                        Text(DMateResourceStrings.Health.selectMetric)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                         
@@ -426,7 +428,7 @@ struct HealthMetricsView: View {
                         
                         VStack(spacing: AppSpacing.sm) {
                             if type == .bloodPressure {
-                                TextField(DoseMateStrings.Health.systolicBp, text: $viewModel.inputSystolic)
+                                TextField(DMateResourceStrings.Health.systolicBp, text: $viewModel.inputSystolic)
                                     .keyboardType(.decimalPad)
                                     .font(AppTypography.title)
                                     .multilineTextAlignment(.center)
@@ -434,11 +436,11 @@ struct HealthMetricsView: View {
                                     .background(AppColors.background)
                                     .cornerRadius(AppRadius.md)
                                 
-                                Text(DoseMateStrings.Health.systolicUnit)
+                                Text(DMateResourceStrings.Health.systolicUnit)
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
                                 
-                                TextField(DoseMateStrings.Health.diastolicBp, text: $viewModel.inputDiastolic)
+                                TextField(DMateResourceStrings.Health.diastolicBp, text: $viewModel.inputDiastolic)
                                     .keyboardType(.decimalPad)
                                     .font(AppTypography.headline)
                                     .multilineTextAlignment(.center)
@@ -446,7 +448,7 @@ struct HealthMetricsView: View {
                                     .background(AppColors.background)
                                     .cornerRadius(AppRadius.md)
                                 
-                                Text(DoseMateStrings.Health.diastolicUnit)
+                                Text(DMateResourceStrings.Health.diastolicUnit)
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
                             } else if type == .mood {
@@ -469,7 +471,7 @@ struct HealthMetricsView: View {
                                     }
                                 }
                             } else {
-                                TextField(DoseMateStrings.Health.inputValue, text: $viewModel.inputValue)
+                                TextField(DMateResourceStrings.Health.inputValue, text: $viewModel.inputValue)
                                     .keyboardType(.decimalPad)
                                     .font(AppTypography.title)
                                     .multilineTextAlignment(.center)
@@ -545,7 +547,7 @@ struct HealthMetricsView: View {
                         }
                         
                         // 메모
-                        TextField(DoseMateStrings.Health.notesOptional, text: $viewModel.inputNotes)
+                        TextField(DMateResourceStrings.Health.notesOptional, text: $viewModel.inputNotes)
                             .padding(AppSpacing.md)
                             .background(AppColors.cardBackground)
                             .cornerRadius(AppRadius.md)
@@ -557,7 +559,7 @@ struct HealthMetricsView: View {
                 
                 // 저장 버튼
                 if viewModel.inputMetricType != nil {
-                    Button(DoseMateStrings.Health.save) {
+                    Button(DMateResourceStrings.Health.save) {
                         Task {
                             await viewModel.saveMetric()
                         }
@@ -569,7 +571,7 @@ struct HealthMetricsView: View {
                 }
             }
             .background(AppColors.background)
-            .navigationTitle(viewModel.inputMetricType?.displayName ?? DoseMateStrings.Health.inputTitle)
+            .navigationTitle(viewModel.inputMetricType?.displayName ?? DMateResourceStrings.Health.inputTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar {
@@ -585,7 +587,7 @@ struct HealthMetricsView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(DoseMateStrings.Health.cancel) {
+                    Button(DMateResourceStrings.Health.cancel) {
                         viewModel.showInputSheet = false
                         resetInputFields()
                     }
@@ -672,7 +674,7 @@ struct HealthMetricCardView: View {
                         .fontWeight(.bold)
                         .foregroundColor(AppColors.textTertiary)
                     
-                    Text(DoseMateStrings.Health.noRecord)
+                    Text(DMateResourceStrings.Health.noRecord)
                         .font(AppTypography.caption2)
                         .foregroundColor(AppColors.textTertiary)
                 }

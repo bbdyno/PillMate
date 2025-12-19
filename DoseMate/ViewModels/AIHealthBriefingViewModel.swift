@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 import HealthKit
 

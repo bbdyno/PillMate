@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 /// 복약 기록 화면
@@ -43,14 +45,14 @@ struct LogHistoryView: View {
             }
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(DoseMateStrings.LogHistory.title)
+            .navigationTitle(DMateResourceStrings.LogHistory.title)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button {
                             viewModel.prepareExport()
                         } label: {
-                            Label(DoseMateStrings.LogHistory.csvExport, systemImage: "square.and.arrow.up")
+                            Label(DMateResourceStrings.LogHistory.csvExport, systemImage: "square.and.arrow.up")
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle")
@@ -102,21 +104,21 @@ struct LogHistoryView: View {
                     LogStatRow(
                         icon: "checkmark.circle.fill",
                         value: viewModel.takenCount,
-                        label: DoseMateStrings.LogHistory.taken,
+                        label: DMateResourceStrings.LogHistory.taken,
                         color: .white
                     )
                     
                     LogStatRow(
                         icon: "clock.fill",
                         value: viewModel.delayedCount,
-                        label: DoseMateStrings.LogHistory.delayed,
+                        label: DMateResourceStrings.LogHistory.delayed,
                         color: .white.opacity(0.8)
                     )
                     
                     LogStatRow(
                         icon: "xmark.circle.fill",
                         value: viewModel.skippedCount,
-                        label: DoseMateStrings.LogHistory.skipped,
+                        label: DMateResourceStrings.LogHistory.skipped,
                         color: .white.opacity(0.6)
                     )
                 }
@@ -129,7 +131,7 @@ struct LogHistoryView: View {
             HStack {
                 LogSummaryItem(
                     value: viewModel.logs.count,
-                    label: DoseMateStrings.LogHistory.totalRecords
+                    label: DMateResourceStrings.LogHistory.totalRecords
                 )
                 
                 Divider()
@@ -137,7 +139,7 @@ struct LogHistoryView: View {
                 
                 LogSummaryItem(
                     value: viewModel.consecutiveDays,
-                    label: DoseMateStrings.LogHistory.consecutiveDays
+                    label: DMateResourceStrings.LogHistory.consecutiveDays
                 )
                 
                 Divider()
@@ -145,7 +147,7 @@ struct LogHistoryView: View {
                 
                 LogSummaryItem(
                     value: viewModel.filteredLogs.count,
-                    label: DoseMateStrings.LogHistory.filterResults
+                    label: DMateResourceStrings.LogHistory.filterResults
                 )
             }
             .padding(.vertical, AppSpacing.sm)
@@ -201,7 +203,7 @@ struct LogHistoryView: View {
     
     private var viewModeToggle: some View {
         HStack {
-            SectionHeader(title: DoseMateStrings.LogHistory.viewRecords)
+            SectionHeader(title: DMateResourceStrings.LogHistory.viewRecords)
             
             Spacer()
             
@@ -287,13 +289,13 @@ struct LogHistoryView: View {
             // 요일 헤더
             HStack(spacing: 0) {
                 let weekdays = [
-                    DoseMateStrings.Calendar.sunday,
-                    DoseMateStrings.Calendar.monday,
-                    DoseMateStrings.Calendar.tuesday,
-                    DoseMateStrings.Calendar.wednesday,
-                    DoseMateStrings.Calendar.thursday,
-                    DoseMateStrings.Calendar.friday,
-                    DoseMateStrings.Calendar.saturday
+                    DMateResourceStrings.Calendar.sunday,
+                    DMateResourceStrings.Calendar.monday,
+                    DMateResourceStrings.Calendar.tuesday,
+                    DMateResourceStrings.Calendar.wednesday,
+                    DMateResourceStrings.Calendar.thursday,
+                    DMateResourceStrings.Calendar.friday,
+                    DMateResourceStrings.Calendar.saturday
                 ]
                 
                 ForEach(Array(weekdays.enumerated()), id: \.offset) { index, day in
@@ -362,7 +364,7 @@ struct LogHistoryView: View {
             
             let logs = viewModel.selectedDateLogs
             if logs.isEmpty {
-                Text(DoseMateStrings.LogHistory.noRecords)
+                Text(DMateResourceStrings.LogHistory.noRecords)
                     .font(AppTypography.subheadline)
                     .foregroundColor(AppColors.textSecondary)
                     .frame(maxWidth: .infinity)
@@ -413,7 +415,7 @@ struct LogHistoryView: View {
                         .font(.system(size: 40))
                         .foregroundColor(AppColors.textTertiary)
                     
-                    Text(DoseMateStrings.LogHistory.noRecords)
+                    Text(DMateResourceStrings.LogHistory.noRecords)
                         .font(AppTypography.headline)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -531,7 +533,7 @@ struct LogHistoryRow: View {
             
             // 약물 정보
             VStack(alignment: .leading, spacing: 2) {
-                Text(log.medication?.name ?? DoseMateStrings.LogHistory.unknown)
+                Text(log.medication?.name ?? DMateResourceStrings.LogHistory.unknown)
                     .font(AppTypography.body)
                     .foregroundColor(AppColors.textPrimary)
                 

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import DMateResource
 
 // MARK: - 스케줄 타입
 /// 복약 스케줄의 유형을 정의합니다.
@@ -20,10 +21,10 @@ enum ScheduleType: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .daily: return DoseMateStrings.ScheduleType.daily
-        case .specificDays: return DoseMateStrings.ScheduleType.specificDays
-        case .interval: return DoseMateStrings.ScheduleType.interval
-        case .asNeeded: return DoseMateStrings.ScheduleType.asNeeded
+        case .daily: return DMateResourceStrings.ScheduleType.daily
+        case .specificDays: return DMateResourceStrings.ScheduleType.specificDays
+        case .interval: return DMateResourceStrings.ScheduleType.interval
+        case .asNeeded: return DMateResourceStrings.ScheduleType.asNeeded
         }
     }
     
@@ -38,10 +39,10 @@ enum ScheduleType: String, Codable, CaseIterable, Identifiable {
     
     var description: String {
         switch self {
-        case .daily: return DoseMateStrings.ScheduleType.dailyDesc
-        case .specificDays: return DoseMateStrings.ScheduleType.specificDaysDesc
-        case .interval: return DoseMateStrings.ScheduleType.intervalDesc
-        case .asNeeded: return DoseMateStrings.ScheduleType.asNeededDesc
+        case .daily: return DMateResourceStrings.ScheduleType.dailyDesc
+        case .specificDays: return DMateResourceStrings.ScheduleType.specificDaysDesc
+        case .interval: return DMateResourceStrings.ScheduleType.intervalDesc
+        case .asNeeded: return DMateResourceStrings.ScheduleType.asNeededDesc
         }
     }
 }
@@ -59,11 +60,11 @@ enum Frequency: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .onceDaily: return DoseMateStrings.Frequency.onceDaily
-        case .twiceDaily: return DoseMateStrings.Frequency.twiceDaily
-        case .threeTimesDaily: return DoseMateStrings.Frequency.threeTimesDaily
-        case .fourTimesDaily: return DoseMateStrings.Frequency.fourTimesDaily
-        case .custom: return DoseMateStrings.Frequency.custom
+        case .onceDaily: return DMateResourceStrings.Frequency.onceDaily
+        case .twiceDaily: return DMateResourceStrings.Frequency.twiceDaily
+        case .threeTimesDaily: return DMateResourceStrings.Frequency.threeTimesDaily
+        case .fourTimesDaily: return DMateResourceStrings.Frequency.fourTimesDaily
+        case .custom: return DMateResourceStrings.Frequency.custom
         }
     }
     
@@ -91,11 +92,11 @@ enum LogStatus: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .taken: return DoseMateStrings.Status.taken
-        case .skipped: return DoseMateStrings.Status.skipped
-        case .delayed: return DoseMateStrings.Status.delayed
-        case .snoozed: return DoseMateStrings.Status.snoozed
-        case .pending: return DoseMateStrings.Status.pending
+        case .taken: return DMateResourceStrings.Status.taken
+        case .skipped: return DMateResourceStrings.Status.skipped
+        case .delayed: return DMateResourceStrings.Status.delayed
+        case .snoozed: return DMateResourceStrings.Status.snoozed
+        case .pending: return DMateResourceStrings.Status.pending
         }
     }
     
@@ -139,17 +140,17 @@ enum MetricType: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .weight: return DoseMateStrings.MetricType.weight
-        case .bloodPressure: return DoseMateStrings.MetricType.bloodPressure
-        case .bloodGlucose: return DoseMateStrings.MetricType.bloodGlucose
-        case .hbA1C: return DoseMateStrings.MetricType.hba1c
-        case .waterIntake: return DoseMateStrings.MetricType.waterIntake
-        case .bodyTemperature: return DoseMateStrings.MetricType.bodyTemperature
-        case .oxygenSaturation: return DoseMateStrings.MetricType.oxygenSaturation
-        case .mood: return DoseMateStrings.MetricType.mood
-        case .heartRate: return DoseMateStrings.MetricType.heartRate
-        case .steps: return DoseMateStrings.MetricType.steps
-        case .sleep: return DoseMateStrings.MetricType.sleep
+        case .weight: return DMateResourceStrings.MetricType.weight
+        case .bloodPressure: return DMateResourceStrings.MetricType.bloodPressure
+        case .bloodGlucose: return DMateResourceStrings.MetricType.bloodGlucose
+        case .hbA1C: return DMateResourceStrings.MetricType.hba1c
+        case .waterIntake: return DMateResourceStrings.MetricType.waterIntake
+        case .bodyTemperature: return DMateResourceStrings.MetricType.bodyTemperature
+        case .oxygenSaturation: return DMateResourceStrings.MetricType.oxygenSaturation
+        case .mood: return DMateResourceStrings.MetricType.mood
+        case .heartRate: return DMateResourceStrings.MetricType.heartRate
+        case .steps: return DMateResourceStrings.MetricType.steps
+        case .sleep: return DMateResourceStrings.MetricType.sleep
         }
     }
     
@@ -164,8 +165,8 @@ enum MetricType: String, Codable, CaseIterable, Identifiable {
         case .oxygenSaturation: return "%"
         case .mood: return ""
         case .heartRate: return "BPM"
-        case .steps: return DoseMateStrings.MetricUnit.steps
-        case .sleep: return DoseMateStrings.MetricUnit.hours
+        case .steps: return DMateResourceStrings.MetricUnit.steps
+        case .sleep: return DMateResourceStrings.MetricUnit.hours
         }
     }
     
@@ -220,8 +221,8 @@ enum DataSource: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .manual: return DoseMateStrings.DataSource.manual
-        case .healthKit: return DoseMateStrings.DataSource.healthApp
+        case .manual: return DMateResourceStrings.DataSource.manual
+        case .healthKit: return DMateResourceStrings.DataSource.healthApp
         }
     }
     
@@ -244,9 +245,9 @@ enum NotificationPreference: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .all: return DoseMateStrings.NotificationPref.all
-        case .missedOnly: return DoseMateStrings.NotificationPref.missedOnly
-        case .none: return DoseMateStrings.NotificationPref.none
+        case .all: return DMateResourceStrings.NotificationPref.all
+        case .missedOnly: return DMateResourceStrings.NotificationPref.missedOnly
+        case .none: return DMateResourceStrings.NotificationPref.none
         }
     }
 }
@@ -269,16 +270,16 @@ enum MedicationForm: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .tablet: return DoseMateStrings.MedicationForm.tablet
-        case .capsule: return DoseMateStrings.MedicationForm.capsule
-        case .syrup: return DoseMateStrings.MedicationForm.syrup
-        case .injection: return DoseMateStrings.MedicationForm.injection
-        case .patch: return DoseMateStrings.MedicationForm.patch
-        case .cream: return DoseMateStrings.MedicationForm.cream
-        case .inhaler: return DoseMateStrings.MedicationForm.inhaler
-        case .drops: return DoseMateStrings.MedicationForm.drops
-        case .powder: return DoseMateStrings.MedicationForm.powder
-        case .other: return DoseMateStrings.MedicationForm.other
+        case .tablet: return DMateResourceStrings.MedicationForm.tablet
+        case .capsule: return DMateResourceStrings.MedicationForm.capsule
+        case .syrup: return DMateResourceStrings.MedicationForm.syrup
+        case .injection: return DMateResourceStrings.MedicationForm.injection
+        case .patch: return DMateResourceStrings.MedicationForm.patch
+        case .cream: return DMateResourceStrings.MedicationForm.cream
+        case .inhaler: return DMateResourceStrings.MedicationForm.inhaler
+        case .drops: return DMateResourceStrings.MedicationForm.drops
+        case .powder: return DMateResourceStrings.MedicationForm.powder
+        case .other: return DMateResourceStrings.MedicationForm.other
         }
     }
     
@@ -311,11 +312,11 @@ enum MealRelation: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .beforeMeal: return DoseMateStrings.MealRelation.beforeMeal
-        case .afterMeal: return DoseMateStrings.MealRelation.afterMeal
-        case .withMeal: return DoseMateStrings.MealRelation.withMeal
-        case .anytime: return DoseMateStrings.MealRelation.anytime
-        case .emptyStomach: return DoseMateStrings.MealRelation.emptyStomach
+        case .beforeMeal: return DMateResourceStrings.MealRelation.beforeMeal
+        case .afterMeal: return DMateResourceStrings.MealRelation.afterMeal
+        case .withMeal: return DMateResourceStrings.MealRelation.withMeal
+        case .anytime: return DMateResourceStrings.MealRelation.anytime
+        case .emptyStomach: return DMateResourceStrings.MealRelation.emptyStomach
         }
     }
     
@@ -343,11 +344,11 @@ enum MoodLevel: Int, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .veryBad: return DoseMateStrings.MoodLevel.veryBad
-        case .bad: return DoseMateStrings.MoodLevel.bad
-        case .neutral: return DoseMateStrings.MoodLevel.neutral
-        case .good: return DoseMateStrings.MoodLevel.good
-        case .veryGood: return DoseMateStrings.MoodLevel.veryGood
+        case .veryBad: return DMateResourceStrings.MoodLevel.veryBad
+        case .bad: return DMateResourceStrings.MoodLevel.bad
+        case .neutral: return DMateResourceStrings.MoodLevel.neutral
+        case .good: return DMateResourceStrings.MoodLevel.good
+        case .veryGood: return DMateResourceStrings.MoodLevel.veryGood
         }
     }
     
@@ -387,25 +388,25 @@ enum Weekday: Int, Codable, CaseIterable, Identifiable {
     
     var shortName: String {
         switch self {
-        case .sunday: return DoseMateStrings.Weekday.sunShort
-        case .monday: return DoseMateStrings.Weekday.monShort
-        case .tuesday: return DoseMateStrings.Weekday.tueShort
-        case .wednesday: return DoseMateStrings.Weekday.wedShort
-        case .thursday: return DoseMateStrings.Weekday.thuShort
-        case .friday: return DoseMateStrings.Weekday.friShort
-        case .saturday: return DoseMateStrings.Weekday.satShort
+        case .sunday: return DMateResourceStrings.Weekday.sunShort
+        case .monday: return DMateResourceStrings.Weekday.monShort
+        case .tuesday: return DMateResourceStrings.Weekday.tueShort
+        case .wednesday: return DMateResourceStrings.Weekday.wedShort
+        case .thursday: return DMateResourceStrings.Weekday.thuShort
+        case .friday: return DMateResourceStrings.Weekday.friShort
+        case .saturday: return DMateResourceStrings.Weekday.satShort
         }
     }
     
     var fullName: String {
         switch self {
-        case .sunday: return DoseMateStrings.Weekday.sunday
-        case .monday: return DoseMateStrings.Weekday.monday
-        case .tuesday: return DoseMateStrings.Weekday.tuesday
-        case .wednesday: return DoseMateStrings.Weekday.wednesday
-        case .thursday: return DoseMateStrings.Weekday.thursday
-        case .friday: return DoseMateStrings.Weekday.friday
-        case .saturday: return DoseMateStrings.Weekday.saturday
+        case .sunday: return DMateResourceStrings.Weekday.sunday
+        case .monday: return DMateResourceStrings.Weekday.monday
+        case .tuesday: return DMateResourceStrings.Weekday.tuesday
+        case .wednesday: return DMateResourceStrings.Weekday.wednesday
+        case .thursday: return DMateResourceStrings.Weekday.thursday
+        case .friday: return DMateResourceStrings.Weekday.friday
+        case .saturday: return DMateResourceStrings.Weekday.saturday
         }
     }
 }
@@ -423,11 +424,11 @@ enum TimeOfDay: String, Codable, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .morning: return DoseMateStrings.TimeOfDay.morning
-        case .afternoon: return DoseMateStrings.TimeOfDay.afternoon
-        case .evening: return DoseMateStrings.TimeOfDay.evening
-        case .night: return DoseMateStrings.TimeOfDay.night
-        case .bedtime: return DoseMateStrings.TimeOfDay.bedtime
+        case .morning: return DMateResourceStrings.TimeOfDay.morning
+        case .afternoon: return DMateResourceStrings.TimeOfDay.afternoon
+        case .evening: return DMateResourceStrings.TimeOfDay.evening
+        case .night: return DMateResourceStrings.TimeOfDay.night
+        case .bedtime: return DMateResourceStrings.TimeOfDay.bedtime
         }
     }
     
@@ -465,11 +466,11 @@ enum SnoozeOption: Int, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .fiveMinutes: return DoseMateStrings.SnoozeOption.fiveMinutes
-        case .tenMinutes: return DoseMateStrings.SnoozeOption.tenMinutes
-        case .fifteenMinutes: return DoseMateStrings.SnoozeOption.fifteenMinutes
-        case .thirtyMinutes: return DoseMateStrings.SnoozeOption.thirtyMinutes
-        case .oneHour: return DoseMateStrings.SnoozeOption.oneHour
+        case .fiveMinutes: return DMateResourceStrings.SnoozeOption.fiveMinutes
+        case .tenMinutes: return DMateResourceStrings.SnoozeOption.tenMinutes
+        case .fifteenMinutes: return DMateResourceStrings.SnoozeOption.fifteenMinutes
+        case .thirtyMinutes: return DMateResourceStrings.SnoozeOption.thirtyMinutes
+        case .oneHour: return DMateResourceStrings.SnoozeOption.oneHour
         }
     }
 }
@@ -486,10 +487,10 @@ enum StatisticsPeriod: String, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .week: return DoseMateStrings.StatisticsPeriod.week
-        case .month: return DoseMateStrings.StatisticsPeriod.month
-        case .threeMonths: return DoseMateStrings.StatisticsPeriod.threeMonths
-        case .year: return DoseMateStrings.StatisticsPeriod.year
+        case .week: return DMateResourceStrings.StatisticsPeriod.week
+        case .month: return DMateResourceStrings.StatisticsPeriod.month
+        case .threeMonths: return DMateResourceStrings.StatisticsPeriod.threeMonths
+        case .year: return DMateResourceStrings.StatisticsPeriod.year
         }
     }
     
@@ -522,17 +523,17 @@ enum MedicationColor: String, Codable, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .white: return DoseMateStrings.MedicationColor.white
-        case .yellow: return DoseMateStrings.MedicationColor.yellow
-        case .orange: return DoseMateStrings.MedicationColor.orange
-        case .pink: return DoseMateStrings.MedicationColor.pink
-        case .red: return DoseMateStrings.MedicationColor.red
-        case .brown: return DoseMateStrings.MedicationColor.brown
-        case .green: return DoseMateStrings.MedicationColor.green
-        case .blue: return DoseMateStrings.MedicationColor.blue
-        case .purple: return DoseMateStrings.MedicationColor.purple
-        case .black: return DoseMateStrings.MedicationColor.black
-        case .multicolor: return DoseMateStrings.MedicationColor.multicolor
+        case .white: return DMateResourceStrings.MedicationColor.white
+        case .yellow: return DMateResourceStrings.MedicationColor.yellow
+        case .orange: return DMateResourceStrings.MedicationColor.orange
+        case .pink: return DMateResourceStrings.MedicationColor.pink
+        case .red: return DMateResourceStrings.MedicationColor.red
+        case .brown: return DMateResourceStrings.MedicationColor.brown
+        case .green: return DMateResourceStrings.MedicationColor.green
+        case .blue: return DMateResourceStrings.MedicationColor.blue
+        case .purple: return DMateResourceStrings.MedicationColor.purple
+        case .black: return DMateResourceStrings.MedicationColor.black
+        case .multicolor: return DMateResourceStrings.MedicationColor.multicolor
         }
     }
 
@@ -576,16 +577,16 @@ enum MedicationCategory: String, Codable, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .cardiovascular: return DoseMateStrings.MedicationCategory.cardiovascular
-        case .diabetes: return DoseMateStrings.MedicationCategory.diabetes
-        case .respiratory: return DoseMateStrings.MedicationCategory.respiratory
-        case .pain: return DoseMateStrings.MedicationCategory.pain
-        case .gastrointestinal: return DoseMateStrings.MedicationCategory.gastrointestinal
-        case .mental: return DoseMateStrings.MedicationCategory.mental
-        case .antibiotic: return DoseMateStrings.MedicationCategory.antibiotic
-        case .vitamin: return DoseMateStrings.MedicationCategory.vitamin
-        case .thyroid: return DoseMateStrings.MedicationCategory.thyroid
-        case .other: return DoseMateStrings.MedicationCategory.other
+        case .cardiovascular: return DMateResourceStrings.MedicationCategory.cardiovascular
+        case .diabetes: return DMateResourceStrings.MedicationCategory.diabetes
+        case .respiratory: return DMateResourceStrings.MedicationCategory.respiratory
+        case .pain: return DMateResourceStrings.MedicationCategory.pain
+        case .gastrointestinal: return DMateResourceStrings.MedicationCategory.gastrointestinal
+        case .mental: return DMateResourceStrings.MedicationCategory.mental
+        case .antibiotic: return DMateResourceStrings.MedicationCategory.antibiotic
+        case .vitamin: return DMateResourceStrings.MedicationCategory.vitamin
+        case .thyroid: return DMateResourceStrings.MedicationCategory.thyroid
+        case .other: return DMateResourceStrings.MedicationCategory.other
         }
     }
 

@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 /// 정렬 옵션

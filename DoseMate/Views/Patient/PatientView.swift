@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 /// 환자 관리 화면
@@ -41,7 +43,7 @@ struct PatientView: View {
                 }
             }
             .background(AppColors.background)
-            .navigationTitle("환자 관리")
+            .navigationTitle(DMateResourceStrings.Patients.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar {
@@ -55,9 +57,9 @@ struct PatientView: View {
             .sheet(item: $patientToEdit) { patient in
                 EditPatientView(patient: patient)
             }
-            .alert("환자 삭제", isPresented: $showDeleteConfirmation) {
-                Button(DoseMateStrings.Common.cancel, role: .cancel) {}
-                Button(DoseMateStrings.Common.delete, role: .destructive) {
+            .alert(DMateResourceStrings.Patients.deleteTitle, isPresented: $showDeleteConfirmation) {
+                Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+                Button(DMateResourceStrings.Common.delete, role: .destructive) {
                     if let patient = patientToDelete {
                         deletePatient(patient)
                     }
@@ -77,9 +79,9 @@ struct PatientView: View {
             Spacer()
             EmptyStateView(
                 icon: "person.2.fill",
-                title: "등록된 환자가 없습니다",
-                description: "가족이나 피보호자의 복약을 관리하려면\n환자를 등록하세요.",
-                buttonTitle: "환자 등록하기",
+                title: DMateResourceStrings.Patients.emptyTitle,
+                description: DMateResourceStrings.Patients.emptyDescription,
+                buttonTitle: DMateResourceStrings.Patients.addButton,
                 action: { showAddSheet = true }
             )
             Spacer()
@@ -91,8 +93,8 @@ struct PatientView: View {
     private var headerCard: some View {
         StandardHeaderCard(
             icon: "person.2.fill",
-            title: "총 \(patients.count)명의 환자",
-            subtitle: "복약을 관리하고 있습니다"
+            title: DMateResourceStrings.Patients.headerCount(patients.count),
+            subtitle: DMateResourceStrings.Patients.headerSubtitle
         )
     }
     
@@ -100,7 +102,7 @@ struct PatientView: View {
     
     private var patientList: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: "환자 목록")
+            SectionHeader(title: DMateResourceStrings.Patients.listTitle)
             
             VStack(spacing: AppSpacing.sm) {
                 ForEach(patients) { patient in
@@ -224,13 +226,13 @@ struct PatientCard: View {
             Button {
                 onEdit()
             } label: {
-                Label(DoseMateStrings.Common.edit, systemImage: "pencil")
+                Label(DMateResourceStrings.Common.edit, systemImage: "pencil")
             }
 
             Button(role: .destructive) {
                 onDelete()
             } label: {
-                Label(DoseMateStrings.Common.delete, systemImage: "trash")
+                Label(DMateResourceStrings.Common.delete, systemImage: "trash")
             }
         }
     }
@@ -308,7 +310,7 @@ struct PatientDetailView: View {
                 HStack(spacing: AppSpacing.xs) {
                     if patient.relationshipType == .myself {
                         Image(systemName: "person.fill")
-                        Text("나")
+                        Text(DMateResourceStrings.Patients.self)
                     } else {
                         Image(systemName: patient.relationshipType.icon)
                         Text(patient.relationshipType.rawValue)
@@ -340,15 +342,15 @@ struct PatientDetailView: View {
     private var adherenceCard: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text("오늘의 복약")
+                Text(DMateResourceStrings.Patient.adherenceToday)
                     .font(AppTypography.subheadline)
                     .foregroundColor(AppColors.textSecondary)
-                
+
                 Text("\(Int(patient.todayAdherenceRate * 100))%")
                     .font(AppTypography.number)
                     .foregroundColor(AppColors.textPrimary)
-                
-                Text("준수율")
+
+                Text(DMateResourceStrings.Patient.adherenceRateLabel)
                     .font(AppTypography.caption)
                     .foregroundColor(AppColors.textSecondary)
             }
@@ -370,26 +372,26 @@ struct PatientDetailView: View {
     private var medicationSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
             SectionHeader(
-                title: "약물 목록",
+                title: DMateResourceStrings.Patient.medicationList,
                 subtitle: "\(patient.medications.count)개",
                 action: { showAddMedicationSheet = true },
-                actionTitle: "추가"
+                actionTitle: DMateResourceStrings.Common.add
             )
-            
+
             if patient.medications.isEmpty {
                 VStack(spacing: AppSpacing.md) {
                     Image(systemName: "pills")
                         .font(.system(size: 40))
                         .foregroundColor(AppColors.textTertiary)
-                    
-                    Text("등록된 약물이 없습니다")
+
+                    Text(DMateResourceStrings.Patients.Detail.noMedications)
                         .font(AppTypography.subheadline)
                         .foregroundColor(AppColors.textSecondary)
-                    
+
                     Button {
                         showAddMedicationSheet = true
                     } label: {
-                        Label("약물 추가", systemImage: "plus")
+                        Label(DMateResourceStrings.Patients.Detail.addMedication, systemImage: "plus")
                     }
                     .buttonStyle(SecondaryButtonStyle())
                     .frame(width: 140)
@@ -444,18 +446,18 @@ struct PatientDetailView: View {
     private var appointmentSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
             SectionHeader(
-                title: "진료 예약",
+                title: DMateResourceStrings.Patient.appointmentListTitle,
                 action: { showAddAppointmentSheet = true },
-                actionTitle: "추가"
+                actionTitle: DMateResourceStrings.Common.add
             )
-            
+
             let upcomingAppointments = patient.appointments.filter { $0.isUpcoming }
-            
+
             if upcomingAppointments.isEmpty {
                 HStack {
                     Image(systemName: "calendar.badge.checkmark")
                         .foregroundColor(AppColors.textTertiary)
-                    Text("예정된 진료가 없습니다")
+                    Text(DMateResourceStrings.Patients.Detail.noAppointments)
                         .font(AppTypography.subheadline)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -510,7 +512,7 @@ struct PatientDetailView: View {
     
     private func notesSection(_ notes: String) -> some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-            SectionHeader(title: "메모")
+            SectionHeader(title: DMateResourceStrings.Patient.notesSection)
             
             Text(notes)
                 .font(AppTypography.body)
@@ -540,22 +542,22 @@ struct AddPatientView: View {
                 VStack(spacing: AppSpacing.lg) {
                     // 기본 정보
                     VStack(alignment: .leading, spacing: AppSpacing.md) {
-                        Text("기본 정보")
+                        Text(DMateResourceStrings.Patient.basicInfo)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
-                        
+
                         VStack(spacing: AppSpacing.sm) {
                             // 이름
-                            TextField("이름", text: $name)
+                            TextField(DMateResourceStrings.Common.name, text: $name)
                                 .textFieldStyle(.plain)
                                 .padding(AppSpacing.md)
                                 .background(AppColors.background)
                                 .cornerRadius(AppRadius.md)
-                            
+
                             // 관계 선택
                             VStack(alignment: .leading, spacing: AppSpacing.xs) {
                                 HStack {
-                                    Text("관계")
+                                    Text(DMateResourceStrings.Patients.Common.relationship)
                                         .font(AppTypography.caption)
                                         .foregroundColor(AppColors.textSecondary)
 
@@ -615,16 +617,16 @@ struct AddPatientView: View {
                             
                             // 생년월일
                             Toggle(isOn: $hasBirthDate) {
-                                Text("생년월일 입력")
+                                Text(DMateResourceStrings.Patients.Common.birthdateInput)
                                     .font(AppTypography.body)
                             }
                             .tint(AppColors.primary)
                             .padding(AppSpacing.md)
                             .background(AppColors.background)
                             .cornerRadius(AppRadius.md)
-                            
+
                             if hasBirthDate {
-                                DatePicker("생년월일", selection: $birthDate, displayedComponents: .date)
+                                DatePicker(DMateResourceStrings.Patients.Common.birthdate, selection: $birthDate, displayedComponents: .date)
                                     .datePickerStyle(.compact)
                                     .padding(AppSpacing.md)
                                     .background(AppColors.background)
@@ -636,7 +638,7 @@ struct AddPatientView: View {
                     
                     // 프로필 색상
                     VStack(alignment: .leading, spacing: AppSpacing.md) {
-                        Text("프로필 색상")
+                        Text(DMateResourceStrings.Patients.Common.profileColor)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                         
@@ -665,7 +667,7 @@ struct AddPatientView: View {
                     
                     // 메모
                     VStack(alignment: .leading, spacing: AppSpacing.md) {
-                        Text("메모 (선택)")
+                        Text(DMateResourceStrings.Patients.notesOptional)
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                         
@@ -680,17 +682,17 @@ struct AddPatientView: View {
                 .padding(AppSpacing.md)
             }
             .background(AppColors.background)
-            .navigationTitle("환자 등록")
+            .navigationTitle(DMateResourceStrings.Patients.Add.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(DoseMateStrings.Common.cancel) {
+                    Button(DMateResourceStrings.Common.cancel) {
                         dismiss()
                     }
                     .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(DoseMateStrings.Common.save) {
+                    Button(DMateResourceStrings.Common.save) {
                         savePatient()
                     }
                     .fontWeight(.semibold)
@@ -757,17 +759,17 @@ struct EditPatientView: View {
                         .shadow(color: profileColor.color.opacity(0.4), radius: 8, y: 4)
                     
                     // 이름
-                    TextField("이름", text: $name)
+                    TextField(DMateResourceStrings.Common.name, text: $name)
                         .font(AppTypography.title3)
                         .multilineTextAlignment(.center)
                         .textFieldStyle(.plain)
                         .padding(AppSpacing.md)
                         .background(AppColors.cardBackground)
                         .cornerRadius(AppRadius.md)
-                    
+
                     // 관계
                     VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                        Text("관계")
+                        Text(DMateResourceStrings.Patients.Common.relationship)
                             .font(AppTypography.caption)
                             .foregroundColor(AppColors.textSecondary)
                         
@@ -795,7 +797,7 @@ struct EditPatientView: View {
                     
                     // 생년월일
                     VStack(spacing: AppSpacing.sm) {
-                        Toggle("생년월일", isOn: $hasBirthDate)
+                        Toggle(DMateResourceStrings.Patients.Common.birthdate, isOn: $hasBirthDate)
                             .tint(AppColors.primary)
                         
                         if hasBirthDate {
@@ -808,7 +810,7 @@ struct EditPatientView: View {
                     
                     // 색상
                     VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                        Text("프로필 색상")
+                        Text(DMateResourceStrings.Patients.Common.profileColor)
                             .font(AppTypography.caption)
                             .foregroundColor(AppColors.textSecondary)
                         
@@ -834,7 +836,7 @@ struct EditPatientView: View {
                     
                     // 메모
                     VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                        Text("메모")
+                        Text(DMateResourceStrings.Patient.notesSection)
                             .font(AppTypography.caption)
                             .foregroundColor(AppColors.textSecondary)
                         
@@ -849,15 +851,15 @@ struct EditPatientView: View {
                 .padding(AppSpacing.md)
             }
             .background(AppColors.background)
-            .navigationTitle("환자 수정")
+            .navigationTitle(DMateResourceStrings.Patients.Edit.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(DoseMateStrings.Common.cancel) { dismiss() }
+                    Button(DMateResourceStrings.Common.cancel) { dismiss() }
                         .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(DoseMateStrings.Common.save) { updatePatient() }
+                    Button(DMateResourceStrings.Common.save) { updatePatient() }
                         .fontWeight(.semibold)
                         .foregroundColor(AppColors.primary)
                         .disabled(name.isEmpty)
@@ -908,7 +910,7 @@ struct AddMedicationForPatientView: View {
                                     .foregroundColor(.white)
                             }
                         
-                        Text("\(patient.name)님의 약물")
+                        Text(DMateResourceStrings.Patient.medication(patient.name))
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                         
@@ -920,29 +922,29 @@ struct AddMedicationForPatientView: View {
                     
                     // 약물 정보
                     VStack(spacing: AppSpacing.sm) {
-                        TextField("약 이름", text: $name)
+                        TextField(DMateResourceStrings.Medication.name, text: $name)
                             .textFieldStyle(.plain)
                             .padding(AppSpacing.md)
                             .background(AppColors.cardBackground)
                             .cornerRadius(AppRadius.md)
-                        
+
                         HStack(spacing: AppSpacing.sm) {
-                            TextField("용량 (예: 1정)", text: $dosage)
+                            TextField(DMateResourceStrings.Medication.dosagePlaceholder, text: $dosage)
                                 .textFieldStyle(.plain)
                                 .padding(AppSpacing.md)
                                 .background(AppColors.cardBackground)
                                 .cornerRadius(AppRadius.md)
-                            
-                            TextField("함량 (예: 500mg)", text: $strength)
+
+                            TextField(DMateResourceStrings.Medication.strengthPlaceholder, text: $strength)
                                 .textFieldStyle(.plain)
                                 .padding(AppSpacing.md)
                                 .background(AppColors.cardBackground)
                                 .cornerRadius(AppRadius.md)
                         }
-                        
+
                         // 형태 선택
                         VStack(alignment: .leading, spacing: AppSpacing.xs) {
-                            Text("형태")
+                            Text(DMateResourceStrings.Medication.form)
                                 .font(AppTypography.caption)
                                 .foregroundColor(AppColors.textSecondary)
                             
@@ -973,15 +975,15 @@ struct AddMedicationForPatientView: View {
                 .padding(AppSpacing.md)
             }
             .background(AppColors.background)
-            .navigationTitle("약물 추가")
+            .navigationTitle(DMateResourceStrings.Patients.Detail.addMedication)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(DoseMateStrings.Common.cancel) { dismiss() }
+                    Button(DMateResourceStrings.Common.cancel) { dismiss() }
                         .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(DoseMateStrings.Common.save) { saveMedication() }
+                    Button(DMateResourceStrings.Common.save) { saveMedication() }
                         .fontWeight(.semibold)
                         .foregroundColor(name.isEmpty ? AppColors.textTertiary : AppColors.primary)
                         .disabled(name.isEmpty)
@@ -1036,7 +1038,7 @@ struct AddAppointmentForPatientView: View {
                                     .foregroundColor(.white)
                             }
                         
-                        Text("\(patient.name)님의 진료 예약")
+                        Text(DMateResourceStrings.Patient.appointment(patient.name))
                             .font(AppTypography.headline)
                             .foregroundColor(AppColors.textPrimary)
                         
@@ -1048,24 +1050,24 @@ struct AddAppointmentForPatientView: View {
                     
                     // 진료 정보
                     VStack(spacing: AppSpacing.sm) {
-                        TextField("의사 이름", text: $doctorName)
+                        TextField(DMateResourceStrings.Appointments.doctorName, text: $doctorName)
                             .textFieldStyle(.plain)
                             .padding(AppSpacing.md)
                             .background(AppColors.cardBackground)
                             .cornerRadius(AppRadius.md)
-                        
-                        TextField("진료과", text: $specialty)
+
+                        TextField(DMateResourceStrings.Appointments.specialty, text: $specialty)
                             .textFieldStyle(.plain)
                             .padding(AppSpacing.md)
                             .background(AppColors.cardBackground)
                             .cornerRadius(AppRadius.md)
-                        
-                        DatePicker("예약 일시", selection: $appointmentDate)
+
+                        DatePicker(DMateResourceStrings.Appointments.datetime, selection: $appointmentDate)
                             .padding(AppSpacing.md)
                             .background(AppColors.cardBackground)
                             .cornerRadius(AppRadius.md)
-                        
-                        TextField("장소", text: $location)
+
+                        TextField(DMateResourceStrings.Appointments.location, text: $location)
                             .textFieldStyle(.plain)
                             .padding(AppSpacing.md)
                             .background(AppColors.cardBackground)
@@ -1074,7 +1076,7 @@ struct AddAppointmentForPatientView: View {
                     
                     // 메모
                     VStack(alignment: .leading, spacing: AppSpacing.xs) {
-                        Text("메모 (선택)")
+                        Text(DMateResourceStrings.Patients.notesOptional)
                             .font(AppTypography.caption)
                             .foregroundColor(AppColors.textSecondary)
                         
@@ -1089,15 +1091,15 @@ struct AddAppointmentForPatientView: View {
                 .padding(AppSpacing.md)
             }
             .background(AppColors.background)
-            .navigationTitle("진료 예약 추가")
+            .navigationTitle(DMateResourceStrings.Appointments.addTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(DoseMateStrings.Common.cancel) { dismiss() }
+                    Button(DMateResourceStrings.Common.cancel) { dismiss() }
                         .foregroundColor(AppColors.textSecondary)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(DoseMateStrings.Common.save) { saveAppointment() }
+                    Button(DMateResourceStrings.Common.save) { saveAppointment() }
                         .fontWeight(.semibold)
                         .foregroundColor(doctorName.isEmpty ? AppColors.textTertiary : AppColors.primary)
                         .disabled(doctorName.isEmpty)

@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 
 // MARK: - Appointment List View
 
@@ -20,7 +22,7 @@ struct AppointmentListView: View {
     var body: some View {
         List {
             if !upcomingAppointments.isEmpty {
-                Section(DoseMateStrings.Appointments.upcomingSection) {
+                Section(DMateResourceStrings.Appointments.upcomingSection) {
                     ForEach(upcomingAppointments) { appointment in
                         AppointmentCard(appointment: appointment)
                             .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
@@ -30,14 +32,14 @@ struct AppointmentListView: View {
                                     modelContext.delete(appointment)
                                     try? modelContext.save()
                                 } label: {
-                                    Label(DoseMateStrings.Appointments.delete, systemImage: "trash")
+                                    Label(DMateResourceStrings.Appointments.delete, systemImage: "trash")
                                 }
 
                                 Button {
                                     appointment.markAsCompleted()
                                     try? modelContext.save()
                                 } label: {
-                                    Label(DoseMateStrings.Appointments.complete, systemImage: "checkmark")
+                                    Label(DMateResourceStrings.Appointments.complete, systemImage: "checkmark")
                                 }
                                 .tint(.green)
                             }
@@ -46,7 +48,7 @@ struct AppointmentListView: View {
             }
 
             if !pastAppointments.isEmpty {
-                Section(DoseMateStrings.Appointments.pastSection) {
+                Section(DMateResourceStrings.Appointments.pastSection) {
                     ForEach(pastAppointments) { appointment in
                         AppointmentCard(appointment: appointment)
                             .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
@@ -56,14 +58,14 @@ struct AppointmentListView: View {
                                     modelContext.delete(appointment)
                                     try? modelContext.save()
                                 } label: {
-                                    Label(DoseMateStrings.Appointments.delete, systemImage: "trash")
+                                    Label(DMateResourceStrings.Appointments.delete, systemImage: "trash")
                                 }
                             }
                     }
                 }
             }
         }
-        .navigationTitle(DoseMateStrings.Appointments.title)
+        .navigationTitle(DMateResourceStrings.Appointments.title)
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -77,9 +79,9 @@ struct AppointmentListView: View {
         .overlay {
             if appointments.isEmpty {
                 ContentUnavailableView(
-                    DoseMateStrings.Appointments.emptyTitle,
+                    DMateResourceStrings.Appointments.emptyTitle,
                     systemImage: "calendar.badge.exclamationmark",
-                    description: Text(DoseMateStrings.Appointments.emptyDescription)
+                    description: Text(DMateResourceStrings.Appointments.emptyDescription)
                 )
             }
         }

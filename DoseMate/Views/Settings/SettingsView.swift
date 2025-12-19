@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 import UniformTypeIdentifiers
 
@@ -50,30 +52,30 @@ struct SettingsView: View {
             .scrollContentBackground(.hidden)
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(DoseMateStrings.Settings.title)
+            .navigationTitle(DMateResourceStrings.Settings.title)
             .toolbarBackground(.clear, for: .navigationBar)
             .onAppear {
                 viewModel.setup(with: modelContext)
             }
-            .alert(DoseMateStrings.Settings.deleteAllDataAlertTitle, isPresented: $viewModel.showDeleteAllConfirmation) {
-                Button(DoseMateStrings.Common.cancel, role: .cancel) {}
-                Button(DoseMateStrings.Common.delete, role: .destructive) {
+            .alert(DMateResourceStrings.Settings.deleteAllDataAlertTitle, isPresented: $viewModel.showDeleteAllConfirmation) {
+                Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+                Button(DMateResourceStrings.Common.delete, role: .destructive) {
                     Task {
                         await viewModel.deleteAllData()
                     }
                 }
             } message: {
-                Text(DoseMateStrings.Settings.deleteAllMessage)
+                Text(DMateResourceStrings.Settings.deleteAllMessage)
             }
-            .alert(DoseMateStrings.Settings.rescheduleNotificationsAlertTitle, isPresented: $viewModel.showRescheduleConfirmation) {
-                Button(DoseMateStrings.Common.cancel, role: .cancel) {}
-                Button(DoseMateStrings.Settings.rescheduleButton) {
+            .alert(DMateResourceStrings.Settings.rescheduleNotificationsAlertTitle, isPresented: $viewModel.showRescheduleConfirmation) {
+                Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+                Button(DMateResourceStrings.Settings.rescheduleButton) {
                     Task {
                         await viewModel.rescheduleAllNotifications()
                     }
                 }
             } message: {
-                Text(DoseMateStrings.Settings.rescheduleMessage)
+                Text(DMateResourceStrings.Settings.rescheduleMessage)
             }
             .overlay {
                 if viewModel.isLoading {
@@ -100,19 +102,19 @@ struct SettingsView: View {
                 ShareSheet(items: [url])
             }
         }
-        .alert(DoseMateStrings.Settings.importDataAlertTitle, isPresented: $showImportConfirmation) {
-            Button(DoseMateStrings.Common.cancel, role: .cancel) {
+        .alert(DMateResourceStrings.Settings.importDataAlertTitle, isPresented: $showImportConfirmation) {
+            Button(DMateResourceStrings.Common.cancel, role: .cancel) {
                 pendingImportURL = nil
                 importValidation = nil
             }
-            Button(DoseMateStrings.Settings.importButton, role: .destructive) {
+            Button(DMateResourceStrings.Settings.importButton, role: .destructive) {
                 Task {
                     await performImport()
                 }
             }
         } message: {
             if let validation = importValidation {
-                Text(DoseMateStrings.Alert.importDataMessage(
+                Text(DMateResourceStrings.Alert.importDataMessage(
                     validation.exportDate.formatted(date: .abbreviated, time: .shortened),
                     validation.appVersion,
                     validation.deviceName,
@@ -123,30 +125,30 @@ struct SettingsView: View {
                 ))
             }
         }
-        .alert(DoseMateStrings.Settings.importCompleteAlertTitle, isPresented: $showImportResult) {
-            Button(DoseMateStrings.Common.confirm) {
+        .alert(DMateResourceStrings.Settings.importCompleteAlertTitle, isPresented: $showImportResult) {
+            Button(DMateResourceStrings.Common.confirm) {
                 importResult = nil
             }
         } message: {
             if let result = importResult {
-                Text(DoseMateStrings.Alert.importCompleteMessage(result.summary, result.totalCount))
+                Text(DMateResourceStrings.Alert.importCompleteMessage(result.summary, result.totalCount))
             }
         }
-        .alert(DoseMateStrings.Settings.restartRequiredAlertTitle, isPresented: $viewModel.showRestartAlert) {
-            Button(DoseMateStrings.Settings.laterButton) { }
-            Button(DoseMateStrings.Settings.quitNowButton) {
+        .alert(DMateResourceStrings.Settings.restartRequiredAlertTitle, isPresented: $viewModel.showRestartAlert) {
+            Button(DMateResourceStrings.Settings.laterButton) { }
+            Button(DMateResourceStrings.Settings.quitNowButton) {
                 exit(0)
             }
         } message: {
-            Text(DoseMateStrings.Alert.restartRequiredMessage)
+            Text(DMateResourceStrings.Alert.restartRequiredMessage)
         }
-        .alert(DoseMateStrings.Alert.icloudWarningTitle, isPresented: $viewModel.showImportWithICloudWarning) {
-            Button(DoseMateStrings.Common.cancel, role: .cancel) { }
-            Button(DoseMateStrings.Settings.continueButton) {
+        .alert(DMateResourceStrings.Alert.icloudWarningTitle, isPresented: $viewModel.showImportWithICloudWarning) {
+            Button(DMateResourceStrings.Common.cancel, role: .cancel) { }
+            Button(DMateResourceStrings.Settings.continueButton) {
                 showImportFilePicker = true
             }
         } message: {
-            Text(DoseMateStrings.Alert.icloudWarningMessage)
+            Text(DMateResourceStrings.Alert.icloudWarningMessage)
         }
     }
     
@@ -163,7 +165,7 @@ struct SettingsView: View {
             exportFileURL = fileURL
             showExportShareSheet = true
         } catch {
-            viewModel.errorMessage = DoseMateStrings.Settings.errorExportFailed(error.localizedDescription)
+            viewModel.errorMessage = DMateResourceStrings.Settings.errorExportFailed(error.localizedDescription)
         }
     }
     
@@ -174,7 +176,7 @@ struct SettingsView: View {
             guard let url = urls.first else { return }
             
             guard url.startAccessingSecurityScopedResource() else {
-                viewModel.errorMessage = DoseMateStrings.Settings.errorFileAccessDenied
+                viewModel.errorMessage = DMateResourceStrings.Settings.errorFileAccessDenied
                 return
             }
             
@@ -194,11 +196,11 @@ struct SettingsView: View {
                 pendingImportURL = tempURL
                 showImportConfirmation = true
             } catch {
-                viewModel.errorMessage = DoseMateStrings.Settings.errorFileReadFailed(error.localizedDescription)
+                viewModel.errorMessage = DMateResourceStrings.Settings.errorFileReadFailed(error.localizedDescription)
             }
             
         case .failure(let error):
-            viewModel.errorMessage = DoseMateStrings.Settings.errorFileSelectionFailed(error.localizedDescription)
+            viewModel.errorMessage = DMateResourceStrings.Settings.errorFileSelectionFailed(error.localizedDescription)
         }
     }
     
@@ -225,7 +227,7 @@ struct SettingsView: View {
             // 임시 파일 삭제
             try? FileManager.default.removeItem(at: url)
         } catch {
-            viewModel.errorMessage = DoseMateStrings.Settings.errorImportFailed(error.localizedDescription)
+            viewModel.errorMessage = DMateResourceStrings.Settings.errorImportFailed(error.localizedDescription)
         }
     }
     
@@ -250,11 +252,11 @@ struct SettingsView: View {
                         .frame(width: 32)
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(DoseMateStrings.Settings.developerSupport)
+                        Text(DMateResourceStrings.Settings.developerSupport)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
 
-                        Text(DoseMateStrings.Settings.cryptoSupportSubtitle)
+                        Text(DMateResourceStrings.Settings.cryptoSupportSubtitle)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -274,9 +276,9 @@ struct SettingsView: View {
                 )
             )
         } header: {
-            Text(DoseMateStrings.Settings.supportSection)
+            Text(DMateResourceStrings.Settings.supportSection)
         } footer: {
-            Text(DoseMateStrings.Settings.freeAppFooter)
+            Text(DMateResourceStrings.Settings.freeAppFooter)
         }
     }
     
@@ -286,13 +288,13 @@ struct SettingsView: View {
         Section {
             // 알림 권한 상태
             HStack {
-                Label(DoseMateStrings.Settings.notificationPermission, systemImage: "bell.badge")
+                Label(DMateResourceStrings.Settings.notificationPermission, systemImage: "bell.badge")
                 Spacer()
                 Text(viewModel.notificationStatusText)
                     .foregroundColor(.secondary)
 
                 if viewModel.notificationAuthorizationStatus == .denied {
-                    Button(DoseMateStrings.Settings.openSettings) {
+                    Button(DMateResourceStrings.Settings.openSettings) {
                         viewModel.openSettings()
                     }
                     .buttonStyle(.bordered)
@@ -300,16 +302,16 @@ struct SettingsView: View {
             }
 
             Toggle(isOn: $viewModel.notificationEnabled) {
-                Label(DoseMateStrings.Settings.enableNotifications, systemImage: "bell")
+                Label(DMateResourceStrings.Settings.enableNotifications, systemImage: "bell")
             }
 
             if viewModel.notificationEnabled {
                 Toggle(isOn: $viewModel.soundEnabled) {
-                    Label(DoseMateStrings.Settings.sound, systemImage: "speaker.wave.2")
+                    Label(DMateResourceStrings.Settings.sound, systemImage: "speaker.wave.2")
                 }
 
                 Toggle(isOn: $viewModel.hapticEnabled) {
-                    Label(DoseMateStrings.Settings.haptic, systemImage: "iphone.radiowaves.left.and.right")
+                    Label(DMateResourceStrings.Settings.haptic, systemImage: "iphone.radiowaves.left.and.right")
                 }
 
                 Picker(selection: $viewModel.defaultSnoozeInterval) {
@@ -317,29 +319,29 @@ struct SettingsView: View {
                         Text("\(minutes)분").tag(minutes)
                     }
                 } label: {
-                    Label(DoseMateStrings.Settings.defaultSnooze, systemImage: "clock.arrow.circlepath")
+                    Label(DMateResourceStrings.Settings.defaultSnooze, systemImage: "clock.arrow.circlepath")
                 }
 
                 Picker(selection: $viewModel.reminderMinutesBefore) {
                     ForEach(viewModel.reminderBeforeOptions, id: \.self) { minutes in
                         if minutes == 0 {
-                            Text(DoseMateStrings.Settings.onTheHour).tag(minutes)
+                            Text(DMateResourceStrings.Settings.onTheHour).tag(minutes)
                         } else {
-                            Text(DoseMateStrings.Schedule.beforeMinutes(minutes)).tag(minutes)
+                            Text(DMateResourceStrings.Schedule.beforeMinutes(minutes)).tag(minutes)
                         }
                     }
                 } label: {
-                    Label(DoseMateStrings.Settings.reminderBefore, systemImage: "clock")
+                    Label(DMateResourceStrings.Settings.reminderBefore, systemImage: "clock")
                 }
             }
 
             Button {
                 viewModel.showRescheduleConfirmation = true
             } label: {
-                Label(DoseMateStrings.Settings.rescheduleNotifications, systemImage: "arrow.triangle.2.circlepath")
+                Label(DMateResourceStrings.Settings.rescheduleNotifications, systemImage: "arrow.triangle.2.circlepath")
             }
         } header: {
-            Text(DoseMateStrings.Settings.notifications)
+            Text(DMateResourceStrings.Settings.notifications)
         }
     }
     
@@ -348,7 +350,7 @@ struct SettingsView: View {
     private var healthKitSection: some View {
         Section {
             HStack {
-                Label(DoseMateStrings.Settings.healthkitIntegration, systemImage: "heart.fill")
+                Label(DMateResourceStrings.Settings.healthkitIntegration, systemImage: "heart.fill")
                     .foregroundColor(AppColors.danger)
                 Spacer()
                 Text(viewModel.healthKitStatusText)
@@ -356,7 +358,7 @@ struct SettingsView: View {
             }
 
             if !HealthKitManager.shared.isAvailable {
-                Text(DoseMateStrings.Settings.healthkitUnavailable)
+                Text(DMateResourceStrings.Settings.healthkitUnavailable)
                     .font(.caption)
                     .foregroundColor(.secondary)
             } else if !viewModel.healthKitAuthorized {
@@ -365,16 +367,16 @@ struct SettingsView: View {
                         await viewModel.requestHealthKitPermission()
                     }
                 } label: {
-                    Label(DoseMateStrings.Settings.requestPermission, systemImage: "hand.raised")
+                    Label(DMateResourceStrings.Settings.requestPermission, systemImage: "hand.raised")
                 }
             } else {
                 Toggle(isOn: $viewModel.healthKitEnabled) {
-                    Label(DoseMateStrings.Settings.autoSync, systemImage: "arrow.triangle.2.circlepath")
+                    Label(DMateResourceStrings.Settings.autoSync, systemImage: "arrow.triangle.2.circlepath")
                 }
 
                 // 마지막 동기화
                 HStack {
-                    Text(DoseMateStrings.Settings.lastSyncLabel)
+                    Text(DMateResourceStrings.Settings.lastSyncLabel)
                     Spacer()
                     Text(viewModel.lastSyncText)
                         .foregroundColor(.secondary)
@@ -386,7 +388,7 @@ struct SettingsView: View {
                     }
                 } label: {
                     HStack {
-                        Label(DoseMateStrings.Settings.syncNow, systemImage: "arrow.clockwise")
+                        Label(DMateResourceStrings.Settings.syncNow, systemImage: "arrow.clockwise")
                         Spacer()
                         if viewModel.isSyncing {
                             ProgressView()
@@ -396,7 +398,7 @@ struct SettingsView: View {
                 .disabled(viewModel.isSyncing)
             }
         } header: {
-            Text(DoseMateStrings.Settings.healthkit)
+            Text(DMateResourceStrings.Settings.healthkit)
         }
     }
     
@@ -409,10 +411,10 @@ struct SettingsView: View {
                     Text(theme.displayName).tag(theme)
                 }
             } label: {
-                Label(DoseMateStrings.Settings.appearanceMode, systemImage: "paintbrush")
+                Label(DMateResourceStrings.Settings.appearanceMode, systemImage: "paintbrush")
             }
         } header: {
-            Text(DoseMateStrings.Settings.appearance)
+            Text(DMateResourceStrings.Settings.appearance)
         }
     }
     
@@ -425,9 +427,9 @@ struct SettingsView: View {
                 PatientView()
             } label: {
                 HStack {
-                    Label(DoseMateStrings.Settings.patientManagement, systemImage: "person.2.fill")
+                    Label(DMateResourceStrings.Settings.patientManagement, systemImage: "person.2.fill")
                     Spacer()
-                    Text(DoseMateStrings.Settings.familyMedication)
+                    Text(DMateResourceStrings.Settings.familyMedication)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -437,7 +439,7 @@ struct SettingsView: View {
             NavigationLink {
                 AppointmentListView()
             } label: {
-                Label(DoseMateStrings.Settings.appointments, systemImage: "calendar.badge.clock")
+                Label(DMateResourceStrings.Settings.appointments, systemImage: "calendar.badge.clock")
             }
 
             // 샘플 데이터
@@ -447,7 +449,7 @@ struct SettingsView: View {
                     await viewModel.createSampleData()
                 }
             } label: {
-                Label(DoseMateStrings.Settings.createSampleData, systemImage: "wand.and.stars")
+                Label(DMateResourceStrings.Settings.createSampleData, systemImage: "wand.and.stars")
             }
             #endif
 
@@ -455,10 +457,10 @@ struct SettingsView: View {
             Button(role: .destructive) {
                 viewModel.showDeleteAllConfirmation = true
             } label: {
-                Label(DoseMateStrings.Settings.deleteAll, systemImage: "trash")
+                Label(DMateResourceStrings.Settings.deleteAll, systemImage: "trash")
             }
         } header: {
-            Text(DoseMateStrings.Settings.data)
+            Text(DMateResourceStrings.Settings.data)
         }
     }
     
@@ -468,7 +470,7 @@ struct SettingsView: View {
         Section {
             Toggle(isOn: $viewModel.iCloudSyncEnabled) {
                 HStack {
-                    Label(DoseMateStrings.Settings.icloudSync, systemImage: "icloud.fill")
+                    Label(DMateResourceStrings.Settings.icloudSync, systemImage: "icloud.fill")
                         .foregroundColor(AppColors.primary)
                 }
             }
@@ -477,25 +479,25 @@ struct SettingsView: View {
             }
 
             HStack {
-                Text(DoseMateStrings.Settings.syncStatusLabel)
+                Text(DMateResourceStrings.Settings.syncStatusLabel)
                     .foregroundColor(.secondary)
                 Spacer()
                 if viewModel.isICloudAvailable {
                     if viewModel.iCloudSyncEnabled && DoseMateApp.isCloudSyncEnabled {
-                        Label(DoseMateStrings.Settings.syncActive, systemImage: "checkmark.circle.fill")
+                        Label(DMateResourceStrings.Settings.syncActive, systemImage: "checkmark.circle.fill")
                             .font(.caption)
                             .foregroundColor(AppColors.success)
                     } else if viewModel.iCloudSyncEnabled && !DoseMateApp.isCloudSyncEnabled {
-                        Label(DoseMateStrings.Settings.syncRestartRequired, systemImage: "exclamationmark.circle.fill")
+                        Label(DMateResourceStrings.Settings.syncRestartRequired, systemImage: "exclamationmark.circle.fill")
                             .font(.caption)
                             .foregroundColor(AppColors.warning)
                     } else {
-                        Text(DoseMateStrings.Settings.syncDisabled)
+                        Text(DMateResourceStrings.Settings.syncDisabled)
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
                 } else {
-                    Label(DoseMateStrings.Settings.icloudUnavailable, systemImage: "xmark.circle.fill")
+                    Label(DMateResourceStrings.Settings.icloudUnavailable, systemImage: "xmark.circle.fill")
                         .font(.caption)
                         .foregroundColor(AppColors.danger)
                 }
@@ -509,7 +511,7 @@ struct SettingsView: View {
                 }
             } label: {
                 HStack {
-                    Label(DoseMateStrings.Settings.exportData, systemImage: "square.and.arrow.up")
+                    Label(DMateResourceStrings.Settings.exportData, systemImage: "square.and.arrow.up")
                     Spacer()
                     if viewModel.isExporting {
                         ProgressView()
@@ -531,7 +533,7 @@ struct SettingsView: View {
                 }
             } label: {
                 HStack {
-                    Label(DoseMateStrings.Settings.importData, systemImage: "square.and.arrow.down")
+                    Label(DMateResourceStrings.Settings.importData, systemImage: "square.and.arrow.down")
                     Spacer()
                     if viewModel.isImporting {
                         ProgressView()
@@ -540,12 +542,12 @@ struct SettingsView: View {
             }
             .disabled(viewModel.isImporting)
         } header: {
-            Text(DoseMateStrings.Settings.cloudBackup)
+            Text(DMateResourceStrings.Settings.cloudBackup)
         } footer: {
             if viewModel.iCloudSyncEnabled {
-                Text(DoseMateStrings.Settings.icloudSyncImportWarning)
+                Text(DMateResourceStrings.Settings.icloudSyncImportWarning)
             } else {
-                Text(DoseMateStrings.Settings.exportDescription)
+                Text(DMateResourceStrings.Settings.exportDescription)
             }
         }
     }
@@ -555,21 +557,21 @@ struct SettingsView: View {
     private var aboutSection: some View {
         Section {
             HStack {
-                Text(DoseMateStrings.Settings.versionLabel)
+                Text(DMateResourceStrings.Settings.versionLabel)
                 Spacer()
                 Text(viewModel.appVersion)
                     .foregroundColor(.secondary)
             }
 
             Link(destination: URL(string: "https://www.apple.com/legal/privacy")!) {
-                Label(DoseMateStrings.Settings.privacyPolicy, systemImage: "hand.raised")
+                Label(DMateResourceStrings.Settings.privacyPolicy, systemImage: "hand.raised")
             }
 
             Link(destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!) {
-                Label(DoseMateStrings.Settings.termsOfService, systemImage: "doc.text")
+                Label(DMateResourceStrings.Settings.termsOfService, systemImage: "doc.text")
             }
         } header: {
-            Text(DoseMateStrings.Settings.infoSection)
+            Text(DMateResourceStrings.Settings.infoSection)
         }
     }
     
@@ -581,12 +583,12 @@ struct SettingsView: View {
             NavigationLink {
                 DeveloperSettingsView()
             } label: {
-                Label(DoseMateStrings.Settings.moreDeveloperOptions, systemImage: "hammer.fill")
+                Label(DMateResourceStrings.Settings.moreDeveloperOptions, systemImage: "hammer.fill")
             }
         } header: {
-            Label(DoseMateStrings.Settings.developerSettings, systemImage: "wrench.and.screwdriver.fill")
+            Label(DMateResourceStrings.Settings.developerSettings, systemImage: "wrench.and.screwdriver.fill")
         } footer: {
-            Text(DoseMateStrings.Settings.debugFooter)
+            Text(DMateResourceStrings.Settings.debugFooter)
         }
     }
     #endif

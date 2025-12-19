@@ -5,6 +5,7 @@
 //  Created by bbdyno on 11/30/25.
 //
 
+import DMateResource
 import Foundation
 
 /// 앱 전체에서 사용되는 포맷터들
@@ -30,7 +31,7 @@ enum Formatters {
     /// 짧은 날짜 포맷터
     static let shortDate: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = DoseMateStrings.DateFormat.shortDate
+        formatter.dateFormat = DMateResourceStrings.DateFormat.shortDate
         formatter.locale = Locale.current
         return formatter
     }()
@@ -38,7 +39,7 @@ enum Formatters {
     /// 전체 날짜 포맷터
     static let fullDate: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = DoseMateStrings.DateFormat.fullDate
+        formatter.dateFormat = DMateResourceStrings.DateFormat.fullDate
         formatter.locale = Locale.current
         return formatter
     }()
@@ -46,7 +47,7 @@ enum Formatters {
     /// 날짜 + 요일 포맷터
     static let dateWithWeekday: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = DoseMateStrings.DateFormat.dateWithWeekday
+        formatter.dateFormat = DMateResourceStrings.DateFormat.dateWithWeekday
         formatter.locale = Locale.current
         return formatter
     }()
@@ -54,7 +55,7 @@ enum Formatters {
     /// 날짜 + 시간 포맷터
     static let dateTime: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = DoseMateStrings.DateFormat.dateTime
+        formatter.dateFormat = DMateResourceStrings.DateFormat.dateTime
         formatter.locale = Locale.current
         return formatter
     }()
@@ -62,7 +63,7 @@ enum Formatters {
     /// 전체 날짜 + 시간 포맷터
     static let fullDateTime: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = DoseMateStrings.DateFormat.fullDateTime
+        formatter.dateFormat = DMateResourceStrings.DateFormat.fullDateTime
         formatter.locale = Locale.current
         return formatter
     }()
@@ -86,7 +87,7 @@ enum Formatters {
     /// 월/년 포맷터
     static let monthYear: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = DoseMateStrings.DateFormat.monthYear
+        formatter.dateFormat = DMateResourceStrings.DateFormat.monthYear
         formatter.locale = Locale.current
         return formatter
     }()
@@ -289,7 +290,7 @@ func formatSteps(_ steps: Double) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.locale = Locale.current
-    return (formatter.string(from: NSNumber(value: Int(steps))) ?? "\(Int(steps))") + " " + DoseMateStrings.TimeUnit.stepsSuffix
+    return (formatter.string(from: NSNumber(value: Int(steps))) ?? "\(Int(steps))") + " " + DMateResourceStrings.TimeUnit.stepsSuffix
 }
 
 /// 수면 시간 포맷팅
@@ -299,9 +300,9 @@ func formatSleepDuration(_ hours: Double) -> String {
     let m = totalMinutes % 60
 
     if m == 0 {
-        return "\(h)" + DoseMateStrings.TimeUnit.hoursShort
+        return "\(h)" + DMateResourceStrings.TimeUnit.hoursShort
     } else {
-        return DoseMateStrings.TimeUnit.hoursMinutesFormat(h, m)
+        return DMateResourceStrings.TimeUnit.hoursMinutesFormat(h, m)
     }
 }
 
@@ -311,11 +312,11 @@ func formatDuration(_ seconds: TimeInterval) -> String {
     let minutes = (Int(seconds) % 3600) / 60
 
     if hours > 0 {
-        return DoseMateStrings.TimeUnit.hoursMinutesFormat(hours, minutes)
+        return DMateResourceStrings.TimeUnit.hoursMinutesFormat(hours, minutes)
     } else if minutes > 0 {
-        return "\(minutes)" + DoseMateStrings.TimeUnit.minutesShort
+        return "\(minutes)" + DMateResourceStrings.TimeUnit.minutesShort
     } else {
-        return DoseMateStrings.TimeUnit.lessThanMinute
+        return DMateResourceStrings.TimeUnit.lessThanMinute
     }
 }
 
@@ -324,21 +325,21 @@ func formatTimeRemaining(_ seconds: TimeInterval) -> String {
     if seconds < 0 {
         let overdue = abs(seconds)
         if overdue < 60 {
-            return DoseMateStrings.TimeUnit.now
+            return DMateResourceStrings.TimeUnit.now
         } else if overdue < 3600 {
-            return DoseMateStrings.TimeUnit.minutesPassed(Int(overdue / 60))
+            return DMateResourceStrings.TimeUnit.minutesPassed(Int(overdue / 60))
         } else {
-            return DoseMateStrings.TimeUnit.hoursPassed(Int(overdue / 3600))
+            return DMateResourceStrings.TimeUnit.hoursPassed(Int(overdue / 3600))
         }
     } else {
         if seconds < 60 {
-            return DoseMateStrings.TimeUnit.shortly
+            return DMateResourceStrings.TimeUnit.shortly
         } else if seconds < 3600 {
-            return DoseMateStrings.TimeUnit.minutesAfter(Int(seconds / 60))
+            return DMateResourceStrings.TimeUnit.minutesAfter(Int(seconds / 60))
         } else if seconds < 86400 {
-            return DoseMateStrings.TimeUnit.hoursAfter(Int(seconds / 3600))
+            return DMateResourceStrings.TimeUnit.hoursAfter(Int(seconds / 3600))
         } else {
-            return DoseMateStrings.TimeUnit.daysAfter(Int(seconds / 86400))
+            return DMateResourceStrings.TimeUnit.daysAfter(Int(seconds / 86400))
         }
     }
 }
@@ -352,7 +353,7 @@ func formatDateRange(from startDate: Date, to endDate: Date) -> String {
     } else if calendar.isDate(startDate, equalTo: endDate, toGranularity: .month) {
         let startDay = calendar.component(.day, from: startDate)
         let endFormatted = Formatters.dateWithWeekday.string(from: endDate)
-        return DoseMateStrings.TimeUnit.dayRange(startDay) + " \(endFormatted)"
+        return DMateResourceStrings.TimeUnit.dayRange(startDay) + " \(endFormatted)"
     } else {
         let startFormatted = Formatters.shortDate.string(from: startDate)
         let endFormatted = Formatters.shortDate.string(from: endDate)

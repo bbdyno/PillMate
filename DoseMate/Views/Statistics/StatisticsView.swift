@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 import Charts
 
@@ -44,14 +46,14 @@ struct StatisticsView: View {
                 .padding()
             }
             .background(Color.appBackground)
-            .navigationTitle("통계")
+            .navigationTitle(DMateResourceStrings.Statistics.title)
         }
     }
-    
+
     // MARK: - Period Selector
-    
+
     private var periodSelector: some View {
-        Picker("기간", selection: $selectedPeriod) {
+        Picker(DMateResourceStrings.Statistics.period, selection: $selectedPeriod) {
             ForEach(StatisticsPeriod.allCases) { period in
                 Text(period.displayName).tag(period)
             }
@@ -63,7 +65,7 @@ struct StatisticsView: View {
     
     private var overallAdherenceCard: some View {
         VStack(spacing: 16) {
-            Text("전체 복약 준수율")
+            Text(DMateResourceStrings.Statistics.overallAdherenceRate)
                 .font(.headline)
             
             ZStack {
@@ -97,7 +99,7 @@ struct StatisticsView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(AppColors.success)
-                    Text("복용")
+                    Text(DMateResourceStrings.Statistics.taken)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -107,7 +109,7 @@ struct StatisticsView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(AppColors.warning)
-                    Text("지연")
+                    Text(DMateResourceStrings.Statistics.delayed)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -117,7 +119,7 @@ struct StatisticsView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(AppColors.danger)
-                    Text("건너뜀")
+                    Text(DMateResourceStrings.Statistics.skipped)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -132,11 +134,11 @@ struct StatisticsView: View {
     
     private var dailyAdherenceChart: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("일별 복약 현황")
+            Text(DMateResourceStrings.Statistics.dailyAdherence)
                 .font(.headline)
-            
+
             if dailyData.isEmpty {
-                Text("데이터가 없습니다")
+                Text(DMateResourceStrings.Statistics.noData)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity)
@@ -145,20 +147,20 @@ struct StatisticsView: View {
                 Chart {
                     ForEach(dailyData, id: \.date) { data in
                         BarMark(
-                            x: .value("날짜", data.date, unit: .day),
-                            y: .value("복용", data.taken)
+                            x: .value(DMateResourceStrings.Statistics.date, data.date, unit: .day),
+                            y: .value(DMateResourceStrings.Statistics.taken, data.taken)
                         )
                         .foregroundStyle(AppColors.chartGreen)
 
                         BarMark(
-                            x: .value("날짜", data.date, unit: .day),
-                            y: .value("지연", data.delayed)
+                            x: .value(DMateResourceStrings.Statistics.date, data.date, unit: .day),
+                            y: .value(DMateResourceStrings.Statistics.delayed, data.delayed)
                         )
                         .foregroundStyle(AppColors.chartOrange)
 
                         BarMark(
-                            x: .value("날짜", data.date, unit: .day),
-                            y: .value("건너뜀", data.skipped)
+                            x: .value(DMateResourceStrings.Statistics.date, data.date, unit: .day),
+                            y: .value(DMateResourceStrings.Statistics.skipped, data.skipped)
                         )
                         .foregroundStyle(AppColors.chartRed)
                     }
@@ -170,12 +172,12 @@ struct StatisticsView: View {
                         AxisValueLabel(format: .dateTime.day())
                     }
                 }
-                
+
                 // 범례
                 HStack(spacing: 16) {
-                    legendItem(color: AppColors.chartGreen, label: "복용")
-                    legendItem(color: AppColors.chartOrange, label: "지연")
-                    legendItem(color: AppColors.chartRed, label: "건너뜀")
+                    legendItem(color: AppColors.chartGreen, label: DMateResourceStrings.Statistics.taken)
+                    legendItem(color: AppColors.chartOrange, label: DMateResourceStrings.Statistics.delayed)
+                    legendItem(color: AppColors.chartRed, label: DMateResourceStrings.Statistics.skipped)
                 }
                 .font(.caption)
             }
@@ -199,11 +201,11 @@ struct StatisticsView: View {
     
     private var medicationAdherenceSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("약물별 준수율")
+            Text(DMateResourceStrings.Statistics.adherenceByMedication)
                 .font(.headline)
-            
+
             if medications.isEmpty {
-                Text("등록된 약물이 없습니다")
+                Text(DMateResourceStrings.Statistics.noMedications)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity)
@@ -260,9 +262,9 @@ struct StatisticsView: View {
     
     private var statisticsSummary: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("요약")
+            Text(DMateResourceStrings.Statistics.summary)
                 .font(.headline)
-            
+
             LazyVGrid(columns: [
                 GridItem(.flexible()),
                 GridItem(.flexible())
@@ -271,28 +273,28 @@ struct StatisticsView: View {
                     icon: "flame.fill",
                     color: AppColors.warning,
                     value: "\(consecutiveDays)",
-                    label: "연속 달성"
+                    label: DMateResourceStrings.Statistics.streak
                 )
 
                 summaryCard(
                     icon: "pills.fill",
                     color: AppColors.primary,
                     value: "\(totalDoses)",
-                    label: "총 복용 횟수"
+                    label: DMateResourceStrings.Statistics.totalTaken
                 )
 
                 summaryCard(
                     icon: "clock.fill",
                     color: AppColors.chartPurple,
                     value: averageDelayText,
-                    label: "평균 지연 시간"
+                    label: DMateResourceStrings.Statistics.avgDelay
                 )
 
                 summaryCard(
                     icon: "calendar",
                     color: AppColors.success,
                     value: "\(perfectDays)",
-                    label: "완벽한 날"
+                    label: DMateResourceStrings.Statistics.perfectDays
                 )
             }
         }
@@ -366,11 +368,11 @@ struct StatisticsView: View {
         if overallAdherenceRate >= 0.9 {
             return "훌륭해요!"
         } else if overallAdherenceRate >= 0.7 {
-            return "잘하고 있어요"
+            return DMateResourceStrings.Statistics.messageGood
         } else if overallAdherenceRate >= 0.5 {
-            return "조금 더 노력해보세요"
+            return DMateResourceStrings.Statistics.messageFair
         } else {
-            return "복약 습관을 개선해보세요"
+            return DMateResourceStrings.Statistics.messagePoor
         }
     }
     

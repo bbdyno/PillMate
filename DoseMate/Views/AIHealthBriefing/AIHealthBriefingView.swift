@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 struct AIHealthBriefingView: View {
@@ -58,8 +60,8 @@ struct AIHealthBriefingView: View {
                 }
             }
         }
-        .alert(DoseMateStrings.Common.error, isPresented: .constant(viewModel.errorMessage != nil)) {
-            Button(DoseMateStrings.Common.ok) {
+        .alert(DMateResourceStrings.Common.error, isPresented: .constant(viewModel.errorMessage != nil)) {
+            Button(DMateResourceStrings.Common.ok) {
                 viewModel.errorMessage = nil
             }
         } message: {

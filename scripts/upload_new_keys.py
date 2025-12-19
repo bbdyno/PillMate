@@ -34,7 +34,7 @@ except ImportError:
 # Configuration
 SCRIPT_DIR = Path(__file__).parent.absolute()
 PROJECT_ROOT = SCRIPT_DIR.parent
-LOCALIZATIONS_DIR = PROJECT_ROOT / "DoseMate" / "Resources" / "Localizations"
+LOCALIZATIONS_DIR = PROJECT_ROOT / "DMateResource" / "Resources" / "Localizations"
 
 # Google Sheets API Scopes - READ & WRITE
 SCOPES = [

@@ -7,6 +7,8 @@
 
 import SwiftData
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import Darwin
 
 /// 메인 탭 뷰
@@ -74,9 +76,9 @@ struct MainTabView: View {
 
         var title: String {
             switch self {
-            case .home: return DoseMateStrings.Tab.home
-            case .medications: return DoseMateStrings.Tab.medications
-            case .settings: return DoseMateStrings.Tab.settings
+            case .home: return DMateResourceStrings.Tab.home
+            case .medications: return DMateResourceStrings.Tab.medications
+            case .settings: return DMateResourceStrings.Tab.settings
             case .history: return NSLocalizedString("tab.history", comment: "")
             case .ai: return NSLocalizedString("tab.ai", comment: "")
             }

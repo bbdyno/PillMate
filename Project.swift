@@ -1,5 +1,30 @@
 import ProjectDescription
 
+// MARK: - Module Names
+enum ModuleName: String {
+    case designSystem = "DMateDesignSystem"
+    case resource = "DMateResource"
+
+    var targetName: String {
+        return self.rawValue
+    }
+
+    var bundleId: String {
+        return "com.bbdyno.app.doseMate.\(self.rawValue)"
+    }
+
+    var path: Path {
+        return .relativeToRoot(self.rawValue)
+    }
+}
+
+// MARK: - TargetDependency Extension
+extension TargetDependency {
+    static func module(_ module: ModuleName) -> TargetDependency {
+        return .project(target: module.targetName, path: module.path)
+    }
+}
+
 let project = Project(
     name: "DoseMate",
     targets: [
@@ -50,6 +75,8 @@ let project = Project(
             resources: ["DoseMate/**/*.{xcassets,strings,storyboard,xib}"],
             entitlements: .file(path: "DoseMate/Resources/DoseMate.entitlements"),
             dependencies: [
+                .module(.designSystem),
+                .module(.resource),
                 .target(name: "DoseMateWidget"),
                 .external(name: "SDWebImage"),
                 .external(name: "SDWebImageSwiftUI")
@@ -79,7 +106,10 @@ let project = Project(
             sources: ["DoseMateWidget/**", "Derived/Sources/TuistStrings+DoseMate.swift"],
             resources: ["DoseMateWidget/**/*.xcassets"],
             entitlements: .file(path: "DoseMateWidget/DoseMateWidget.entitlements"),
-            dependencies: [],
+            dependencies: [
+                .module(.designSystem),
+                .module(.resource)
+            ],
             settings: .settings(
                 base: [
                     "CODE_SIGN_STYLE": "Manual",

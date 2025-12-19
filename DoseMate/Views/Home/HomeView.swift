@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 /// 메인 홈 화면
@@ -58,7 +60,7 @@ struct HomeView: View {
             }
             .background(AppColors.background)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(DoseMateStrings.App.name)
+            .navigationTitle(DMateResourceStrings.App.name)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -165,19 +167,19 @@ struct HomeView: View {
                 // 준수율 링
                 HStack(spacing: AppSpacing.xl) {
                     adherenceRing(
-                        title: DoseMateStrings.Period.today,
+                        title: DMateResourceStrings.Period.today,
                         rate: viewModel.todayAdherenceRate,
                         size: 85
                     )
 
                     adherenceRing(
-                        title: DoseMateStrings.Period.thisWeek,
+                        title: DMateResourceStrings.Period.thisWeek,
                         rate: viewModel.weekAdherenceRate,
                         size: 70
                     )
 
                     adherenceRing(
-                        title: DoseMateStrings.Period.thisMonth,
+                        title: DMateResourceStrings.Period.thisMonth,
                         rate: viewModel.monthAdherenceRate,
                         size: 70
                     )
@@ -192,7 +194,7 @@ struct HomeView: View {
                 statisticItem(
                     icon: "checkmark.circle.fill",
                     value: "\(viewModel.completedLogsCount)",
-                    label: DoseMateStrings.Home.completed,
+                    label: DMateResourceStrings.Home.completed,
                     color: AppColors.success
                 )
                 
@@ -202,7 +204,7 @@ struct HomeView: View {
                 statisticItem(
                     icon: "clock.fill",
                     value: "\(viewModel.pendingLogsCount)",
-                    label: DoseMateStrings.Home.pending,
+                    label: DMateResourceStrings.Home.pending,
                     color: AppColors.warning
                 )
                 
@@ -212,7 +214,7 @@ struct HomeView: View {
                 statisticItem(
                     icon: "flame.fill",
                     value: "\(viewModel.consecutiveDays)일",
-                    label: DoseMateStrings.Home.streak,
+                    label: DMateResourceStrings.Home.streak,
                     color: AppColors.peach
                 )
             }
@@ -226,10 +228,10 @@ struct HomeView: View {
     private var greetingText: String {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
-        case 5..<12: return DoseMateStrings.Home.greetingMorning
-        case 12..<17: return DoseMateStrings.Home.greetingAfternoon
-        case 17..<21: return DoseMateStrings.Home.greetingEvening
-        default: return DoseMateStrings.Home.greetingDefault
+        case 5..<12: return DMateResourceStrings.Home.greetingMorning
+        case 12..<17: return DMateResourceStrings.Home.greetingAfternoon
+        case 17..<21: return DMateResourceStrings.Home.greetingEvening
+        default: return DMateResourceStrings.Home.greetingDefault
         }
     }
     
@@ -308,7 +310,7 @@ struct HomeView: View {
                 IconBadge(icon: "bell.fill", color: AppColors.primary)
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(DoseMateStrings.Reminders.title)
+                    Text(DMateResourceStrings.Reminders.title)
                         .font(AppTypography.headline)
                         .foregroundColor(AppColors.textPrimary)
                     if let timeText = viewModel.timeUntilNextDoseText {
@@ -374,8 +376,8 @@ struct HomeView: View {
     private var todayScheduleSection: some View {
         VStack(alignment: .center, spacing: AppSpacing.md) {
             SectionHeader(
-                title: DoseMateStrings.Reminders.title,
-                subtitle: "\(viewModel.completedLogsCount)/\(viewModel.totalLogsCount) \(DoseMateStrings.Status.taken)"
+                title: DMateResourceStrings.Reminders.title,
+                subtitle: "\(viewModel.completedLogsCount)/\(viewModel.totalLogsCount) \(DMateResourceStrings.Status.taken)"
             )
             
             if viewModel.todayLogs.isEmpty {
@@ -423,9 +425,9 @@ struct HomeView: View {
     private var emptyScheduleView: some View {
         EmptyStateView(
             icon: "checkmark.seal.fill",
-            title: DoseMateStrings.LogHistory.noRecords,
-            description: DoseMateStrings.MedicationList.addToStart,
-            buttonTitle: DoseMateStrings.Medications.add,
+            title: DMateResourceStrings.LogHistory.noRecords,
+            description: DMateResourceStrings.MedicationList.addToStart,
+            buttonTitle: DMateResourceStrings.Medications.add,
             action: { showAddMedicationSheet = true }
         )
 //        .cardStyle(padding: AppSpacing.xl)
@@ -435,7 +437,7 @@ struct HomeView: View {
     
     private var lowStockSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: DoseMateStrings.Home.lowStock, subtitle: "\(viewModel.lowStockMedications.count)개 \(DoseMateStrings.Tab.medications)")
+            SectionHeader(title: DMateResourceStrings.Home.lowStock, subtitle: "\(viewModel.lowStockMedications.count)개 \(DMateResourceStrings.Tab.medications)")
             
             VStack(spacing: AppSpacing.xs) {
                 ForEach(viewModel.lowStockMedications) { medication in
@@ -464,7 +466,7 @@ struct HomeView: View {
     
     private var appointmentSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: DoseMateStrings.Home.todayAppointments, subtitle: "\(viewModel.todayAppointments.count)개 \(DoseMateStrings.Reminders.title)")
+            SectionHeader(title: DMateResourceStrings.Home.todayAppointments, subtitle: "\(viewModel.todayAppointments.count)개 \(DMateResourceStrings.Reminders.title)")
             
             VStack(spacing: AppSpacing.xs) {
                 ForEach(viewModel.todayAppointments) { appointment in
@@ -503,12 +505,12 @@ struct HomeView: View {
                 // 아이콘
                 IconBadge(icon: "forward.fill", color: AppColors.warning, size: 60, iconSize: 28)
                 
-                Text(DoseMateStrings.Status.skipped)
+                Text(DMateResourceStrings.Status.skipped)
                     .font(AppTypography.title3)
                     .foregroundColor(AppColors.textPrimary)
 
                 // 이유 입력
-                TextField(DoseMateStrings.Common.edit, text: $skipReason, axis: .vertical)
+                TextField(DMateResourceStrings.Common.edit, text: $skipReason, axis: .vertical)
                     .textFieldStyle(.plain)
                     .padding(AppSpacing.md)
                     .background(AppColors.background)
@@ -519,7 +521,7 @@ struct HomeView: View {
                 
                 // 버튼들
                 VStack(spacing: AppSpacing.sm) {
-                    Button(DoseMateStrings.Status.skipped) {
+                    Button(DMateResourceStrings.Status.skipped) {
                         if let log = selectedLogForSkip {
                             Task {
                                 await viewModel.markAsSkipped(
@@ -534,7 +536,7 @@ struct HomeView: View {
                     }
                     .buttonStyle(PrimaryButtonStyle())
 
-                    Button(DoseMateStrings.Common.cancel) {
+                    Button(DMateResourceStrings.Common.cancel) {
                         skipReason = ""
                         selectedLogForSkip = nil
                         showSkipReasonSheet = false
@@ -878,7 +880,7 @@ struct PatientSelectorSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(DoseMateStrings.Common.done) {
+                    Button(DMateResourceStrings.Common.done) {
                         dismiss()
                     }
                     .foregroundColor(AppColors.primary)

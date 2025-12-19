@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import DMateDesignSystem
+import DMateResource
 import SwiftData
 
 /// 약물 목록 화면
@@ -41,16 +43,16 @@ struct MedicationListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .searchable(
                 text: $viewModel.searchText,
-                prompt: DoseMateStrings.MedicationList.searchPrompt
+                prompt: DMateResourceStrings.MedicationList.searchPrompt
             )
-            .navigationTitle(DoseMateStrings.MedicationList.titleShort)
+            .navigationTitle(DMateResourceStrings.MedicationList.titleShort)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack(spacing: AppSpacing.sm) {
                         // 필터/정렬 메뉴
                         Menu {
-                            Section(DoseMateStrings.MedicationList.sortSection) {
-                                Picker(DoseMateStrings.MedicationList.sortLabel, selection: $viewModel.sortOption) {
+                            Section(DMateResourceStrings.MedicationList.sortSection) {
+                                Picker(DMateResourceStrings.MedicationList.sortLabel, selection: $viewModel.sortOption) {
                                     ForEach(MedicationSortOption.allCases) { option in
                                         Label(option.rawValue, systemImage: option.icon)
                                             .tag(option)
@@ -58,8 +60,8 @@ struct MedicationListView: View {
                                 }
                             }
 
-                            Section(DoseMateStrings.MedicationList.filterSection) {
-                                Picker(DoseMateStrings.MedicationList.filterLabel, selection: $viewModel.filterOption) {
+                            Section(DMateResourceStrings.MedicationList.filterSection) {
+                                Picker(DMateResourceStrings.MedicationList.filterLabel, selection: $viewModel.filterOption) {
                                     ForEach(MedicationFilterOption.allCases) { option in
                                         Text(option.rawValue).tag(option)
                                     }
@@ -95,16 +97,16 @@ struct MedicationListView: View {
                     }
                 }
             }
-            .alert(DoseMateStrings.MedicationList.deleteAlertTitle, isPresented: $viewModel.showDeleteConfirmation) {
-                Button(DoseMateStrings.Common.cancel, role: .cancel) {}
-                Button(DoseMateStrings.Common.delete, role: .destructive) {
+            .alert(DMateResourceStrings.MedicationList.deleteAlertTitle, isPresented: $viewModel.showDeleteConfirmation) {
+                Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+                Button(DMateResourceStrings.Common.delete, role: .destructive) {
                     Task {
                         await viewModel.executeDelete()
                     }
                 }
             } message: {
                 if let medication = viewModel.medicationToDelete {
-                    Text(DoseMateStrings.MedicationList.deleteMessage(medication.name))
+                    Text(DMateResourceStrings.MedicationList.deleteMessage(medication.name))
                 }
             }
         }
@@ -117,21 +119,21 @@ struct MedicationListView: View {
             StatCard(
                 icon: "pills.fill",
                 value: "\(viewModel.activeMedicationsCount)",
-                label: DoseMateStrings.MedicationList.activeLabel,
+                label: DMateResourceStrings.MedicationList.activeLabel,
                 color: AppColors.success
             )
 
             StatCard(
                 icon: "exclamationmark.triangle.fill",
                 value: "\(viewModel.lowStockMedicationsCount)",
-                label: DoseMateStrings.MedicationList.lowStock,
+                label: DMateResourceStrings.MedicationList.lowStock,
                 color: AppColors.warning
             )
 
             StatCard(
                 icon: "square.stack.3d.up.fill",
                 value: "\(viewModel.totalMedicationsCount)",
-                label: DoseMateStrings.MedicationList.total,
+                label: DMateResourceStrings.MedicationList.total,
                 color: AppColors.primary
             )
         }
@@ -155,11 +157,11 @@ struct MedicationListView: View {
             }
             
             VStack(spacing: AppSpacing.xs) {
-                Text(DoseMateStrings.MedicationList.noMedications)
+                Text(DMateResourceStrings.MedicationList.noMedications)
                     .font(AppTypography.title3)
                     .foregroundColor(AppColors.textPrimary)
 
-                Text(DoseMateStrings.MedicationList.addToStart)
+                Text(DMateResourceStrings.MedicationList.addToStart)
                     .font(AppTypography.subheadline)
                     .foregroundColor(AppColors.textSecondary)
             }
@@ -169,7 +171,7 @@ struct MedicationListView: View {
             } label: {
                 HStack {
                     Image(systemName: "plus.circle.fill")
-                    Text(DoseMateStrings.Medications.add)
+                    Text(DMateResourceStrings.Medications.add)
                 }
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -188,11 +190,11 @@ struct MedicationListView: View {
                 .font(.system(size: 40))
                 .foregroundColor(AppColors.textTertiary)
             
-            Text(DoseMateStrings.MedicationList.noResults)
+            Text(DMateResourceStrings.MedicationList.noResults)
                 .font(AppTypography.headline)
                 .foregroundColor(AppColors.textPrimary)
 
-            Text(DoseMateStrings.MedicationList.noResultsFor(viewModel.searchText))
+            Text(DMateResourceStrings.MedicationList.noResultsFor(viewModel.searchText))
                 .font(AppTypography.subheadline)
                 .foregroundColor(AppColors.textSecondary)
         }
@@ -205,8 +207,8 @@ struct MedicationListView: View {
     private var medicationList: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
             SectionHeader(
-                title: DoseMateStrings.MedicationList.medicationListTitle,
-                subtitle: "\(viewModel.filteredMedications.count)\(DoseMateStrings.MedicationList.items)"
+                title: DMateResourceStrings.MedicationList.medicationListTitle,
+                subtitle: "\(viewModel.filteredMedications.count)\(DMateResourceStrings.MedicationList.items)"
             )
             
             VStack(spacing: AppSpacing.sm) {
@@ -287,7 +289,7 @@ struct MedicationCard: View {
                         .foregroundColor(AppColors.textPrimary)
                     
                     if !medication.isActive {
-                        Text(DoseMateStrings.MedicationList.discontinued)
+                        Text(DMateResourceStrings.MedicationList.discontinued)
                             .font(AppTypography.caption2)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
@@ -318,7 +320,7 @@ struct MedicationCard: View {
                     .fontWeight(.medium)
                     .foregroundColor(medication.isOutOfStock ? AppColors.danger : AppColors.warning)
                 } else if medication.stockCount > 0 {
-                    Text("\(medication.stockCount)\(DoseMateStrings.MedicationList.items)")
+                    Text("\(medication.stockCount)\(DMateResourceStrings.MedicationList.items)")
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -340,7 +342,7 @@ struct MedicationCard: View {
             Button {
                 onDelete()
             } label: {
-                Label(DoseMateStrings.Common.delete, systemImage: "trash")
+                Label(DMateResourceStrings.Common.delete, systemImage: "trash")
             }
         }
     }
