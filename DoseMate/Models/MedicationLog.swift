@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import DMateResource
 
 /// 복약 기록을 저장하는 모델
 @Model
@@ -117,23 +118,23 @@ final class MedicationLog {
     /// 남은 시간 텍스트
     var timeRemainingText: String? {
         guard let seconds = secondsUntilDue else { return nil }
-        
+
         if seconds < 0 {
             let overdue = abs(seconds)
             if overdue < 60 {
-                return "지금"
+                return DMateResourceStrings.Time.now
             } else if overdue < 3600 {
-                return "\(Int(overdue / 60))분 경과"
+                return DMateResourceStrings.Time.minutesOverdue(Int(overdue / 60))
             } else {
-                return "\(Int(overdue / 3600))시간 경과"
+                return DMateResourceStrings.Time.hoursOverdue(Int(overdue / 3600))
             }
         } else {
             if seconds < 60 {
-                return "잠시 후"
+                return DMateResourceStrings.Time.shortly
             } else if seconds < 3600 {
-                return "\(Int(seconds / 60))분 후"
+                return DMateResourceStrings.Time.minutesRemaining(Int(seconds / 60))
             } else {
-                return "\(Int(seconds / 3600))시간 후"
+                return DMateResourceStrings.Time.hoursRemaining(Int(seconds / 3600))
             }
         }
     }

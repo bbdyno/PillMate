@@ -17,8 +17,17 @@ enum LogFilter: String, CaseIterable, Identifiable {
     case taken = "복용완료"
     case skipped = "건너뜀"
     case delayed = "지연"
-    
+
     var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .all: return DMateResourceStrings.LogFilter.all
+        case .taken: return DMateResourceStrings.LogFilter.taken
+        case .skipped: return DMateResourceStrings.LogFilter.skipped
+        case .delayed: return DMateResourceStrings.LogFilter.delayed
+        }
+    }
 }
 
 /// 복약 기록 ViewModel
@@ -73,6 +82,13 @@ final class LogHistoryViewModel {
     enum ViewMode: String, CaseIterable {
         case calendar = "달력"
         case list = "목록"
+
+        var displayName: String {
+            switch self {
+            case .calendar: return DMateResourceStrings.ViewMode.calendar
+            case .list: return DMateResourceStrings.ViewMode.list
+            }
+        }
     }
     
     /// 선택된 로그 (상세용)
@@ -157,7 +173,7 @@ final class LogHistoryViewModel {
             applyFilter()
             calculateStatistics()
         } catch {
-            errorMessage = "복약 기록을 불러오는데 실패했습니다."
+            errorMessage = DMateResourceStrings.Error.loadLogsFailed
         }
     }
     
@@ -295,7 +311,7 @@ final class LogHistoryViewModel {
     
     /// CSV 내보내기
     func exportToCSV() -> String {
-        var csv = "날짜,시간,약물명,용량,상태,실제복용시간,메모\n"
+        var csv = "\(DMateResourceStrings.CsvHeader.medicationLog)\n"
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

@@ -105,7 +105,7 @@ struct AddMedicationView: View {
                 bottomNavigationBar
             }
             .background(AppColors.background)
-            .navigationTitle(medicationToEdit == nil ? DMateResourceStrings.Medications.add : "약물 편집")
+            .navigationTitle(medicationToEdit == nil ? DMateResourceStrings.Medications.add : DMateResourceStrings.Medication.editTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -116,7 +116,7 @@ struct AddMedicationView: View {
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
-            .alert("입력 오류", isPresented: $showValidationError) {
+            .alert(DMateResourceStrings.Medication.inputError, isPresented: $showValidationError) {
                 Button(DMateResourceStrings.Common.ok, role: .cancel) {}
             } message: {
                 Text(validationErrorMessage)
@@ -332,9 +332,9 @@ struct AddMedicationView: View {
                 
                 // 복용 횟수
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "복용 횟수", subtitle: "")
-                    
-                    Picker("하루 복용 횟수", selection: $frequency) {
+                    SectionHeader(title: DMateResourceStrings.Medication.frequencySection, subtitle: "")
+
+                    Picker(DMateResourceStrings.Medication.frequencyPickerLabel, selection: $frequency) {
                         ForEach(Frequency.allCases) { freq in
                             Text(freq.displayName).tag(freq)
                         }
@@ -349,13 +349,13 @@ struct AddMedicationView: View {
                 // 복용 시간
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
                     HStack {
-                        SectionHeader(title: "복용 시간", subtitle: "")
+                        SectionHeader(title: DMateResourceStrings.Medication.timeSection, subtitle: "")
                         Spacer()
                         if frequency == .custom {
                             Button {
                                 scheduleTimes.append(Date())
                             } label: {
-                                Label("추가", systemImage: "plus.circle.fill")
+                                Label(DMateResourceStrings.Medication.addTime, systemImage: "plus.circle.fill")
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.primary)
                             }
@@ -367,7 +367,7 @@ struct AddMedicationView: View {
                             HStack {
                                 IconBadge(icon: "clock", color: AppColors.lavender, size: 36, iconSize: 16)
                                 
-                                Text("시간 \(index + 1)")
+                                Text(DMateResourceStrings.Medication.timeN(index + 1))
                                     .font(AppTypography.body)
                                     .foregroundColor(AppColors.textPrimary)
                                 
@@ -390,7 +390,7 @@ struct AddMedicationView: View {
                 
                 // 식사 관계
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "식사와의 관계", subtitle: "")
+                    SectionHeader(title: DMateResourceStrings.Medication.mealRelationSection, subtitle: "")
                     
                     VStack(spacing: AppSpacing.xs) {
                         ForEach(MealRelation.allCases) { relation in
@@ -428,21 +428,21 @@ struct AddMedicationView: View {
                 
                 // 기간
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "복용 기간", subtitle: "")
-                    
+                    SectionHeader(title: DMateResourceStrings.Medication.periodSection, subtitle: "")
+
                     VStack(spacing: AppSpacing.sm) {
-                        DatePicker("시작일", selection: $startDate, displayedComponents: .date)
+                        DatePicker(DMateResourceStrings.Medication.startDateLabel, selection: $startDate, displayedComponents: .date)
                             .padding(AppSpacing.sm)
                             .background(AppColors.background)
                             .cornerRadius(AppRadius.md)
-                        
-                        Toggle("종료일 설정", isOn: $hasEndDate)
+
+                        Toggle(DMateResourceStrings.Medication.hasEndDateLabel, isOn: $hasEndDate)
                             .padding(AppSpacing.sm)
                             .background(AppColors.background)
                             .cornerRadius(AppRadius.md)
-                        
+
                         if hasEndDate {
-                            DatePicker("종료일", selection: $endDate, displayedComponents: .date)
+                            DatePicker(DMateResourceStrings.Medication.endDateLabel, selection: $endDate, displayedComponents: .date)
                                 .padding(AppSpacing.sm)
                                 .background(AppColors.background)
                                 .cornerRadius(AppRadius.md)
@@ -453,21 +453,21 @@ struct AddMedicationView: View {
                 
                 // 알림
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "알림 설정", subtitle: "")
-                    
+                    SectionHeader(title: DMateResourceStrings.Medication.notificationSection, subtitle: "")
+
                     VStack(spacing: AppSpacing.sm) {
-                        Toggle("알림 받기", isOn: $notificationEnabled)
+                        Toggle(DMateResourceStrings.Medication.enableNotificationLabel, isOn: $notificationEnabled)
                             .padding(AppSpacing.sm)
                             .background(AppColors.background)
                             .cornerRadius(AppRadius.md)
-                        
+
                         if notificationEnabled {
-                            Picker("미리 알림", selection: $reminderMinutesBefore) {
-                                Text("정각에").tag(0)
-                                Text("5분 전").tag(5)
-                                Text("10분 전").tag(10)
-                                Text("15분 전").tag(15)
-                                Text("30분 전").tag(30)
+                            Picker(DMateResourceStrings.Medication.reminderBeforeLabel, selection: $reminderMinutesBefore) {
+                                Text(DMateResourceStrings.Medication.onTime).tag(0)
+                                Text(DMateResourceStrings.Medication.before5min).tag(5)
+                                Text(DMateResourceStrings.Medication.before10min).tag(10)
+                                Text(DMateResourceStrings.Medication.before15min).tag(15)
+                                Text(DMateResourceStrings.Medication.before30min).tag(30)
                             }
                             .pickerStyle(.menu)
                             .padding(AppSpacing.sm)
@@ -491,18 +491,18 @@ struct AddMedicationView: View {
                 // 헤더
                 pageHeaderCard(
                     icon: "doc.text.fill",
-                    title: "추가 정보",
-                    subtitle: "약물에 대한 상세 정보를 입력하세요",
+                    title: DMateResourceStrings.Medication.additionalInfoTitle,
+                    subtitle: DMateResourceStrings.Medication.additionalInfoSubtitle,
                     color: AppColors.mint
                 )
-                
+
                 // 의사 정보
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "처방 정보", subtitle: "")
-                    
+                    SectionHeader(title: DMateResourceStrings.Medication.prescriptionSection, subtitle: "")
+
                     CustomTextField(
                         icon: "stethoscope",
-                        placeholder: "처방 의사",
+                        placeholder: DMateResourceStrings.Medication.prescribingDoctorPlaceholder,
                         text: $prescribingDoctor
                     )
                 }
@@ -510,44 +510,44 @@ struct AddMedicationView: View {
                 
                 // 재고
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "재고 관리", subtitle: "")
-                    
+                    SectionHeader(title: DMateResourceStrings.Medication.stockSection, subtitle: "")
+
                     VStack(spacing: AppSpacing.sm) {
                         HStack {
                             IconBadge(icon: "shippingbox", color: AppColors.mint, size: 40, iconSize: 18)
-                            
+
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("현재 재고")
+                                Text(DMateResourceStrings.Medication.currentStockLabel)
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
-                                Text("\(stockCount)개")
+                                Text("\(stockCount)\(DMateResourceStrings.Medication.stockUnit)")
                                     .font(AppTypography.headline)
                                     .foregroundColor(AppColors.textPrimary)
                             }
-                            
+
                             Spacer()
-                            
+
                             Stepper("", value: $stockCount, in: 0...999)
                                 .labelsHidden()
                         }
                         .padding(AppSpacing.sm)
                         .background(AppColors.background)
                         .cornerRadius(AppRadius.md)
-                        
+
                         HStack {
                             IconBadge(icon: "exclamationmark.triangle", color: AppColors.warning, size: 40, iconSize: 18)
-                            
+
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("부족 알림 기준")
+                                Text(DMateResourceStrings.Medication.lowStockThresholdLabel)
                                     .font(AppTypography.caption)
                                     .foregroundColor(AppColors.textSecondary)
-                                Text("\(lowStockThreshold)개 이하")
+                                Text(DMateResourceStrings.Medication.stockBelow(lowStockThreshold))
                                     .font(AppTypography.headline)
                                     .foregroundColor(AppColors.textPrimary)
                             }
-                            
+
                             Spacer()
-                            
+
                             Stepper("", value: $lowStockThreshold, in: 1...50)
                                 .labelsHidden()
                         }
@@ -560,9 +560,9 @@ struct AddMedicationView: View {
                 
                 // 부작용
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "부작용", subtitle: "")
-                    
-                    TextField("알려진 부작용을 입력하세요", text: $sideEffects, axis: .vertical)
+                    SectionHeader(title: DMateResourceStrings.Medication.sideEffectsSection, subtitle: "")
+
+                    TextField(DMateResourceStrings.Medication.sideEffectsPlaceholder, text: $sideEffects, axis: .vertical)
                         .textFieldStyle(.plain)
                         .lineLimit(3...5)
                         .padding(AppSpacing.md)
@@ -573,9 +573,9 @@ struct AddMedicationView: View {
                 
                 // 주의사항
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "주의사항", subtitle: "")
-                    
-                    TextField("복용 시 주의사항을 입력하세요", text: $precautions, axis: .vertical)
+                    SectionHeader(title: DMateResourceStrings.Medication.precautionsSection, subtitle: "")
+
+                    TextField(DMateResourceStrings.Medication.precautionsPlaceholder, text: $precautions, axis: .vertical)
                         .textFieldStyle(.plain)
                         .lineLimit(3...5)
                         .padding(AppSpacing.md)
@@ -586,9 +586,9 @@ struct AddMedicationView: View {
                 
                 // 메모
                 VStack(alignment: .leading, spacing: AppSpacing.md) {
-                    SectionHeader(title: "메모", subtitle: "")
-                    
-                    TextField("추가 메모를 입력하세요", text: $notes, axis: .vertical)
+                    SectionHeader(title: DMateResourceStrings.Medication.notesSection, subtitle: "")
+
+                    TextField(DMateResourceStrings.Medication.notesPlaceholder, text: $notes, axis: .vertical)
                         .textFieldStyle(.plain)
                         .lineLimit(3...5)
                         .padding(AppSpacing.md)
@@ -622,7 +622,7 @@ struct AddMedicationView: View {
                 Button {
                     selectedImageData = nil
                 } label: {
-                    Text("사진 변경")
+                    Text(DMateResourceStrings.Medication.changePhoto)
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.primary)
                 }
@@ -641,7 +641,7 @@ struct AddMedicationView: View {
                         VStack(spacing: 4) {
                             Image(systemName: "photo")
                                 .font(.system(size: 24))
-                            Text("갤러리")
+                            Text(DMateResourceStrings.Medication.gallery)
                                 .font(AppTypography.caption)
                         }
                         .foregroundColor(AppColors.primary)
@@ -653,7 +653,7 @@ struct AddMedicationView: View {
                         VStack(spacing: 4) {
                             Image(systemName: "camera")
                                 .font(.system(size: 24))
-                            Text("카메라")
+                            Text(DMateResourceStrings.Medication.camera)
                                 .font(AppTypography.caption)
                         }
                         .foregroundColor(AppColors.primary)
@@ -718,11 +718,11 @@ struct AddMedicationView: View {
                 IconBadge(icon: "calendar.badge.clock", color: AppColors.lavender, size: 40, iconSize: 18)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("복용 간격")
+                    Text(DMateResourceStrings.Medication.intervalLabel)
                         .font(AppTypography.body)
                         .foregroundColor(AppColors.textPrimary)
                     
-                    Text("시작일로부터 \(intervalDays)일마다 복용")
+                    Text(DMateResourceStrings.Medication.intervalDescription(intervalDays))
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                 }
@@ -779,9 +779,9 @@ struct AddMedicationView: View {
     
     private func intervalDisplayText(for days: Int) -> String {
         if days == 1 {
-            return "매일"
+            return DMateResourceStrings.Medication.everyDay
         } else {
-            return "\(days)일마다"
+            return DMateResourceStrings.Medication.everyNDays(days)
         }
     }
     
@@ -812,7 +812,7 @@ struct AddMedicationView: View {
                     } label: {
                         HStack(spacing: 6) {
                             Image(systemName: "chevron.left")
-                            Text("이전")
+                            Text(DMateResourceStrings.Medication.previous)
                         }
                         .font(AppTypography.body)
                         .foregroundColor(AppColors.textSecondary)
@@ -829,7 +829,7 @@ struct AddMedicationView: View {
                         }
                     } label: {
                         HStack(spacing: 6) {
-                            Text("다음")
+                            Text(DMateResourceStrings.Medication.next)
                             Image(systemName: "chevron.right")
                         }
                         .font(AppTypography.body)
@@ -849,7 +849,7 @@ struct AddMedicationView: View {
                     } label: {
                         HStack(spacing: 6) {
                             Image(systemName: "checkmark")
-                            Text("저장")
+                            Text(DMateResourceStrings.Common.save)
                         }
                         .font(AppTypography.body)
                         .fontWeight(.semibold)
@@ -932,7 +932,7 @@ struct AddMedicationView: View {
     private func saveMedication() {
         // 유효성 검사
         guard !name.isEmpty else {
-            validationErrorMessage = "약물 이름을 입력해주세요."
+            validationErrorMessage = DMateResourceStrings.Medication.validationNameRequired
             showValidationError = true
             return
         }

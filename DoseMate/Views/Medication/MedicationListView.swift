@@ -54,7 +54,7 @@ struct MedicationListView: View {
                             Section(DMateResourceStrings.MedicationList.sortSection) {
                                 Picker(DMateResourceStrings.MedicationList.sortLabel, selection: $viewModel.sortOption) {
                                     ForEach(MedicationSortOption.allCases) { option in
-                                        Label(option.rawValue, systemImage: option.icon)
+                                        Label(option.displayName, systemImage: option.icon)
                                             .tag(option)
                                     }
                                 }
@@ -63,7 +63,7 @@ struct MedicationListView: View {
                             Section(DMateResourceStrings.MedicationList.filterSection) {
                                 Picker(DMateResourceStrings.MedicationList.filterLabel, selection: $viewModel.filterOption) {
                                     ForEach(MedicationFilterOption.allCases) { option in
-                                        Text(option.rawValue).tag(option)
+                                        Text(option.displayName).tag(option)
                                     }
                                 }
                             }

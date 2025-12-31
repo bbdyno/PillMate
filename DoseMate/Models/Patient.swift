@@ -13,6 +13,7 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import DMateResource
 
 /// 피보호자(환자) 정보를 저장하는 모델
 @Model
@@ -197,6 +198,20 @@ enum PatientRelationship: String, CaseIterable, Identifiable {
         case .other: return "person.fill.questionmark"
         }
     }
+
+    var displayName: String {
+        switch self {
+        case .myself: return DMateResourceStrings.Patient.Relationship.myself
+        case .parent: return DMateResourceStrings.Patient.Relationship.parent
+        case .grandparent: return DMateResourceStrings.Patient.Relationship.grandparent
+        case .spouse: return DMateResourceStrings.Patient.Relationship.spouse
+        case .child: return DMateResourceStrings.Patient.Relationship.child
+        case .sibling: return DMateResourceStrings.Patient.Relationship.sibling
+        case .relative: return DMateResourceStrings.Patient.Relationship.relative
+        case .friend: return DMateResourceStrings.Patient.Relationship.friend
+        case .other: return DMateResourceStrings.Patient.Relationship.other
+        }
+    }
 }
 
 // MARK: - 환자 프로필 색상
@@ -228,14 +243,14 @@ enum PatientColor: String, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .blue: return "파랑"
-        case .green: return "초록"
-        case .orange: return "주황"
-        case .purple: return "보라"
-        case .pink: return "분홍"
-        case .red: return "빨강"
-        case .teal: return "청록"
-        case .indigo: return "남색"
+        case .blue: return DMateResourceStrings.Color.blue
+        case .green: return DMateResourceStrings.Color.green
+        case .orange: return DMateResourceStrings.Color.orange
+        case .purple: return DMateResourceStrings.Color.purple
+        case .pink: return DMateResourceStrings.Color.pink
+        case .red: return DMateResourceStrings.Color.red
+        case .teal: return DMateResourceStrings.Color.teal
+        case .indigo: return DMateResourceStrings.Color.indigo
         }
     }
 }

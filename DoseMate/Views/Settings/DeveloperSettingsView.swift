@@ -49,7 +49,7 @@ struct DeveloperSettingsView: View {
                 resetAllData()
             }
         } message: {
-            Text("모든 데이터가 삭제됩니다. 이 작업은 되돌릴 수 없습니다.")
+            Text(DMateResourceStrings.Developer.deleteAllMessage)
         }
         .alert(DMateResourceStrings.Developer.addSampleData, isPresented: $showSampleDataAlert) {
             Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
@@ -57,7 +57,7 @@ struct DeveloperSettingsView: View {
                 addSampleData()
             }
         } message: {
-            Text("테스트용 샘플 데이터를 추가하시겠습니까?")
+            Text(DMateResourceStrings.Developer.addSampleDataMessage)
         }
     }
 
@@ -123,12 +123,12 @@ struct DeveloperSettingsView: View {
             Button(role: .destructive) {
                 resetUserDefaults()
             } label: {
-                Label("UserDefaults 초기화", systemImage: "arrow.counterclockwise")
+                Label(DMateResourceStrings.Developer.resetUserDefaults, systemImage: "arrow.counterclockwise")
             }
         } header: {
             Label(DMateResourceStrings.Developer.testTools, systemImage: "hammer.fill")
         } footer: {
-            Text("테스트 및 디버깅을 위한 도구입니다.")
+            Text(DMateResourceStrings.Developer.testToolsFooter)
         }
     }
     

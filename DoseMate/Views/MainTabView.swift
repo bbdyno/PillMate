@@ -79,8 +79,10 @@ struct MainTabView: View {
             case .home: return DMateResourceStrings.Tab.home
             case .medications: return DMateResourceStrings.Tab.medications
             case .settings: return DMateResourceStrings.Tab.settings
-            case .history: return NSLocalizedString("tab.history", comment: "")
-            case .ai: return NSLocalizedString("tab.ai", comment: "")
+            case .history: return
+                DMateResourceStrings.Tab.history
+            case .ai: return
+                DMateResourceStrings.Tab.ai
             }
         }
         var icon: String {
@@ -123,15 +125,15 @@ struct MainTabView: View {
             .tag(Tab.history)
 
             // AI 브리핑 탭 (iPhone 15 Pro+ & iOS 18.2+ 에서만 표시)
-            if isAIBriefingAvailable {
-                NavigationStack {
-                    AIHealthBriefingView()
-                }
-                .tabItem {
-                    Label(Tab.ai.title, systemImage: Tab.ai.icon)
-                }
-                .tag(Tab.ai)
-            }
+//            if isAIBriefingAvailable {
+//                NavigationStack {
+//                    AIHealthBriefingView()
+//                }
+//                .tabItem {
+//                    Label(Tab.ai.title, systemImage: Tab.ai.icon)
+//                }
+//                .tag(Tab.ai)
+//            }
 
             NavigationStack {
                 SettingsView()

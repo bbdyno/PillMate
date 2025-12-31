@@ -1,6 +1,6 @@
 //
 //  MedicationListViewModel.swift
-//  DoseMate
+//  DoseMate. ㅋ
 //
 //  Created by bbdyno on 11/30/25.
 //
@@ -13,22 +13,40 @@ import SwiftData
 
 /// 정렬 옵션
 enum MedicationSortOption: String, CaseIterable, Identifiable {
-    case name = "이름순"
-    case createdAt = "추가순"
-    case nextDose = "다음 복용순"
-    case stockCount = "재고순"
-    
+    case name
+    case createdAt
+    case nextDose
+    case stockCount
+
     var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .name: return DMateResourceStrings.MedicationSortOption.name
+        case .createdAt: return DMateResourceStrings.MedicationSortOption.createdAt
+        case .nextDose: return DMateResourceStrings.MedicationSortOption.nextDose
+        case .stockCount: return DMateResourceStrings.MedicationSortOption.stockCount
+        }
+    }
 }
 
 /// 필터 옵션
 enum MedicationFilterOption: String, CaseIterable, Identifiable {
-    case all = "전체"
-    case active = "복용 중"
-    case inactive = "중단됨"
-    case lowStock = "재고 부족"
-    
+    case all
+    case active
+    case inactive
+    case lowStock
+
     var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .all: return DMateResourceStrings.MedicationFilterOption.all
+        case .active: return DMateResourceStrings.MedicationFilterOption.active
+        case .inactive: return DMateResourceStrings.MedicationFilterOption.inactive
+        case .lowStock: return DMateResourceStrings.MedicationFilterOption.lowStock
+        }
+    }
 }
 
 /// 약물 목록 ViewModel
@@ -119,7 +137,7 @@ final class MedicationListViewModel {
             medications = try context.fetch(descriptor)
             applyFiltersAndSort()
         } catch {
-            errorMessage = "약물 목록을 불러오는데 실패했습니다."
+            errorMessage = DMateResourceStrings.Error.loadMedicationsFailed
         }
     }
     
@@ -175,7 +193,7 @@ final class MedicationListViewModel {
     func addMedication(_ medication: Medication) async {
         guard let context = modelContext else {
             print("❌ ModelContext가 없습니다")
-            errorMessage = "데이터베이스 연결에 실패했습니다."
+            errorMessage = DMateResourceStrings.Error.databaseConnectionFailed
             return
         }
 
@@ -206,7 +224,7 @@ final class MedicationListViewModel {
         } catch {
             print("❌ 약물 저장 실패: \(error.localizedDescription)")
             print("   상세 오류: \(error)")
-            errorMessage = "약물 추가에 실패했습니다: \(error.localizedDescription)"
+            errorMessage = DMateResourceStrings.Error.addMedicationFailedDetail(error.localizedDescription)
         }
     }
     
@@ -231,7 +249,7 @@ final class MedicationListViewModel {
 
             await loadMedications()
         } catch {
-            errorMessage = "약물 삭제에 실패했습니다."
+            errorMessage = DMateResourceStrings.Errors.deleteMedicationFailed
         }
     }
     

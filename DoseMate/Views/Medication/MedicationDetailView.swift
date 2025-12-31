@@ -67,26 +67,26 @@ struct MedicationDetailView: View {
                     Button {
                         showEditSheet = true
                     } label: {
-                        Label("편집", systemImage: "pencil")
+                        Label(DMateResourceStrings.Common.edit, systemImage: "pencil")
                     }
-                    
+
                     Button {
                         Task {
                             await viewModel.toggleActive()
                         }
                     } label: {
                         Label(
-                            medication.isActive ? "복용 중단" : "복용 재개",
+                            medication.isActive ? DMateResourceStrings.Medication.pauseAction : DMateResourceStrings.Medication.resumeAction,
                             systemImage: medication.isActive ? "pause.circle" : "play.circle"
                         )
                     }
-                    
+
                     Divider()
-                    
+
                     Button(role: .destructive) {
                         viewModel.showDeleteConfirmation = true
                     } label: {
-                        Label("삭제", systemImage: "trash")
+                        Label(DMateResourceStrings.Common.delete, systemImage: "trash")
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -114,16 +114,16 @@ struct MedicationDetailView: View {
                 }
             }
         }
-        .alert("약물 삭제", isPresented: $viewModel.showDeleteConfirmation) {
-            Button("취소", role: .cancel) {}
-            Button("삭제", role: .destructive) {
+        .alert(DMateResourceStrings.Medication.deleteTitle, isPresented: $viewModel.showDeleteConfirmation) {
+            Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+            Button(DMateResourceStrings.Common.delete, role: .destructive) {
                 Task {
                     await viewModel.deleteMedication()
                     dismiss()
                 }
             }
         } message: {
-            Text("이 약물과 관련된 모든 기록이 삭제됩니다.")
+            Text(DMateResourceStrings.Medication.deleteMessage)
         }
     }
     
@@ -166,7 +166,7 @@ struct MedicationDetailView: View {
                 }
                 
                 if !medication.isActive {
-                    Text("복용 중단됨")
+                    Text(DMateResourceStrings.Medication.discontinuedStatus)
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
                         .padding(.horizontal, AppSpacing.md)
@@ -183,15 +183,15 @@ struct MedicationDetailView: View {
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(stockColor)
-                    Text("남은 재고")
+                    Text(DMateResourceStrings.Medication.stockRemaining)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                
+
                 Button {
                     showStockSheet = true
                 } label: {
-                    Label("재고 추가", systemImage: "plus.circle")
+                    Label(DMateResourceStrings.Medication.addStock, systemImage: "plus.circle")
                         .font(.subheadline)
                 }
                 .buttonStyle(.bordered)
@@ -213,39 +213,39 @@ struct MedicationDetailView: View {
     
     private var statisticsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("복약 통계")
+            Text(DMateResourceStrings.Medication.adherenceStats)
                 .font(.headline)
-            
+
             // 기간 선택
-            Picker("기간", selection: $viewModel.selectedPeriod) {
+            Picker(DMateResourceStrings.Medication.periodLabel, selection: $viewModel.selectedPeriod) {
                 ForEach(StatisticsPeriod.allCases) { period in
                     Text(period.displayName).tag(period)
                 }
             }
             .pickerStyle(.segmented)
-            
+
             // 통계
             HStack(spacing: 16) {
                 statisticCard(
-                    title: "오늘",
+                    title: DMateResourceStrings.Medication.periodToday,
                     value: formatPercent(viewModel.dailyAdherenceRate),
                     color: rateColor(viewModel.dailyAdherenceRate)
                 )
-                
+
                 statisticCard(
-                    title: "주간",
+                    title: DMateResourceStrings.Medication.periodWeekly,
                     value: formatPercent(viewModel.weeklyAdherenceRate),
                     color: rateColor(viewModel.weeklyAdherenceRate)
                 )
-                
+
                 statisticCard(
-                    title: "월간",
+                    title: DMateResourceStrings.Medication.periodMonthly,
                     value: formatPercent(viewModel.monthlyAdherenceRate),
                     color: rateColor(viewModel.monthlyAdherenceRate)
                 )
-                
+
                 statisticCard(
-                    title: "연속",
+                    title: DMateResourceStrings.Medication.periodStreak,
                     value: "\(viewModel.consecutiveDays)일",
                     color: AppColors.warning
                 )
@@ -281,20 +281,20 @@ struct MedicationDetailView: View {
     private var schedulesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("복용 스케줄")
+                Text(DMateResourceStrings.Medication.scheduleTitle)
                     .font(.headline)
-                
+
                 Spacer()
-                
+
                 Button {
                     viewModel.showAddScheduleSheet = true
                 } label: {
                     Image(systemName: "plus.circle")
                 }
             }
-            
+
             if viewModel.activeSchedules.isEmpty {
-                Text("등록된 스케줄이 없습니다")
+                Text(DMateResourceStrings.Medication.noSchedules)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity)
@@ -308,7 +308,7 @@ struct MedicationDetailView: View {
                                     await viewModel.deleteSchedule(schedule)
                                 }
                             } label: {
-                                Label("삭제", systemImage: "trash")
+                                Label(DMateResourceStrings.Common.delete, systemImage: "trash")
                             }
                         }
                 }
@@ -324,21 +324,21 @@ struct MedicationDetailView: View {
     private var logsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("최근 복약 기록")
+                Text(DMateResourceStrings.Medication.recentLogs)
                     .font(.headline)
-                
+
                 Spacer()
-                
+
                 NavigationLink {
                     LogHistoryView()
                 } label: {
-                    Text("전체 보기")
+                    Text(DMateResourceStrings.Medication.viewAll)
                         .font(.subheadline)
                 }
             }
-            
+
             if viewModel.logs.isEmpty {
-                Text("복약 기록이 없습니다")
+                Text(DMateResourceStrings.Medication.noLogs)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity)
@@ -358,26 +358,26 @@ struct MedicationDetailView: View {
     
     private var detailsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("상세 정보")
+            Text(DMateResourceStrings.Medication.detailInfo)
                 .font(.headline)
-            
+
             if !medication.prescribingDoctor.isEmpty {
-                detailRow(title: "처방 의사", value: medication.prescribingDoctor)
+                detailRow(title: DMateResourceStrings.Medication.prescribingDoctor, value: medication.prescribingDoctor)
             }
-            
+
             if !medication.sideEffects.isEmpty {
-                detailRow(title: "부작용", value: medication.sideEffects)
+                detailRow(title: DMateResourceStrings.Medication.sideEffectsSection, value: medication.sideEffects)
             }
-            
+
             if !medication.precautions.isEmpty {
-                detailRow(title: "주의사항", value: medication.precautions)
+                detailRow(title: DMateResourceStrings.Medication.precautionsSection, value: medication.precautions)
             }
-            
+
             if let notes = medication.notes, !notes.isEmpty {
-                detailRow(title: "메모", value: notes)
+                detailRow(title: DMateResourceStrings.Common.memo, value: notes)
             }
-            
-            detailRow(title: "등록일", value: Formatters.fullDate.string(from: medication.createdAt))
+
+            detailRow(title: DMateResourceStrings.Medication.registrationDate, value: Formatters.fullDate.string(from: medication.createdAt))
         }
         .padding(AppSpacing.lg)
         .background(AppColors.cardBackground)
@@ -399,7 +399,7 @@ struct MedicationDetailView: View {
 
     private var relatedHealthMetricsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("관련 건강 지표")
+            Text(DMateResourceStrings.Medication.healthMetricsTitle)
                 .font(.headline)
 
             Text("\(medication.medicationCategory.displayName) 약물과 관련된 건강 지표를 추적하세요")
@@ -426,7 +426,7 @@ struct MedicationDetailView: View {
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             } else {
-                                Text("아직 기록된 데이터가 없습니다")
+                                Text(DMateResourceStrings.Medication.noHealthData)
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             }
@@ -469,7 +469,7 @@ struct MedicationDetailView: View {
                     }
 
                 VStack(spacing: AppSpacing.xs) {
-                    Text("재고 추가")
+                    Text(DMateResourceStrings.Medication.addStock)
                         .font(AppTypography.title3)
                         .foregroundColor(AppColors.textPrimary)
 
@@ -480,7 +480,7 @@ struct MedicationDetailView: View {
 
                 // 수량 입력
                 VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                    Text("추가할 수량")
+                    Text(DMateResourceStrings.MedicationDetail.quantityToAdd)
                         .font(AppTypography.caption)
                         .foregroundColor(AppColors.textSecondary)
 
@@ -512,7 +512,7 @@ struct MedicationDetailView: View {
                             showStockSheet = false
                         }
                     } label: {
-                        Text("추가")
+                        Text(DMateResourceStrings.Common.add)
                             .font(AppTypography.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
@@ -531,7 +531,7 @@ struct MedicationDetailView: View {
                         stockAmount = ""
                         showStockSheet = false
                     } label: {
-                        Text("취소")
+                        Text(DMateResourceStrings.Common.cancel)
                             .font(AppTypography.subheadline)
                             .foregroundColor(AppColors.textSecondary)
                             .frame(maxWidth: .infinity)
@@ -633,20 +633,20 @@ struct AddScheduleView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("복용 주기") {
-                    Picker("주기 타입", selection: $scheduleType) {
+                Section(DMateResourceStrings.Medication.cycleSection) {
+                    Picker(DMateResourceStrings.Medication.cycleTypeLabel, selection: $scheduleType) {
                         ForEach(ScheduleType.allCases) { type in
                             Text(type.displayName).tag(type)
                         }
                     }
-                    
+
                     if scheduleType == .specificDays {
                         weekdaySelector
                     }
                 }
-                
-                Section("복용 횟수") {
-                    Picker("하루 복용 횟수", selection: $frequency) {
+
+                Section(DMateResourceStrings.Medication.frequencySection) {
+                    Picker(DMateResourceStrings.Medication.frequencyPickerLabel, selection: $frequency) {
                         ForEach(Frequency.allCases) { freq in
                             Text(freq.displayName).tag(freq)
                         }
@@ -655,18 +655,18 @@ struct AddScheduleView: View {
                         updateTimesForFrequency(newValue)
                     }
                 }
-                
-                Section("복용 시간") {
+
+                Section(DMateResourceStrings.Medication.timeSection) {
                     ForEach(times.indices, id: \.self) { index in
                         DatePicker(
-                            "시간 \(index + 1)",
+                            DMateResourceStrings.Medication.timeN(index + 1),
                             selection: $times[index],
                             displayedComponents: .hourAndMinute
                         )
                     }
                 }
-                
-                Section("식사와의 관계") {
+
+                Section(DMateResourceStrings.Medication.mealRelationSection) {
                     Picker("", selection: $mealRelation) {
                         ForEach(MealRelation.allCases) { relation in
                             Text(relation.displayName).tag(relation)
@@ -674,19 +674,19 @@ struct AddScheduleView: View {
                     }
                     .pickerStyle(.menu)
                 }
-                
-                Section("알림") {
-                    Toggle("알림 받기", isOn: $notificationEnabled)
+
+                Section(DMateResourceStrings.Medication.notificationSection) {
+                    Toggle(DMateResourceStrings.Medication.receiveNotification, isOn: $notificationEnabled)
                 }
             }
-            .navigationTitle("스케줄 추가")
+            .navigationTitle(DMateResourceStrings.Schedule.addTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("취소") { dismiss() }
+                    Button(DMateResourceStrings.Common.cancel) { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("저장") {
+                    Button(DMateResourceStrings.Common.save) {
                         saveSchedule()
                     }
                 }

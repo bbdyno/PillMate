@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import DMateResource
 
 /// 건강 지표를 저장하는 모델
 @Model
@@ -204,7 +205,18 @@ enum BloodPressureStatus: String {
         case .low: return .blue
         }
     }
-    
+
+    var displayName: String {
+        switch self {
+        case .normal: return DMateResourceStrings.BloodPressureStatus.normal
+        case .elevated: return DMateResourceStrings.BloodPressureStatus.elevated
+        case .highStage1: return DMateResourceStrings.BloodPressureStatus.stage1
+        case .highStage2: return DMateResourceStrings.BloodPressureStatus.stage2
+        case .crisis: return DMateResourceStrings.BloodPressureStatus.crisis
+        case .low: return DMateResourceStrings.BloodPressureStatus.low
+        }
+    }
+
     static func status(systolic: Double, diastolic: Double) -> BloodPressureStatus {
         if systolic < 90 || diastolic < 60 {
             return .low
@@ -237,7 +249,16 @@ enum BloodGlucoseStatus: String {
         case .diabetes: return .red
         }
     }
-    
+
+    var displayName: String {
+        switch self {
+        case .low: return DMateResourceStrings.BloodGlucoseStatus.low
+        case .normal: return DMateResourceStrings.BloodGlucoseStatus.normal
+        case .prediabetes: return DMateResourceStrings.BloodGlucoseStatus.prediabetes
+        case .diabetes: return DMateResourceStrings.BloodGlucoseStatus.diabetes
+        }
+    }
+
     // 공복 혈당 기준
     static func status(value: Double) -> BloodGlucoseStatus {
         if value < 70 {

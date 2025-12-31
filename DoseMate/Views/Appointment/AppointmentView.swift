@@ -44,7 +44,7 @@ struct AppointmentView: View {
                     appointmentList
                 }
             }
-            .navigationTitle("진료 예약")
+            .navigationTitle(DMateResourceStrings.Appointments.title)
             .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -72,16 +72,16 @@ struct AppointmentView: View {
             .sheet(item: $selectedAppointment) { appointment in
                 AppointmentDetailView(appointment: appointment)
             }
-            .alert("예약 삭제", isPresented: $showDeleteConfirmation) {
-                Button("취소", role: .cancel) {}
-                Button("삭제", role: .destructive) {
+            .alert(DMateResourceStrings.Appointments.deleteTitle, isPresented: $showDeleteConfirmation) {
+                Button(DMateResourceStrings.Common.cancel, role: .cancel) {}
+                Button(DMateResourceStrings.Appointments.delete, role: .destructive) {
                     if let appointment = appointmentToDelete {
                         modelContext.delete(appointment)
                         try? modelContext.save()
                     }
                 }
             } message: {
-                Text("이 예약을 삭제하시겠습니까?")
+                Text(DMateResourceStrings.Appointments.deleteMessage)
             }
         }
     }
@@ -113,11 +113,11 @@ struct AppointmentView: View {
             }
 
             VStack(spacing: 8) {
-                Text("등록된 예약이 없습니다")
+                Text(DMateResourceStrings.Appointments.emptyTitle)
                     .font(.title3)
                     .fontWeight(.semibold)
 
-                Text("진료 예약을 추가하여\n알림을 받아보세요")
+                Text(DMateResourceStrings.Appointments.emptyDescription)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -128,7 +128,7 @@ struct AppointmentView: View {
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "plus.circle.fill")
-                    Text("예약 추가")
+                    Text(DMateResourceStrings.Appointments.addButton)
                         .fontWeight(.semibold)
                 }
                 .foregroundStyle(.white)
@@ -158,7 +158,7 @@ struct AppointmentView: View {
                 let upcoming = appointments.filter { $0.isUpcoming }
                 if !upcoming.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("다가오는 예약")
+                        Text(DMateResourceStrings.Appointments.upcomingSection)
                             .font(.headline)
                             .fontWeight(.semibold)
                             .padding(.horizontal)
@@ -174,7 +174,7 @@ struct AppointmentView: View {
                                             appointment.markAsCompleted()
                                             try? modelContext.save()
                                         } label: {
-                                            Label("완료로 표시", systemImage: "checkmark.circle")
+                                            Label(DMateResourceStrings.Appointments.markCompleted, systemImage: "checkmark.circle")
                                         }
                                     }
 
@@ -182,7 +182,7 @@ struct AppointmentView: View {
                                         appointmentToDelete = appointment
                                         showDeleteConfirmation = true
                                     } label: {
-                                        Label("삭제", systemImage: "trash")
+                                        Label(DMateResourceStrings.Appointments.delete, systemImage: "trash")
                                     }
                                 }
                         }
@@ -193,7 +193,7 @@ struct AppointmentView: View {
                 let past = appointments.filter { $0.isPast }
                 if !past.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("지난 예약")
+                        Text(DMateResourceStrings.Appointments.pastSection)
                             .font(.headline)
                             .fontWeight(.semibold)
                             .padding(.horizontal)
@@ -208,7 +208,7 @@ struct AppointmentView: View {
                                         appointmentToDelete = appointment
                                         showDeleteConfirmation = true
                                     } label: {
-                                        Label("삭제", systemImage: "trash")
+                                        Label(DMateResourceStrings.Appointments.delete, systemImage: "trash")
                                     }
                                 }
                         }
@@ -404,18 +404,18 @@ struct AddAppointmentView: View {
                         VStack(spacing: 16) {
                             // 기본 정보
                             VStack(alignment: .leading, spacing: 12) {
-                                SectionHeaderView(title: "기본 정보", icon: "person.text.rectangle")
+                                SectionHeaderView(title: DMateResourceStrings.Appointments.basicInfo, icon: "person.text.rectangle")
 
                                 VStack(spacing: 12) {
                                     ModernTextField(
                                         icon: "stethoscope",
-                                        placeholder: "의사 이름 *",
+                                        placeholder: DMateResourceStrings.Appointments.doctorNameRequired,
                                         text: $doctorName
                                     )
 
                                     ModernTextField(
                                         icon: "cross.case",
-                                        placeholder: "진료과",
+                                        placeholder: DMateResourceStrings.Appointments.departmentPlaceholder,
                                         text: $specialty
                                     )
                                 }
@@ -423,7 +423,7 @@ struct AddAppointmentView: View {
 
                             // 예약 일시
                             VStack(alignment: .leading, spacing: 12) {
-                                SectionHeaderView(title: "예약 일시", icon: "calendar.circle")
+                                SectionHeaderView(title: DMateResourceStrings.Appointments.datetime, icon: "calendar.circle")
 
                                 DatePicker(
                                     "",
@@ -442,18 +442,18 @@ struct AddAppointmentView: View {
 
                             // 장소
                             VStack(alignment: .leading, spacing: 12) {
-                                SectionHeaderView(title: "장소", icon: "mappin.circle")
+                                SectionHeaderView(title: DMateResourceStrings.Appointments.locationSection, icon: "mappin.circle")
 
                                 ModernTextField(
                                     icon: "building.2",
-                                    placeholder: "병원/위치",
+                                    placeholder: DMateResourceStrings.Appointments.locationPlaceholder,
                                     text: $location
                                 )
                             }
 
                             // 알림
                             VStack(alignment: .leading, spacing: 12) {
-                                SectionHeaderView(title: "알림", icon: "bell.badge")
+                                SectionHeaderView(title: DMateResourceStrings.Appointments.notificationSection, icon: "bell.badge")
 
                                 VStack(spacing: 12) {
                                     HStack {
@@ -462,7 +462,7 @@ struct AddAppointmentView: View {
                                             .foregroundStyle(.blue)
                                             .frame(width: 24)
 
-                                        Text("알림 받기")
+                                        Text(DMateResourceStrings.Appointments.enableNotification)
                                             .font(.subheadline)
 
                                         Spacer()
@@ -478,8 +478,8 @@ struct AddAppointmentView: View {
                                     )
 
                                     if notificationEnabled {
-                                        Picker("알림 시간", selection: $notificationMinutesBefore) {
-                                            Text("정각에").tag(0)
+                                        Picker(DMateResourceStrings.Appointments.notificationTime, selection: $notificationMinutesBefore) {
+                                            Text(DMateResourceStrings.Appointments.onTime).tag(0)
                                             Text("30분 전").tag(30)
                                             Text("1시간 전").tag(60)
                                             Text("2시간 전").tag(120)
@@ -499,9 +499,9 @@ struct AddAppointmentView: View {
 
                             // 메모
                             VStack(alignment: .leading, spacing: 12) {
-                                SectionHeaderView(title: "메모", icon: "note.text")
+                                SectionHeaderView(title: DMateResourceStrings.Appointments.notesSection, icon: "note.text")
 
-                                TextField("추가 메모를 입력하세요", text: $notes, axis: .vertical)
+                                TextField(DMateResourceStrings.Appointments.notesPlaceholder, text: $notes, axis: .vertical)
                                     .lineLimit(3...5)
                                     .padding()
                                     .background(
@@ -519,7 +519,7 @@ struct AddAppointmentView: View {
                         } label: {
                             HStack(spacing: 8) {
                                 Image(systemName: "checkmark.circle.fill")
-                                Text("예약 저장")
+                                Text(DMateResourceStrings.Appointments.saveButton)
                                     .fontWeight(.semibold)
                             }
                             .foregroundStyle(.white)
@@ -541,7 +541,7 @@ struct AddAppointmentView: View {
                     }
                 }
             }
-            .navigationTitle("예약 추가")
+            .navigationTitle(DMateResourceStrings.Appointments.addTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
             .toolbar {
@@ -666,7 +666,7 @@ struct AppointmentDetailView: View {
                         VStack(spacing: 12) {
                             DetailRow(
                                 icon: "clock.fill",
-                                title: "시간",
+                                title: DMateResourceStrings.Appointments.timeLabel,
                                 value: formatTime(appointment.appointmentDate),
                                 color: .blue
                             )
@@ -674,7 +674,7 @@ struct AppointmentDetailView: View {
                             if let location = appointment.location, !location.isEmpty {
                                 DetailRow(
                                     icon: "mappin.circle.fill",
-                                    title: "장소",
+                                    title: DMateResourceStrings.Appointments.locationLabel,
                                     value: location,
                                     color: .green
                                 )
@@ -683,7 +683,7 @@ struct AppointmentDetailView: View {
                             if appointment.isUpcoming, let timeRemaining = appointment.timeRemainingText {
                                 DetailRow(
                                     icon: "hourglass",
-                                    title: "남은 시간",
+                                    title: DMateResourceStrings.Appointments.timeRemaining,
                                     value: timeRemaining,
                                     color: .orange
                                 )
@@ -697,7 +697,7 @@ struct AppointmentDetailView: View {
                                 HStack {
                                     Image(systemName: "note.text")
                                         .foregroundStyle(.blue)
-                                    Text("메모")
+                                    Text(DMateResourceStrings.Appointments.notesLabel)
                                         .font(.headline)
                                         .fontWeight(.semibold)
                                 }
@@ -728,7 +728,7 @@ struct AppointmentDetailView: View {
                             } label: {
                                 HStack(spacing: 8) {
                                     Image(systemName: "checkmark.circle.fill")
-                                    Text("완료로 표시")
+                                    Text(DMateResourceStrings.Appointments.markCompleted)
                                         .fontWeight(.semibold)
                                 }
                                 .foregroundStyle(.white)
@@ -751,7 +751,7 @@ struct AppointmentDetailView: View {
                     .padding(.bottom)
                 }
             }
-            .navigationTitle("예약 상세")
+            .navigationTitle(DMateResourceStrings.Appointments.detailTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
             .toolbar {

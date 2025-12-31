@@ -154,13 +154,13 @@ final class SettingsViewModel {
     /// iCloud 상태 텍스트
     var iCloudStatusText: String {
         if !isICloudAvailable {
-            return "iCloud 사용 불가"
+            return DMateResourceStrings.Settings.icloudUnavailable
         } else if iCloudSyncEnabled && DoseMateApp.isCloudSyncEnabled {
-            return "동기화 중"
+            return DMateResourceStrings.Settings.syncing
         } else if iCloudSyncEnabled && !DoseMateApp.isCloudSyncEnabled {
-            return "재시작 필요"
+            return DMateResourceStrings.Settings.syncRestartRequired
         } else {
-            return "비활성화"
+            return DMateResourceStrings.Settings.disabled
         }
     }
     
@@ -225,7 +225,7 @@ final class SettingsViewModel {
         do {
             try await notificationManager.requestAuthorization(includingCriticalAlerts: criticalAlertsEnabled)
             await checkPermissions()
-            successMessage = "알림 권한이 허용되었습니다."
+            successMessage = DMateResourceStrings.Settings.Success.notificationPermissionGranted
         } catch {
             errorMessage = DMateResourceStrings.Error.notificationRequestFailed
         }
@@ -237,7 +237,7 @@ final class SettingsViewModel {
             try await healthKitManager.requestAuthorization()
             healthKitAuthorized = true
             healthKitEnabled = true
-            successMessage = "건강 앱 연동이 활성화되었습니다."
+            successMessage = DMateResourceStrings.Settings.Success.healthkitActivated
         } catch {
             errorMessage = DMateResourceStrings.Error.healthkitRequestFailed
         }
@@ -262,7 +262,7 @@ final class SettingsViewModel {
         
         await healthKitManager.syncHealthData()
         lastSyncDate = Date()
-        successMessage = "건강 데이터가 동기화되었습니다."
+        successMessage = DMateResourceStrings.Settings.Success.healthDataSynced
     }
     
     // MARK: - Notification Actions
@@ -285,7 +285,7 @@ final class SettingsViewModel {
         
         do {
             try await notificationManager.rescheduleAllNotifications(schedules: schedules)
-            successMessage = "알림이 재설정되었습니다."
+            successMessage = DMateResourceStrings.Settings.Success.notificationsRescheduled
         } catch {
             errorMessage = DMateResourceStrings.Error.notificationRescheduleFailed
         }
@@ -294,7 +294,7 @@ final class SettingsViewModel {
     /// 모든 알림 제거
     func removeAllNotifications() {
         notificationManager.removeAllNotifications()
-        successMessage = "모든 알림이 제거되었습니다."
+        successMessage = DMateResourceStrings.Settings.Success.allNotificationsRemoved
     }
     
     // MARK: - Data Actions
@@ -356,7 +356,7 @@ final class SettingsViewModel {
             // 위젯 데이터 업데이트
             WidgetDataUpdater.shared.updateWidgetData(context: context)
 
-            successMessage = "모든 데이터가 삭제되었습니다."
+            successMessage = DMateResourceStrings.Settings.Success.allDataDeleted
         } catch {
             print("[SettingsViewModel] Delete all data failed: \(error)")
             errorMessage = "\(DMateResourceStrings.Error.dataDeleteFailed): \(error.localizedDescription)"
@@ -405,7 +405,7 @@ final class SettingsViewModel {
         // 로그 생성
         DataManager.shared.generateTodayLogs()
 
-        successMessage = "샘플 데이터가 생성되었습니다."
+        successMessage = DMateResourceStrings.Settings.Success.sampleDataCreated
     }
     
     // MARK: - Computed Properties
@@ -444,7 +444,7 @@ final class SettingsViewModel {
         if let date = lastSyncDate {
             return formatRelativeTime(date)
         }
-        return "동기화 안됨"
+        return DMateResourceStrings.Settings.notSynced
     }
     
     /// 스누즈 옵션들

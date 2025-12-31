@@ -310,7 +310,7 @@ struct PatientDetailView: View {
                 HStack(spacing: AppSpacing.xs) {
                     if patient.relationshipType == .myself {
                         Image(systemName: "person.fill")
-                        Text(DMateResourceStrings.Patients.self)
+                        Text(DMateResourceStrings.Patients.myself)
                     } else {
                         Image(systemName: patient.relationshipType.icon)
                         Text(patient.relationshipType.rawValue)

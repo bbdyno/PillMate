@@ -33,11 +33,11 @@ struct SupportDeveloperView: View {
                 .padding()
             }
             .background(AppColors.background)
-            .navigationTitle(isKorean ? "개발자 지원" : "Support Developer")
+            .navigationTitle(DMateResourceStrings.Support.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(isKorean ? "닫기" : "Close") {
+                    Button(DMateResourceStrings.Support.close) {
                         dismiss()
                     }
                 }
@@ -90,7 +90,7 @@ struct SupportDeveloperView: View {
             HStack {
                 Image(systemName: "bitcoinsign.circle.fill")
                     .foregroundColor(AppColors.warning)
-                Text(isKorean ? "암호화폐 후원" : "Cryptocurrency Support")
+                Text(DMateResourceStrings.Support.cryptoSection)
                     .font(.headline)
             }
             .padding(.horizontal, 4)
@@ -119,7 +119,7 @@ struct SupportDeveloperView: View {
             HStack {
                 Image(systemName: "creditcard.fill")
                     .foregroundColor(AppColors.primary)
-                Text(isKorean ? "일반 후원" : "Traditional Support")
+                Text(DMateResourceStrings.Support.traditionalSection)
                     .font(.headline)
             }
             .padding(.horizontal, 4)
@@ -140,7 +140,7 @@ struct SupportDeveloperView: View {
 
     private var infoSection: some View {
         VStack(spacing: 12) {
-            Text(isKorean ? "안내사항" : "Information")
+            Text(DMateResourceStrings.Support.infoSection)
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundColor(.secondary)
@@ -150,25 +150,19 @@ struct SupportDeveloperView: View {
                 InfoRow(
                     icon: "checkmark.circle.fill",
                     color: AppColors.success,
-                    text: isKorean
-                        ? "후원은 100% 자발적이며 앱 기능과 무관합니다"
-                        : "Support is 100% voluntary and doesn't affect app features"
+                    text: DMateResourceStrings.Support.infoVoluntary
                 )
 
                 InfoRow(
                     icon: "lock.shield.fill",
                     color: AppColors.info,
-                    text: isKorean
-                        ? "암호화폐 거래는 블록체인으로 안전하게 처리됩니다"
-                        : "Cryptocurrency transactions are secured by blockchain"
+                    text: DMateResourceStrings.Support.infoBlockchain
                 )
 
                 InfoRow(
                     icon: "heart.fill",
                     color: AppColors.premiumPink,
-                    text: isKorean
-                        ? "모든 후원은 앱 개발과 유지보수에 사용됩니다"
-                        : "All support goes to app development and maintenance"
+                    text: DMateResourceStrings.Support.infoDevelopment
                 )
             }
         }
@@ -263,12 +257,10 @@ struct CryptoDetailView: View {
         .background(AppColors.background)
         .navigationTitle(isKorean ? cryptoType.displayNameKorean : cryptoType.displayName)
         .navigationBarTitleDisplayMode(.inline)
-        .alert(isKorean ? "주소 복사됨" : "Address Copied", isPresented: $showCopiedAlert) {
+        .alert(DMateResourceStrings.Support.addressCopied, isPresented: $showCopiedAlert) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(isKorean
-                ? "지갑 앱에 붙여넣기 하세요"
-                : "Paste in your wallet app")
+            Text(DMateResourceStrings.Support.pasteWallet)
         }
     }
 
@@ -281,9 +273,7 @@ struct CryptoDetailView: View {
                 .cornerRadius(16)
                 .shadow(color: .black.opacity(0.1), radius: 10)
 
-            Text(isKorean
-                ? "지갑 앱으로 QR 코드를 스캔하세요"
-                : "Scan QR code with your wallet app")
+            Text(DMateResourceStrings.Support.qrScan)
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -292,7 +282,7 @@ struct CryptoDetailView: View {
     // 주소 섹션
     private var addressSection: some View {
         VStack(spacing: 12) {
-            Text(isKorean ? "지갑 주소" : "Wallet Address")
+            Text(DMateResourceStrings.Support.addressLabel)
                 .font(.caption)
                 .fontWeight(.semibold)
                 .foregroundColor(.secondary)
@@ -323,7 +313,7 @@ struct CryptoDetailView: View {
         VStack(spacing: 16) {
             // 설명
             VStack(alignment: .leading, spacing: 8) {
-                Label(isKorean ? "송금 방법" : "How to Send", systemImage: "info.circle.fill")
+                Label(DMateResourceStrings.Support.howToSend, systemImage: "info.circle.fill")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(AppColors.info)
@@ -338,7 +328,7 @@ struct CryptoDetailView: View {
 
             // 주의사항
             VStack(alignment: .leading, spacing: 8) {
-                Label(isKorean ? "주의사항" : "Warning", systemImage: "exclamationmark.triangle.fill")
+                Label(DMateResourceStrings.Support.warningLabel, systemImage: "exclamationmark.triangle.fill")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(AppColors.warning)
@@ -363,7 +353,7 @@ struct CryptoDetailView: View {
             } label: {
                 HStack {
                     Image(systemName: "doc.on.doc")
-                    Text(isKorean ? "주소 복사하기" : "Copy Address")
+                    Text(DMateResourceStrings.Support.addressCopy)
                         .fontWeight(.semibold)
                 }
                 .frame(maxWidth: .infinity)

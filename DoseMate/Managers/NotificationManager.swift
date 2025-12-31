@@ -9,6 +9,7 @@ import Combine
 import Foundation
 import UserNotifications
 import UIKit
+import DMateResource
 
 /// 알림 카테고리 식별자
 enum NotificationCategory: String {
@@ -87,43 +88,43 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         // 복약 알림 액션
         let takenAction = UNNotificationAction(
             identifier: NotificationAction.taken.rawValue,
-            title: "복용 완료 ✓",
+            title: DMateResourceStrings.Notification.actionTaken,
             options: [.foreground]
         )
         
         let snooze5Action = UNNotificationAction(
             identifier: NotificationAction.snooze5.rawValue,
-            title: "5분 후 알림",
+            title: DMateResourceStrings.Notification.snooze5min,
             options: []
         )
         
         let snooze10Action = UNNotificationAction(
             identifier: NotificationAction.snooze10.rawValue,
-            title: "10분 후 알림",
+            title: DMateResourceStrings.Notification.snooze10min,
             options: []
         )
         
         let snooze15Action = UNNotificationAction(
             identifier: NotificationAction.snooze15.rawValue,
-            title: "15분 후 알림",
+            title: DMateResourceStrings.Notification.snooze15min,
             options: []
         )
         
         let snooze30Action = UNNotificationAction(
             identifier: NotificationAction.snooze30.rawValue,
-            title: "30분 후 알림",
+            title: DMateResourceStrings.Notification.snooze30min,
             options: []
         )
         
         let skipAction = UNNotificationAction(
             identifier: NotificationAction.skip.rawValue,
-            title: "건너뛰기",
+            title: DMateResourceStrings.Notification.actionSkip,
             options: [.destructive]
         )
         
         let viewDetailsAction = UNNotificationAction(
             identifier: NotificationAction.viewDetails.rawValue,
-            title: "상세 보기",
+            title: DMateResourceStrings.Notification.actionViewDetails,
             options: [.foreground]
         )
         
@@ -132,7 +133,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             identifier: NotificationCategory.medicationReminder.rawValue,
             actions: [takenAction, snooze10Action, snooze30Action, skipAction],
             intentIdentifiers: [],
-            hiddenPreviewsBodyPlaceholder: "복약 알림",
+            hiddenPreviewsBodyPlaceholder: DMateResourceStrings.Notification.medicationReminder,
             options: [.customDismissAction]
         )
         
@@ -141,7 +142,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
             identifier: NotificationCategory.criticalMedication.rawValue,
             actions: [takenAction, snooze5Action, snooze15Action],
             intentIdentifiers: [],
-            hiddenPreviewsBodyPlaceholder: "중요 복약 알림",
+            hiddenPreviewsBodyPlaceholder: DMateResourceStrings.Notification.criticalReminder,
             options: [.customDismissAction]
         )
         
@@ -456,7 +457,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         
         guard let medicationIdString = userInfo["medicationId"] as? String,
               let medicationId = UUID(uuidString: medicationIdString) else {
-            return .error("잘못된 알림 데이터")
+            return .error(DMateResourceStrings.Notification.errorInvalidNotificationData)
         }
         
         let logIdString = userInfo["logId"] as? String
@@ -652,17 +653,17 @@ enum NotificationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .notAuthorized:
-            return "알림 권한이 없습니다. 설정에서 알림을 허용해주세요."
+            return DMateResourceStrings.Notification.errorNotAuthorized
         case .authorizationFailed(let error):
-            return "알림 권한 요청 실패: \(error.localizedDescription)"
+            return DMateResourceStrings.Notification.errorAuthorizationFailed(error.localizedDescription)
         case .scheduleFailed(let error):
-            return "알림 예약 실패: \(error.localizedDescription)"
+            return DMateResourceStrings.Notification.errorScheduleFailed(error.localizedDescription)
         case .invalidSchedule:
-            return "잘못된 스케줄입니다."
+            return DMateResourceStrings.Notification.errorInvalidSchedule
         case .invalidData:
-            return "잘못된 데이터입니다."
+            return DMateResourceStrings.Notification.errorInvalidData
         case .limitExceeded:
-            return "예약 가능한 알림 수를 초과했습니다."
+            return DMateResourceStrings.Notification.errorLimitExceeded
         }
     }
 }

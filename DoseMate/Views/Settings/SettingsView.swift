@@ -323,7 +323,7 @@ struct SettingsView: View {
                 }
 
                 Picker(selection: $viewModel.reminderMinutesBefore) {
-                    ForEach(viewModel.reminderBeforeOptions, id: \.self) { minutes in
+                    ForEach([0, 5, 10, 15, 30, 60], id: \.self) { (minutes: Int) in
                         if minutes == 0 {
                             Text(DMateResourceStrings.Settings.onTheHour).tag(minutes)
                         } else {

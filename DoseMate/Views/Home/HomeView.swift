@@ -575,7 +575,7 @@ struct HomeView: View {
                                 .font(AppTypography.headline)
                                 .foregroundColor(AppColors.textPrimary)
 
-                            Text("복약 완료 후 건강 지표를 기록하세요")
+                            Text(DMateResourceStrings.Health.recordAfterMedication)
                                 .font(AppTypography.caption)
                                 .foregroundColor(AppColors.textSecondary)
                         }
@@ -588,7 +588,7 @@ struct HomeView: View {
 
                     // 관련 건강 지표 버튼들
                     VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                        Text("측정할 건강 지표 선택")
+                        Text(DMateResourceStrings.Health.selectMetrics)
                             .font(AppTypography.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(AppColors.textPrimary)
@@ -611,7 +611,7 @@ struct HomeView: View {
                                             .font(AppTypography.subheadline)
                                             .foregroundColor(AppColors.textPrimary)
 
-                                        Text("지금 \(metricType.displayName)을(를) 기록하세요")
+                                        Text(DMateResourceStrings.Health.recordNow(metricType.displayName))
                                             .font(AppTypography.caption2)
                                             .foregroundColor(AppColors.textSecondary)
                                     }
@@ -638,7 +638,7 @@ struct HomeView: View {
                         viewModel.showHealthMetricPrompt = false
                         viewModel.logForHealthMetric = nil
                     } label: {
-                        Text("나중에 기록하기")
+                        Text(DMateResourceStrings.Health.recordLater)
                             .font(AppTypography.subheadline)
                             .foregroundColor(AppColors.textSecondary)
                             .frame(maxWidth: .infinity)
@@ -648,7 +648,7 @@ struct HomeView: View {
             }
             .padding(AppSpacing.lg)
             .background(AppColors.background)
-            .navigationTitle("건강 지표 기록")
+            .navigationTitle(DMateResourceStrings.Health.recordTitle)
             .navigationBarTitleDisplayMode(.inline)
         }
         .presentationDetents([.medium])
@@ -865,7 +865,7 @@ struct PatientSelectorSheet: View {
                     ForEach(patients) { patient in
                         PatientSelectionRow(
                             name: patient.displayName,
-                            subtitle: "약물 \(patient.activeMedicationCount)개",
+                            subtitle: DMateResourceStrings.Patient.medicationCount(patient.activeMedicationCount),
                             color: patient.color,
                             initials: patient.initials,
                             isSelected: selectedPatient?.id == patient.id,
@@ -876,7 +876,7 @@ struct PatientSelectorSheet: View {
                 .padding(AppSpacing.lg)
             }
             .background(AppColors.background)
-            .navigationTitle("환자 선택")
+            .navigationTitle(DMateResourceStrings.Patient.selectTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

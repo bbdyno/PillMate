@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import DMateResource
 
 /// 복약 스케줄을 저장하는 모델
 @Model
@@ -187,7 +188,7 @@ final class MedicationSchedule {
         
         switch scheduleTypeEnum {
         case .daily:
-            description = "매일"
+            description = DMateResourceStrings.ScheduleFrequency.daily
         case .specificDays:
             if let days = specificDays {
                 let dayNames = days.map { Weekday(rawValue: $0)?.shortName ?? "" }.joined(separator: ", ")
@@ -195,18 +196,18 @@ final class MedicationSchedule {
             }
         case .interval:
             if intervalDays == 1 {
-                description = "매일"
+                description = DMateResourceStrings.ScheduleFrequency.daily
             } else if intervalDays == 7 {
-                description = "매주"
+                description = DMateResourceStrings.ScheduleFrequency.weekly
             } else if intervalDays == 14 {
-                description = "격주"
+                description = DMateResourceStrings.ScheduleFrequency.biweekly
             } else if intervalDays == 30 {
-                description = "매월"
+                description = DMateResourceStrings.ScheduleFrequency.monthly
             } else {
                 description = "\(intervalDays)일마다"
             }
         case .asNeeded:
-            description = "필요시"
+            description = DMateResourceStrings.ScheduleFrequency.asNeeded
         }
         
         let timesText = times.map { DateFormatter.shortTime.string(from: $0) }.joined(separator: ", ")
