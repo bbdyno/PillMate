@@ -86,6 +86,7 @@
 "common.cancel" = "キャンセル";
 "common.close" = "閉じる";
 "common.confirm" = "確認";
+"common.count_format" = "%d個";
 "common.days_suffix" = "日";
 "common.delete" = "削除";
 "common.done" = "完了";
@@ -247,6 +248,7 @@
 "medication.additional_info_title" = "追加情報";
 "medication.basic_info_subtitle" = "薬の基本情報を入力してください";
 "medication.basic_info_title" = "基本情報";
+"medication.count_with_unit" = "%d個の薬";
 "medication.before_10min" = "10分前";
 "medication.before_15min" = "15分前";
 "medication.before_30min" = "30分前";
@@ -893,6 +895,7 @@
 "notification.snooze_15min" = "15分後に通知";
 "notification.snooze_30min" = "30分後に通知";
 "notification.snooze_5min" = "5分後に通知";
+"notification.stock_remaining" = "%@の在庫が%d個残っています";
 "widget.add_in_app" = "アプリで薬を追加してください";
 "widget.add_medications_in_app" = "DoseMateアプリで\n薬を追加してください";
 "widget.adherence_rate" = "服薬順守率";

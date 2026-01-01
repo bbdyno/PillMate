@@ -189,7 +189,7 @@ struct PatientCard: View {
                         Label(ageText, systemImage: "calendar")
                     }
                     
-                    Label("\(patient.activeMedicationCount)개 약물", systemImage: "pills.fill")
+                    Label(DMateResourceStrings.Medication.countWithUnit(patient.activeMedicationCount), systemImage: "pills.fill")
                 }
                 .font(AppTypography.caption)
                 .foregroundColor(AppColors.textSecondary)
@@ -373,7 +373,7 @@ struct PatientDetailView: View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
             SectionHeader(
                 title: DMateResourceStrings.Patient.medicationList,
-                subtitle: "\(patient.medications.count)개",
+                subtitle: DMateResourceStrings.Common.countFormat(patient.medications.count),
                 action: { showAddMedicationSheet = true },
                 actionTitle: DMateResourceStrings.Common.add
             )

@@ -86,6 +86,7 @@
 "common.cancel" = "إلغاء";
 "common.close" = "إغلاق";
 "common.confirm" = "تأكيد";
+"common.count_format" = "%d";
 "common.days_suffix" = "يوم/أيام";
 "common.delete" = "حذف";
 "common.done" = "تم";
@@ -247,6 +248,7 @@
 "medication.additional_info_title" = "معلومات إضافية";
 "medication.basic_info_subtitle" = "أدخل المعلومات الأساسية عن الدواء";
 "medication.basic_info_title" = "المعلومات الأساسية";
+"medication.count_with_unit" = "%d أدوية";
 "medication.before_10min" = "قبل 10 دقائق";
 "medication.before_15min" = "قبل 15 دقيقة";
 "medication.before_30min" = "قبل 30 دقيقة";
@@ -893,6 +895,7 @@
 "notification.snooze_15min" = "تذكير بعد 15 دقيقة";
 "notification.snooze_30min" = "تذكير بعد 30 دقيقة";
 "notification.snooze_5min" = "تذكير بعد 5 دقائق";
+"notification.stock_remaining" = "%@ لديه %d متبقية";
 "widget.add_in_app" = "أضف الأدوية في التطبيق";
 "widget.add_medications_in_app" = "أضف الأدوية في\nتطبيق DoseMate";
 "widget.adherence_rate" = "معدل الالتزام";

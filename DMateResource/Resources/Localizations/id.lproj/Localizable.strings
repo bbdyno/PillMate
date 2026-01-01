@@ -86,6 +86,7 @@
 "common.cancel" = "Batal";
 "common.close" = "Tutup";
 "common.confirm" = "Konfirmasi";
+"common.count_format" = "%d";
 "common.days_suffix" = "hari";
 "common.delete" = "Hapus";
 "common.done" = "Selesai";
@@ -247,6 +248,7 @@
 "medication.additional_info_title" = "Informasi Tambahan";
 "medication.basic_info_subtitle" = "Masukkan informasi dasar tentang obat";
 "medication.basic_info_title" = "Informasi Dasar";
+"medication.count_with_unit" = "%d obat";
 "medication.before_10min" = "10 menit sebelumnya";
 "medication.before_15min" = "15 menit sebelumnya";
 "medication.before_30min" = "30 menit sebelumnya";
@@ -893,6 +895,7 @@
 "notification.snooze_15min" = "Ingatkan dalam 15 menit";
 "notification.snooze_30min" = "Ingatkan dalam 30 menit";
 "notification.snooze_5min" = "Ingatkan dalam 5 menit";
+"notification.stock_remaining" = "%@ tersisa %d";
 "widget.add_in_app" = "Tambahkan obat di aplikasi";
 "widget.add_medications_in_app" = "Tambahkan obat di\naplikasi DoseMate";
 "widget.adherence_rate" = "Tingkat Kepatuhan";

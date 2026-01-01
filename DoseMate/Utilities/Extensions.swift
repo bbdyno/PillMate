@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import DMateDesignSystem
+import DMateResource
 
 // MARK: - Date Extensions
 
@@ -69,15 +70,15 @@ extension Date {
     /// 요일 이름
     var weekdayName: String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.locale = Locale.current
         formatter.dateFormat = "EEEE"
         return formatter.string(from: self)
     }
-    
+
     /// 짧은 요일 이름
     var shortWeekdayName: String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.locale = Locale.current
         formatter.dateFormat = "E"
         return formatter.string(from: self)
     }
@@ -107,7 +108,7 @@ extension Date {
     /// 상대적 시간 표시
     var relativeTimeString: String {
         let formatter = RelativeDateTimeFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.locale = Locale.current
         formatter.unitsStyle = .full
         return formatter.localizedString(for: self, relativeTo: Date())
     }
@@ -129,16 +130,16 @@ extension Date {
     /// 날짜 문자열 (M월 d일)
     var shortDateString: String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "M월 d일"
+        formatter.locale = Locale.current
+        formatter.setLocalizedDateFormatFromTemplate(DMateResourceStrings.DateFormat.shortDate)
         return formatter.string(from: self)
     }
-    
+
     /// 전체 날짜 문자열
     var fullDateString: String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "yyyy년 M월 d일 (E)"
+        formatter.locale = Locale.current
+        formatter.setLocalizedDateFormatFromTemplate(DMateResourceStrings.DateFormat.fullDate)
         return formatter.string(from: self)
     }
 }
@@ -154,36 +155,37 @@ extension DateFormatter {
     }()
     
     /// 시간 포맷터 (오전/오후 h:mm)
-    static let koreanTime: DateFormatter = {
+    static var localizedTime: DateFormatter {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "a h:mm"
+        formatter.locale = Locale.current
+        formatter.timeStyle = .short
         return formatter
-    }()
-    
+    }
+
     /// 날짜 포맷터 (M월 d일)
-    static let shortDate: DateFormatter = {
+    static var localizedShortDate: DateFormatter {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "M월 d일"
+        formatter.locale = Locale.current
+        formatter.setLocalizedDateFormatFromTemplate(DMateResourceStrings.DateFormat.shortDate)
         return formatter
-    }()
-    
+    }
+
     /// 전체 날짜 포맷터
-    static let fullDate: DateFormatter = {
+    static var localizedFullDate: DateFormatter {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "yyyy년 M월 d일 (E)"
+        formatter.locale = Locale.current
+        formatter.setLocalizedDateFormatFromTemplate(DMateResourceStrings.DateFormat.fullDate)
         return formatter
-    }()
-    
+    }
+
     /// 날짜 + 시간 포맷터
-    static let dateTime: DateFormatter = {
+    static var localizedDateTime: DateFormatter {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "M월 d일 a h:mm"
+        formatter.locale = Locale.current
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
         return formatter
-    }()
+    }
 }
 
 // MARK: - String Extensions
@@ -254,7 +256,7 @@ extension Int {
     var ordinal: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .ordinal
-        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.locale = Locale.current
         return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
     }
 }

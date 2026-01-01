@@ -86,6 +86,7 @@
 "common.cancel" = "取消";
 "common.close" = "关闭";
 "common.confirm" = "确认";
+"common.count_format" = "%d个";
 "common.days_suffix" = "天";
 "common.delete" = "删除";
 "common.done" = "完成";
@@ -247,6 +248,7 @@
 "medication.additional_info_title" = "附加信息";
 "medication.basic_info_subtitle" = "输入药物的基本信息";
 "medication.basic_info_title" = "基本信息";
+"medication.count_with_unit" = "%d个药物";
 "medication.before_10min" = "提前10分钟";
 "medication.before_15min" = "提前15分钟";
 "medication.before_30min" = "提前30分钟";
@@ -893,6 +895,7 @@
 "notification.snooze_15min" = "15分钟后提醒";
 "notification.snooze_30min" = "30分钟后提醒";
 "notification.snooze_5min" = "5分钟后提醒";
+"notification.stock_remaining" = "%@剩余%d个";
 "widget.add_in_app" = "在应用中添加药物";
 "widget.add_medications_in_app" = "在DoseMate应用\n中添加药物";
 "widget.adherence_rate" = "依从率";

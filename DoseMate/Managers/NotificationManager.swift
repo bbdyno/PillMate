@@ -381,7 +381,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         
         let content = UNMutableNotificationContent()
         content.title = "📦 재고 부족 알림"
-        content.body = "\(medication.name) 재고가 \(medication.stockCount)개 남았습니다."
+        content.body = DMateResourceStrings.Notification.stockRemaining(medication.name, medication.stockCount)
         content.sound = soundEnabled ? .default : nil
         content.categoryIdentifier = NotificationCategory.lowStock.rawValue
         content.userInfo = [

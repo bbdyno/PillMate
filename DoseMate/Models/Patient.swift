@@ -137,7 +137,7 @@ final class Patient {
     /// 표시 이름 (본인인 경우 "이름(나)" 형태)
     var displayName: String {
         if isMyself {
-            return "\(name)(나)"
+            return "\(name)(\(DMateResourceStrings.Patients.myself))"
         }
         return name
     }

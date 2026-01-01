@@ -437,7 +437,7 @@ struct HomeView: View {
     
     private var lowStockSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: DMateResourceStrings.Home.lowStock, subtitle: "\(viewModel.lowStockMedications.count)개 \(DMateResourceStrings.Tab.medications)")
+            SectionHeader(title: DMateResourceStrings.Home.lowStock, subtitle: DMateResourceStrings.MedicationList.count(viewModel.lowStockMedications.count))
             
             VStack(spacing: AppSpacing.xs) {
                 ForEach(viewModel.lowStockMedications) { medication in
@@ -450,7 +450,7 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        Text("\(medication.stockCount)개 남음")
+                        Text(DMateResourceStrings.Home.itemsRemaining(medication.stockCount))
                             .font(AppTypography.subheadline)
                             .foregroundColor(medication.isOutOfStock ? AppColors.danger : AppColors.warning)
                     }
@@ -466,7 +466,7 @@ struct HomeView: View {
     
     private var appointmentSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            SectionHeader(title: DMateResourceStrings.Home.todayAppointments, subtitle: "\(viewModel.todayAppointments.count)개 \(DMateResourceStrings.Reminders.title)")
+            SectionHeader(title: DMateResourceStrings.Home.todayAppointments, subtitle: DMateResourceStrings.Common.countFormat(viewModel.todayAppointments.count) + " " + DMateResourceStrings.Reminders.title)
             
             VStack(spacing: AppSpacing.xs) {
                 ForEach(viewModel.todayAppointments) { appointment in

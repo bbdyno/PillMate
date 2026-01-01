@@ -86,6 +86,7 @@
 "common.cancel" = "Abbrechen";
 "common.close" = "Schließen";
 "common.confirm" = "Bestätigen";
+"common.count_format" = "%d";
 "common.days_suffix" = "Tag(e)";
 "common.delete" = "Löschen";
 "common.done" = "Fertig";
@@ -247,6 +248,7 @@
 "medication.additional_info_title" = "Zusätzliche Informationen";
 "medication.basic_info_subtitle" = "Geben Sie grundlegende Informationen zum Medikament ein";
 "medication.basic_info_title" = "Grundinformationen";
+"medication.count_with_unit" = "%d Medikamente";
 "medication.before_10min" = "10 Minuten vorher";
 "medication.before_15min" = "15 Minuten vorher";
 "medication.before_30min" = "30 Minuten vorher";
@@ -892,6 +894,7 @@
 "notification.snooze_15min" = "In 15 Min. erinnern";
 "notification.snooze_30min" = "In 30 Min. erinnern";
 "notification.snooze_5min" = "In 5 Min. erinnern";
+"notification.stock_remaining" = "%@ hat noch %d übrig";
 "widget.add_in_app" = "Medikamente in der App hinzufügen";
 "widget.add_medications_in_app" = "Medikamente in der\nDoseMate-App hinzufügen";
 "widget.adherence_rate" = "Therapietreue-Rate";

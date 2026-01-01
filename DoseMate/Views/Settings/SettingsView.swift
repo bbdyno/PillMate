@@ -38,7 +38,7 @@ struct SettingsView: View {
             List {
                 supportSection
                 notificationSection
-                healthKitSection
+//                healthKitSection
                 appearanceSection
                 dataSection
                 backupSection
