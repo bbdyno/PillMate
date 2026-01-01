@@ -87,6 +87,7 @@
 "common.close" = "닫기";
 "common.confirm" = "확인";
 "common.count_format" = "%d개";
+"common.days_format" = "%d일";
 "common.days_suffix" = "일";
 "common.delete" = "삭제";
 "common.done" = "완료";
@@ -486,9 +487,14 @@
 "notification_status.permission_required" = "권한 필요";
 "notification_status.provisional" = "임시 허용";
 "notification_status.unknown" = "알 수 없음";
+"onboarding.agree_privacy_policy" = "개인정보 처리방침에 동의합니다";
+"onboarding.agree_terms" = "이용약관에 동의합니다";
 "onboarding.ask_name" = "가장 먼저, 당신의 이름을 알려주세요.";
 "onboarding.get_started" = "시작하기";
 "onboarding.name_placeholder" = "이름을 입력하세요";
+"onboarding.privacy_policy" = "개인정보 처리방침";
+"onboarding.terms_of_service" = "이용약관";
+"onboarding.view" = "보기";
 "patient.adherence_rate_label" = "준수율";
 "patient.adherence_today" = "오늘의 복약";
 "patient.age" = "나이";
@@ -868,8 +874,6 @@
 "tip_jar.thank_you_title" = "감사합니다!";
 "tip_jar.title" = "개발자 후원";
 "tip_jar.total_tips" = "총 팁: %d";
-"view_mode.calendar" = "달력";
-"view_mode.list" = "목록";
 "weekday.friShort" = "금";
 "weekday.friday" = "금요일";
 "weekday.monShort" = "월";
@@ -919,4 +923,7 @@
 "widget.status.snoozed" = "미루기";
 "widget.tap_to_open" = "탭하여 앱 열기";
 "widget.today_adherence" = "오늘 준수율";
-"widget.today_medication" = "오늘의 복약";
+"widget.today_medication" = "오늘의 복약";"view_mode.calendar" = "달력";
+
+"view_mode.calendar" = "달력";
+"view_mode.list" = "목록";

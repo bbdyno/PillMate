@@ -87,6 +87,7 @@
 "common.close" = "Fermer";
 "common.confirm" = "Confirmer";
 "common.count_format" = "%d";
+"common.days_format" = "%d jours";
 "common.days_suffix" = "jour(s)";
 "common.delete" = "Supprimer";
 "common.done" = "Terminé";
@@ -862,8 +863,6 @@
 "tip_jar.thank_you_title" = "Merci !";
 "tip_jar.title" = "Soutenir le développeur";
 "tip_jar.total_tips" = "Total des pourboires : %d";
-"view_mode.calendar" = "Calendrier";
-"view_mode.list" = "Liste";
 "weekday.friShort" = "Ven";
 "weekday.friday" = "Vendredi";
 "weekday.monShort" = "Lun";
@@ -913,4 +912,11 @@
 "widget.status.snoozed" = "Reporté";
 "widget.tap_to_open" = "Appuyez pour ouvrir l'application";
 "widget.today_adherence" = "Observance d'aujourd'hui";
-"widget.today_medication" = "Médicament d'aujourd'hui";
+"widget.today_medication" = "Médicament d'aujourd'hui";"onboarding.agree_privacy_policy" = "J'accepte la Politique de Confidentialité";
+"onboarding.agree_terms" = "J'accepte les Conditions d'Utilisation";
+"onboarding.privacy_policy" = "Politique de Confidentialité";
+"onboarding.terms_of_service" = "Conditions d'Utilisation";
+"onboarding.view" = "Voir";
+
+"view_mode.calendar" = "Calendrier";
+"view_mode.list" = "Liste";

@@ -87,6 +87,7 @@
 "common.close" = "閉じる";
 "common.confirm" = "確認";
 "common.count_format" = "%d個";
+"common.days_format" = "%d日";
 "common.days_suffix" = "日";
 "common.delete" = "削除";
 "common.done" = "完了";
@@ -863,8 +864,6 @@
 "tip_jar.thank_you_title" = "ありがとうございます！";
 "tip_jar.title" = "開発者へのチップ";
 "tip_jar.total_tips" = "合計チップ: %d";
-"view_mode.calendar" = "カレンダー";
-"view_mode.list" = "リスト";
 "weekday.friShort" = "金";
 "weekday.friday" = "金曜日";
 "weekday.monShort" = "月";
@@ -914,4 +913,11 @@
 "widget.status.snoozed" = "スヌーズ";
 "widget.tap_to_open" = "タップして開く";
 "widget.today_adherence" = "今日の順守率";
-"widget.today_medication" = "今日の服薬";
+"widget.today_medication" = "今日の服薬";"onboarding.agree_privacy_policy" = "プライバシーポリシーに同意します";
+"onboarding.agree_terms" = "利用規約に同意します";
+"onboarding.privacy_policy" = "プライバシーポリシー";
+"onboarding.terms_of_service" = "利用規約";
+"onboarding.view" = "表示";
+
+"view_mode.calendar" = "カレンダー";
+"view_mode.list" = "リスト";

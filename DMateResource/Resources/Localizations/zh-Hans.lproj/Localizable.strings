@@ -87,6 +87,7 @@
 "common.close" = "关闭";
 "common.confirm" = "确认";
 "common.count_format" = "%d个";
+"common.days_format" = "%d天";
 "common.days_suffix" = "天";
 "common.delete" = "删除";
 "common.done" = "完成";
@@ -863,8 +864,6 @@
 "tip_jar.thank_you_title" = "谢谢！";
 "tip_jar.title" = "开发者打赏";
 "tip_jar.total_tips" = "总打赏：%d";
-"view_mode.calendar" = "日历";
-"view_mode.list" = "列表";
 "weekday.friShort" = "五";
 "weekday.friday" = "星期五";
 "weekday.monShort" = "一";
@@ -914,4 +913,11 @@
 "widget.status.snoozed" = "推迟";
 "widget.tap_to_open" = "点击打开应用";
 "widget.today_adherence" = "今日依从率";
-"widget.today_medication" = "今日用药";
+"widget.today_medication" = "今日用药";"onboarding.agree_privacy_policy" = "我同意隐私政策";
+"onboarding.agree_terms" = "我同意服务条款";
+"onboarding.privacy_policy" = "隐私政策";
+"onboarding.terms_of_service" = "服务条款";
+"onboarding.view" = "查看";
+
+"view_mode.calendar" = "日历";
+"view_mode.list" = "列表";

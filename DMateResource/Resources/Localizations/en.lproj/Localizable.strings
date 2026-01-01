@@ -87,6 +87,7 @@
 "common.close" = "Close";
 "common.confirm" = "Confirm";
 "common.count_format" = "%d";
+"common.days_format" = "%d days";
 "common.days_suffix" = "day(s)";
 "common.delete" = "Delete";
 "common.done" = "Done";
@@ -486,9 +487,14 @@
 "notification_status.permission_required" = "Permission Required";
 "notification_status.provisional" = "Provisional";
 "notification_status.unknown" = "Unknown";
+"onboarding.agree_privacy_policy" = "I agree to the Privacy Policy";
+"onboarding.agree_terms" = "I agree to the Terms of Service";
 "onboarding.ask_name" = "First, please tell us your name.";
 "onboarding.get_started" = "Get Started";
 "onboarding.name_placeholder" = "Enter your name";
+"onboarding.privacy_policy" = "Privacy Policy";
+"onboarding.terms_of_service" = "Terms of Service";
+"onboarding.view" = "View";
 "patient.adherence_rate_label" = "Adherence Rate";
 "patient.adherence_today" = "Today's Adherence";
 "patient.age" = "Age";
@@ -868,8 +874,6 @@
 "tip_jar.thank_you_title" = "Thank You!";
 "tip_jar.title" = "Support the Developer";
 "tip_jar.total_tips" = "Total tips: %d";
-"view_mode.calendar" = "Calendar";
-"view_mode.list" = "List";
 "weekday.friShort" = "Fri";
 "weekday.friday" = "Friday";
 "weekday.monShort" = "Mon";
@@ -919,4 +923,7 @@
 "widget.status.snoozed" = "Snoozed";
 "widget.tap_to_open" = "Tap to open app";
 "widget.today_adherence" = "Today's Adherence";
-"widget.today_medication" = "Today's Medication";
+"widget.today_medication" = "Today's Medication";"view_mode.calendar" = "Calendar";
+
+"view_mode.calendar" = "Calendar";
+"view_mode.list" = "List";

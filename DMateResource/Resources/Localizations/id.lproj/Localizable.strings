@@ -87,6 +87,7 @@
 "common.close" = "Tutup";
 "common.confirm" = "Konfirmasi";
 "common.count_format" = "%d";
+"common.days_format" = "%d hari";
 "common.days_suffix" = "hari";
 "common.delete" = "Hapus";
 "common.done" = "Selesai";
@@ -863,8 +864,6 @@
 "tip_jar.thank_you_title" = "Terima kasih!";
 "tip_jar.title" = "Dukung Pengembang";
 "tip_jar.total_tips" = "Total tip: %d";
-"view_mode.calendar" = "Kalender";
-"view_mode.list" = "Daftar";
 "weekday.friShort" = "Jum";
 "weekday.friday" = "Jumat";
 "weekday.monShort" = "Sen";
@@ -914,4 +913,11 @@
 "widget.status.snoozed" = "Ditunda";
 "widget.tap_to_open" = "Ketuk untuk membuka aplikasi";
 "widget.today_adherence" = "Kepatuhan Hari Ini";
-"widget.today_medication" = "Obat Hari Ini";
+"widget.today_medication" = "Obat Hari Ini";"onboarding.agree_privacy_policy" = "Saya setuju dengan Kebijakan Privasi";
+"onboarding.agree_terms" = "Saya setuju dengan Ketentuan Layanan";
+"onboarding.privacy_policy" = "Kebijakan Privasi";
+"onboarding.terms_of_service" = "Ketentuan Layanan";
+"onboarding.view" = "Lihat";
+
+"view_mode.calendar" = "Kalender";
+"view_mode.list" = "Daftar";

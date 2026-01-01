@@ -13,10 +13,10 @@ import SwiftData
 
 /// 복약 기록 필터
 enum LogFilter: String, CaseIterable, Identifiable {
-    case all = "전체"
-    case taken = "복용완료"
-    case skipped = "건너뜀"
-    case delayed = "지연"
+    case all
+    case taken
+    case skipped
+    case delayed
 
     var id: String { rawValue }
 

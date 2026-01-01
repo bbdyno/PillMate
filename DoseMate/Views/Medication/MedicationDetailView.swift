@@ -246,7 +246,7 @@ struct MedicationDetailView: View {
 
                 statisticCard(
                     title: DMateResourceStrings.Medication.periodStreak,
-                    value: "\(viewModel.consecutiveDays)일",
+                    value: DMateResourceStrings.Common.daysFormat(viewModel.consecutiveDays),
                     color: AppColors.warning
                 )
             }

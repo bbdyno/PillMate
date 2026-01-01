@@ -582,7 +582,7 @@ struct AddPatientView: View {
                                                     HStack(spacing: 4) {
                                                         Image(systemName: rel.icon)
                                                             .font(.caption)
-                                                        Text(rel.rawValue)
+                                                        Text(rel.displayName)
                                                             .font(AppTypography.caption)
                                                     }
                                                     .padding(.horizontal, AppSpacing.sm)

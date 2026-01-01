@@ -73,8 +73,15 @@ final class MedicationDetailViewModel {
     var viewMode: ViewMode = .calendar
 
     enum ViewMode: String, CaseIterable {
-        case calendar = "달력"
-        case list = "목록"
+        case calendar
+        case list
+
+        var displayName: String {
+            switch self {
+            case .calendar: return DMateResourceStrings.ViewMode.calendar
+            case .list: return DMateResourceStrings.ViewMode.list
+            }
+        }
     }
 
     /// 최신 건강 지표들

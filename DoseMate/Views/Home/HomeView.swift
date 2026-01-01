@@ -213,7 +213,7 @@ struct HomeView: View {
                 
                 statisticItem(
                     icon: "flame.fill",
-                    value: "\(viewModel.consecutiveDays)일",
+                    value: DMateResourceStrings.Common.daysFormat(viewModel.consecutiveDays),
                     label: DMateResourceStrings.Home.streak,
                     color: AppColors.peach
                 )

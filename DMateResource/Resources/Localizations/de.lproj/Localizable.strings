@@ -87,6 +87,7 @@
 "common.close" = "Schließen";
 "common.confirm" = "Bestätigen";
 "common.count_format" = "%d";
+"common.days_format" = "%d Tage";
 "common.days_suffix" = "Tag(e)";
 "common.delete" = "Löschen";
 "common.done" = "Fertig";
@@ -862,8 +863,6 @@
 "tip_jar.thank_you_title" = "Danke!";
 "tip_jar.title" = "Entwickler unterstützen";
 "tip_jar.total_tips" = "Gesamte Tipps: %d";
-"view_mode.calendar" = "Kalender";
-"view_mode.list" = "Liste";
 "weekday.friShort" = "Fr";
 "weekday.friday" = "Freitag";
 "weekday.monShort" = "Mo";
@@ -913,4 +912,11 @@
 "widget.status.snoozed" = "Verschoben";
 "widget.tap_to_open" = "Tippen zum Öffnen der App";
 "widget.today_adherence" = "Heutige Therapietreue";
-"widget.today_medication" = "Heutiges Medikament";
+"widget.today_medication" = "Heutiges Medikament";"onboarding.agree_privacy_policy" = "Ich stimme der Datenschutzrichtlinie zu";
+"onboarding.agree_terms" = "Ich stimme den Nutzungsbedingungen zu";
+"onboarding.privacy_policy" = "Datenschutzrichtlinie";
+"onboarding.terms_of_service" = "Nutzungsbedingungen";
+"onboarding.view" = "Ansehen";
+
+"view_mode.calendar" = "Kalender";
+"view_mode.list" = "Liste";

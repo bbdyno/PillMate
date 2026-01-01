@@ -30,6 +30,10 @@ struct SettingsView: View {
     @State private var pendingImportURL: URL?
     @State private var showImportResult = false
     @State private var importResult: ImportResult?
+
+    // 약관 및 개인정보 처리방침
+    @State private var showTermsSheet = false
+    @State private var showPrivacySheet = false
     
     // MARK: - Body
     
@@ -87,6 +91,18 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showSupportSheet) {
                 SupportDeveloperView()
+            }
+            .sheet(isPresented: $showTermsSheet) {
+                DocumentViewer(
+                    title: DMateResourceStrings.Onboarding.termsOfService,
+                    fileName: termsFileName
+                )
+            }
+            .sheet(isPresented: $showPrivacySheet) {
+                DocumentViewer(
+                    title: DMateResourceStrings.Onboarding.privacyPolicy,
+                    fileName: privacyFileName
+                )
             }
         }
         .tint(AppColors.primary)
@@ -152,8 +168,18 @@ struct SettingsView: View {
         }
     }
     
+    // MARK: - Computed Properties
+
+    private var termsFileName: String {
+        Locale.current.language.languageCode?.identifier == "ko" ? "TERMS_OF_SERVICE_ko" : "TERMS_OF_SERVICE_en"
+    }
+
+    private var privacyFileName: String {
+        Locale.current.language.languageCode?.identifier == "ko" ? "PRIVACY_POLICY_ko" : "PRIVACY_POLICY_en"
+    }
+
     // MARK: - Export/Import Methods
-    
+
     /// 데이터 내보내기
     private func exportData() async {
         viewModel.isExporting = true
@@ -563,11 +589,15 @@ struct SettingsView: View {
                     .foregroundColor(.secondary)
             }
 
-            Link(destination: URL(string: "https://www.apple.com/legal/privacy")!) {
+            Button {
+                showPrivacySheet = true
+            } label: {
                 Label(DMateResourceStrings.Settings.privacyPolicy, systemImage: "hand.raised")
             }
 
-            Link(destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!) {
+            Button {
+                showTermsSheet = true
+            } label: {
                 Label(DMateResourceStrings.Settings.termsOfService, systemImage: "doc.text")
             }
         } header: {

@@ -143,16 +143,20 @@ enum AppConstants {
     }
     
     // MARK: - Date Formats
-    
+
+    // NOTE: Date formats are now managed through DMateResourceStrings.DateFormat
+    // for proper localization support. See Extensions.swift for usage.
     enum DateFormats {
         static let time = "HH:mm"
         static let timeWithAMPM = "a h:mm"
-        static let shortDate = "M월 d일"
-        static let fullDate = "yyyy년 M월 d일"
-        static let fullDateTime = "yyyy년 M월 d일 a h:mm"
         static let weekday = "EEEE"
-        static let monthYear = "yyyy년 M월"
         static let iso8601 = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+        // Deprecated: Use DMateResourceStrings.DateFormat instead
+        // static let shortDate = "M월 d일"
+        // static let fullDate = "yyyy년 M월 d일"
+        // static let fullDateTime = "yyyy년 M월 d일 a h:mm"
+        // static let monthYear = "yyyy년 M월"
     }
     
     // MARK: - Widget Constants

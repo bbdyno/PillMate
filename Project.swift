@@ -72,7 +72,7 @@ let project = Project(
                 ]
             ),
             sources: ["DoseMate/**"],
-            resources: ["DoseMate/**/*.{xcassets,strings,storyboard,xib}"],
+            resources: ["DoseMate/**/*.{xcassets,strings,storyboard,xib,md}"],
             entitlements: .file(path: "DoseMate/Resources/DoseMate.entitlements"),
             dependencies: [
                 .module(.designSystem),

@@ -87,6 +87,7 @@
 "common.close" = "إغلاق";
 "common.confirm" = "تأكيد";
 "common.count_format" = "%d";
+"common.days_format" = "%d يوم";
 "common.days_suffix" = "يوم/أيام";
 "common.delete" = "حذف";
 "common.done" = "تم";
@@ -863,8 +864,6 @@
 "tip_jar.thank_you_title" = "شكراً لك!";
 "tip_jar.title" = "دعم المطور";
 "tip_jar.total_tips" = "إجمالي الإكراميات: %d";
-"view_mode.calendar" = "تقويم";
-"view_mode.list" = "قائمة";
 "weekday.friShort" = "جمعة";
 "weekday.friday" = "الجمعة";
 "weekday.monShort" = "إثنين";
@@ -914,4 +913,11 @@
 "widget.status.snoozed" = "مؤجل";
 "widget.tap_to_open" = "انقر لفتح التطبيق";
 "widget.today_adherence" = "التزام اليوم";
-"widget.today_medication" = "دواء اليوم";
+"widget.today_medication" = "دواء اليوم";"onboarding.agree_privacy_policy" = "أوافق على سياسة الخصوصية";
+"onboarding.agree_terms" = "أوافق على شروط الخدمة";
+"onboarding.privacy_policy" = "سياسة الخصوصية";
+"onboarding.terms_of_service" = "شروط الخدمة";
+"onboarding.view" = "عرض";
+
+"view_mode.calendar" = "التقويم";
+"view_mode.list" = "القائمة";
